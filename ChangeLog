@@ -1,3 +1,8 @@
+Sat Jun 12 16:22:44 1999  Doug Morris <doug@mhost.com>
+
+	* Added patch to check for and use mkstemp on systems that
+	have it.
+
 Wed May 12 23:41:33 1999  Dan Winship  <danw@mit.edu>
 
 	* Released nmh-1.0.1.
