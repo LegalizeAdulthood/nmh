@@ -49,9 +49,10 @@ void cpydgst (int, int, char *, char *);
 int decode_rfc2047 (char *, char *);
 void discard (FILE *);
 int done (int);
+int ext_hook(char *, char *, char *);
 int fdcompare (int, int);
-int folder_addmsg (struct msgs **, char *, int, int, int);
-int folder_delmsgs (struct msgs *, int);
+int folder_addmsg (struct msgs **, char *, int, int, int, int);
+int folder_delmsgs (struct msgs *, int, int);
 void folder_free (struct msgs *);
 int folder_pack (struct msgs **, int);
 struct msgs *folder_read (char *);
@@ -154,11 +155,12 @@ char *OfficialName(char *);
 /*
  * prototypes for some routines in uip
  */
-int annotate (char *, char *, char *, int, int);
+int annotate (char *, char *, char *, int, int, int, int);
+void annolist(char *, char *, char *, int);
 int distout (char *, char *, char *);
 void replout (FILE *, char *, char *, struct msgs *, int,
 	int, char *, char *, char *);
-int sendsbr (char **, int, char *, struct stat *, int);
+int sendsbr (char **, int, char *, struct stat *, int, char *);
 int what_now (char *, int, int, char *, char *,
 	int, struct msgs *, char *, int, char *);
 

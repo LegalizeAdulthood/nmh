@@ -152,6 +152,12 @@ rmf (char *folder)
 	adios (NULL, "unable to read folder +%s", folder);
     others = 0;
 
+    /*
+     *	Run the external delete hook program.
+     */
+
+    (void)ext_hook("del-hook", maildir, (char *)0);
+
     j = strlen(BACKUP_PREFIX);
     while ((dp = readdir (dd))) {
 	switch (dp->d_name[0]) {
@@ -216,10 +222,6 @@ rma (char *folder)
     register int alen, j, plen;
     register char *cp;
     register struct node *np, *pp;
-
-    /* sanity check - check that context has been read */
-    if (defpath == NULL)
-	adios (NULL, "oops, context hasn't been read yet");
 
     alen = strlen ("atr-");
     plen = strlen (cp = m_mailpath (folder)) + 1;
