@@ -134,8 +134,6 @@ static struct swit switches[] = {
     { NULL, 0 }
 };
 
-extern int errno;
-
 /*
  * flags for the mail source
  */
@@ -844,6 +842,9 @@ go_to_it:
 
 		msgnum++;
 		mp->hghmsg++;
+		mp->nummsg++;
+		if (mp->lowmsg == 0) mp->lowmsg = 1;
+
 		clear_msg_flags (mp, msgnum);
 		set_exists (mp, msgnum);
 		set_unseen (mp, msgnum);

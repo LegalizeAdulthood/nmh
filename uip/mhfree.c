@@ -15,8 +15,6 @@
 #include <h/mime.h>
 #include <h/mhparse.h>
 
-extern int errno;
-
 /*
  * prototypes
  */
@@ -271,6 +269,7 @@ free_encoding (CT ct, int toplevel)
 	if (ce->ce_unlink)
 	    unlink (ce->ce_file);
 	free (ce->ce_file);
+	ce->ce_file = NULL;
     }
 
     if (toplevel) {

@@ -88,7 +88,6 @@ match (char *str, char *sub)
 /*
  * macros to format data
  */
-
 #define PUTDF(cp, num, wid, fill)\
 	if (cp + wid < ep) {\
 	    if ((i = (num)) < 0)\
@@ -107,26 +106,6 @@ match (char *str, char *sub)
 	    while (sp > cp)\
 		*--sp = fill;\
 	    cp += c;\
-	    }
-
-#define PUTD(cp, num)\
-	if (cp < ep) {\
-	    if ((i = (num)) == 0)\
-		*cp++ = '0';\
-	    else {\
-		if ((i = (num)) < 0) {\
-		    *cp++ = '-';\
-		    i = -(num);\
-		    }\
-		c = 10;\
-		while (c <= i) \
-		    c *= 10;\
-		while (cp < ep && c > 1) {\
-		    c /= 10;\
-		    *cp++ = (i / c) + '0';\
-		    i %= c;\
-		    }\
-		}\
 	    }
 
 #ifdef LOCALE
@@ -286,7 +265,7 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
     char *cp, *ep, *sp;
     char *savestr, *str = NULL;
     char buffer[BUFSIZ], buffer2[BUFSIZ];
-    int i, c, ljust;
+    int i, c, ljust, n;
     int value = 0;
     time_t t;
     struct format *fmt;
@@ -296,6 +275,15 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 
     cp = scanl;
     ep = scanl + width - 1;
+
+    for (fmt = format; fmt->f_type != FT_DONE; fmt++)
+	switch (fmt->f_type) {
+	case FT_PARSEADDR:
+	case FT_PARSEDATE:
+	    fmt->f_comp->c_flags &= ~CF_PARSED;
+	    break;
+	}
+
     fmt = format;
 
     while (cp < ep) {
@@ -337,7 +325,8 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 	    adios (NULL, "internal error (FT_STRFW)");
 
 	case FT_NUM:
-	    PUTD (cp, value);
+	    n = snprintf(cp, ep - cp, "%d", value);
+	    if (n >= 0) cp += n;
 	    break;
 	case FT_NUMF:
 	    PUTDF (cp, value, fmt->f_width, fmt->f_fill);
@@ -490,7 +479,7 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 	    break;
 
 	case FT_LV_COMPFLAG:
-	    value = fmt->f_comp->c_flags;
+	    value = (fmt->f_comp->c_flags & CF_TRUE) != 0;
 	    break;
 	case FT_LV_COMP:
 	    value = (comp = fmt->f_comp)->c_text ? atoi(comp->c_text) : 0;
@@ -502,7 +491,10 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 	    value = dat[fmt->f_value];
 	    break;
 	case FT_LV_STRLEN:
-	    value = strlen(str);
+	    if (str != NULL)
+		    value = strlen(str);
+	    else
+		    value = 0;
 	    break;
 	case FT_LV_CHAR_LEFT:
 	    value = width - (cp - scanl);
@@ -710,13 +702,16 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 
 	case FT_PARSEDATE:
 	    comp = fmt->f_comp;
+	    if (comp->c_flags & CF_PARSED)
+		break;
 	    if ((sp = comp->c_text) && (tws = dparsetime(sp))) {
 		*comp->c_tws = *tws;
-		comp->c_flags = 0;
-	    } else if (comp->c_flags >= 0) {
+		comp->c_flags &= ~CF_TRUE;
+	    } else if ((comp->c_flags & CF_DATEFAB) == 0) {
 		memset ((char *) comp->c_tws, 0, sizeof *comp->c_tws);
-		comp->c_flags = 1;
+		comp->c_flags = CF_TRUE;
 	    }
+	    comp->c_flags |= CF_PARSED;
 	    break;
 
 	case FT_FORMATADDR:
@@ -779,6 +774,8 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 
 	case FT_PARSEADDR:
 	    comp = fmt->f_comp;
+	    if (comp->c_flags & CF_PARSED)
+		break;
 	    if (comp->c_mn != &fmt_mnull)
 		mnfree (comp->c_mn);
 	    if ((sp = comp->c_text) && (sp = getname(sp)) &&
@@ -786,6 +783,7 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 		comp->c_mn = mn;
 		while (getname(""))
 		    ;
+		comp->c_flags |= CF_PARSED;
 	    } else {
 		while (getname(""))		/* XXX */
 		    ;
@@ -805,15 +803,22 @@ fmt_scan (struct format *format, char *scanl, int width, int *dat)
 	    if ((sp = comp->c_text) && (sp = getname(sp)) &&
 		(mn = getm (sp, NULL, 0, AD_NAME, NULL))) {
 		comp->c_mn = mn;
-		comp->c_flags = ismymbox(mn);
+		if (ismymbox(mn))
+		    comp->c_flags |= CF_TRUE;
+		else
+		    comp->c_flags &= ~CF_TRUE;
 		while ((sp = getname(sp)))
-		    if (comp->c_flags == 0 &&
+		    if ((comp->c_flags & CF_TRUE) == 0 &&
 			(mn = getm (sp, NULL, 0, AD_NAME, NULL)))
-			comp->c_flags |= ismymbox(mn);
+			if (ismymbox(mn))
+			    comp->c_flags |= CF_TRUE;
 	    } else {
 		while (getname(""))		/* XXX */
 		    ;
-		comp->c_flags = (comp->c_text == 0);
+		if (comp->c_text == 0)
+		    comp->c_flags |= CF_TRUE;
+		else
+		    comp->c_flags &= ~CF_TRUE;
 		comp->c_mn = &fmt_mnull;
 	    }
 	    break;

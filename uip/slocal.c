@@ -52,7 +52,16 @@ extern int  initgroups(char*, int);
 #ifdef HAVE_DB1_NDBM_H
 #include <db1/ndbm.h>
 #else
+#ifdef HAVE_GDBM_NDBM_H
+#include <gdbm/ndbm.h>
+#else
+#if defined(HAVE_DB_H) && defined(HAVE_LIBDB)
+#define DB_DBM_HSEARCH 1
+#include <db.h>
+#else
 #include <ndbm.h>
+#endif
+#endif
 #endif
 
 #include <utmp.h>
@@ -456,7 +465,7 @@ localmail (int fd, char *mdlvr)
 static int
 usr_delivery (int fd, char *delivery, int su)
 {
-    int i, accept, status, won, vecp, next;
+    int i, accept, status=1, won, vecp, next;
     char *field, *pattern, *action, *result, *string;
     char buffer[BUFSIZ], tmpbuf[BUFSIZ];
     char *cp, *vec[NVEC];
@@ -659,6 +668,8 @@ usr_delivery (int fd, char *delivery, int su)
 		status = 0;
 		break;
 	}
+
+	if (status) next = 0;	/* action failed, mark for 'N' result */
 
 	if (accept && status == 0)
 	    won++;

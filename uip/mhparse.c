@@ -26,7 +26,6 @@
 #endif
 
 
-extern int errno;
 extern int debugsw;
 
 extern int endian;	/* mhmisc.c     */
@@ -181,7 +180,7 @@ static struct str2init str2ces[] = {
     { "quoted-printable", CE_QUOTED,	InitQuoted },
     { "8bit",		  CE_8BIT,	Init7Bit },
     { "7bit",		  CE_7BIT,	Init7Bit },
-    { "binary",		  CE_BINARY,	NULL },
+    { "binary",		  CE_BINARY,	Init7Bit },
     { NULL,		  CE_EXTENSION,	NULL },	 /* these two must be last! */
     { NULL,		  CE_UNKNOWN,	NULL },
 };
@@ -988,6 +987,7 @@ InitMultiPart (CT ct)
      * Check for "boundary" parameter, which is
      * required for multipart messages.
      */
+    bp = 0;
     for (ap = ci->ci_attrs, ep = ci->ci_values; *ap; ap++, ep++) {
 	if (!strcasecmp (*ap, "boundary")) {
 	    bp = *ep;
