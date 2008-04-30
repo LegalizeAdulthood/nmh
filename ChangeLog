@@ -1,3 +1,26 @@
+2008-04-30  Peter Maydell  <pmaydell@chiark.greenend.org.uk>
+
+	* Fixes ported from trunk: 
+	
+	* mts/smtp/smtp.c: provide a callback for SASL_CB_AUTHNAME
+	(fixes issue with SASL sending the wrong username in some
+	circumstances). Thanks to <der_wachtmeister@freenet.de>
+	for the patch.
+
+	* Revert previous attempt at fix for SASL issue as it
+	is the wrong approach.
+
+	* Fix in correct manner, by making sm_rrecord() and thus
+	sm_hear() set the length of the reply string correctly
+	(the SASL libraries now care if you pass in the wrong
+	length).
+
+	* Correct various places in smtp.c where the reply string
+	might not have been correctly NUL-terminated. Includes a
+	fix for a particularly nasty and long standing screwup
+	where the buffer length counting in smhear() was totally
+	broken for continued lines from the server.
+
 2008-04-29  Peter Maydell  <pmaydell@chiark.greenend.org.uk>
 
 	* Port fix from trunk for SASL not working with newer libsasl.
