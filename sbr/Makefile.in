@@ -101,16 +101,18 @@ sigmsg.h: sigmsg.awk
 lint: sigmsg.h
 	$(LINT) $(LINTFLAGS) $(INCLUDES) $(DEFS) $(SRCS)
 
-# Note that some lexes (for example flex 2.5.4) require that there
-# be no space between -o and the output filename.
+# Note that not all lexes support -o (it is not POSIX); also
+# some lexes will only accept '-n -t', not '-nt'.
+# Also, not all makes accept $< in non-pattern rules,
+# hence the explicit filenames here.
 dtimep.c: dtimep.lex
-	$(LEX) -o$@ $<
+	$(LEX) -n -t $(srcdir)/dtimep.lex > dtimep.c
 
 client.o: client.c
-	$(COMPILE2) $<
+	$(COMPILE2) $(srcdir)/client.c
 
 mts.o: mts.c
-	$(COMPILE2) $<
+	$(COMPILE2) $(srcdir)/mts.c
 
 pidstatus.o: sigmsg.h
 

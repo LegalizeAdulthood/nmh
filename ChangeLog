@@ -1,3 +1,9 @@
+2008-05-20  Peter Maydell  <pmaydell@chiark.greenend.org.uk>
+
+	* sbr/Makefile.in, config/Makefile.in: Don't use $<
+	in target rules in makefiles, as POSIX says it's only
+	defined in inference rules. (Ported from trunk.)
+
 2008-05-04  Peter Maydell  <pmaydell@chiark.greenend.org.uk>
 
 	* Released nmh-1.3 RC2.
