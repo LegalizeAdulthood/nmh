@@ -1,3 +1,9 @@
+2008-05-21  Peter Maydell  <pmaydell@chiark.greenend.org.uk>
+
+	* sbr/dtimep.lex: add some table size declarations for the
+	benefit of elderly lexes with small defaults. (Ported from
+	trunk.)
+
 2008-05-21  David Levine <levinedl@acm.org>
 
 	* configure.in, INSTALL: if --enable-masquerade is not
