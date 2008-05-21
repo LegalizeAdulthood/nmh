@@ -1,3 +1,13 @@
+2008-05-21  David Levine <levinedl@acm.org>
+
+	* configure.in, INSTALL: if --enable-masquerade is not
+	specified to configure, enable all supported masquerade forms.
+	This allows users to masquerade with the default
+	configuration.	That seems to be more worthwhile now than
+	trying to prevent users from using it, especially with
+	single-user installations or those where a user can edit
+	etc/mts.conf.  (Ported from trunk.)
+
 2008-05-20  Peter Maydell  <pmaydell@chiark.greenend.org.uk>
 
 	* sbr/Makefile.in, config/Makefile.in: Don't use $<
