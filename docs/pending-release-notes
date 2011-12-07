@@ -1,6 +1,8 @@
 Things to add to the release notes for the next full release:
 
 - SASL security layers (encryption) are now supported for the SMTP MTA.
+- TLS is now supported for the SMTP MTA.
+- inc can now incorporate mail from Maildir drops.
 - You can now select the SMTP server and port from either "send" or a
   user's mh_profile (you could always select the server; that option is
   now documented).  These are available via the -server and -port switches.
