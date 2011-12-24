@@ -1,0 +1,157 @@
+#
+# Makefile for sbr subdirectory
+#
+
+SHELL = /bin/sh
+
+top_srcdir = ..
+srcdir     = .
+
+
+prefix      = /usr/local/nmh
+exec_prefix = ${prefix}
+bindir      = ${exec_prefix}/bin
+libdir      = ${exec_prefix}/lib
+etcdir      = ${prefix}/etc
+
+CC       = gcc
+CFLAGS   = -Wall -Wno-pointer-sign -O2
+DEFS     = -DHAVE_CONFIG_H
+CONFIGDEFS = -DNMHETCDIR='"$(etcdir)"' -DMAILSPOOL='"$(mailspool)"' -DSENDMAILPATH='"$(sendmailpath)"'
+INCLUDES = -I.. -I. -I$(top_srcdir) 
+
+LEX    = flex
+AWK    = awk
+LORDER = lorder
+TSORT  = tsort
+RANLIB = ranlib
+LIBTOOL = libtool
+GNU_LIBTOOL = 
+LINT	= echo 'No lint program found'
+LINTFLAGS =  
+
+LIBOBJS = 
+
+mailspool    = /var/mail
+sendmailpath = /usr/sbin/sendmail
+
+COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS)
+COMPILE2 = $(CC) -c $(DEFS) $(CONFIGDEFS) $(INCLUDES) $(CFLAGS)
+
+
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+.c.o:
+	$(COMPILE) $<
+
+# this header file is parsed to generate signal messages (sigmsg.h)
+SIGNAL_H = /usr/include/sys/signal.h
+
+# source for library functions
+SRCS = addrsbr.c ambigsw.c atooi.c brkstring.c			\
+	check_charset.c client.c closefds.c concat.c context_del.c	\
+	context_find.c context_foil.c context_read.c			\
+	context_replace.c context_save.c copy.c				\
+	copyip.c cpydata.c cpydgst.c crawl_folders.c			\
+	discard.c done.c dtime.c dtimep.c				\
+	error.c	ext_hook.c fdcompare.c folder_addmsg.c folder_delmsgs.c	\
+	folder_free.c folder_pack.c folder_read.c			\
+	folder_realloc.c gans.c	getans.c getanswer.c			\
+	getarguments.c getcpy.c getfolder.c getpass.c			\
+	fmt_addr.c fmt_compile.c fmt_new.c fmt_rfc2047.c		\
+	fmt_scan.c lock_file.c m_atoi.c m_backup.c			\
+	m_convert.c m_draft.c m_getfld.c m_gmprot.c			\
+	m_maildir.c m_name.c m_scratch.c m_tmpfil.c			\
+	makedir.c mts.c norm_charmap.c                                  \
+	path.c peekc.c pidwait.c pidstatus.c		                \
+	print_help.c print_sw.c print_version.c push.c			\
+	putenv.c refile.c	remdir.c r1bindex.c			\
+	readconfig.c ruserpass.c seq_add.c seq_bits.c			\
+	seq_del.c seq_getnum.c seq_list.c seq_nameok.c			\
+	seq_print.c seq_read.c seq_save.c seq_setcur.c			\
+	seq_setprev.c seq_setunseen.c showfile.c signals.c		\
+	smatch.c snprintb.c ssequal.c strcasecmp.c			\
+	strindex.c trimcpy.c uprf.c vfgets.c fmt_def.c			\
+	m_msgdef.c mf.c utils.c m_mktemp.c
+
+# source for compatibility functions
+COMPAT = memmove.c snprintf.c strdup.c strerror.c
+
+OBJS =	$(SRCS:.c=.o) $(LIBOBJS)
+
+# auxiliary files
+AUX = Makefile.in sigmsg.awk dtimep.lex
+
+# all files in this directory included in the distribution
+DIST = $(SRCS) $(COMPAT) $(AUX)
+
+# ========= DEPENDENCIES FOR BUILDING ==========
+
+# default target
+all: libmh.a
+
+sigmsg.h: sigmsg.awk
+	$(AWK) -f $(srcdir)/sigmsg.awk $(SIGNAL_H) > $@
+
+lint: sigmsg.h
+	$(LINT) $(LINTFLAGS) $(INCLUDES) $(DEFS) $(SRCS)
+
+# Note that not all lexes support -o (it is not POSIX); also
+# some lexes will only accept '-n -t', not '-nt'.
+# Also, not all makes accept $< in non-pattern rules,
+# hence the explicit filenames here.
+dtimep.c: dtimep.lex
+	$(LEX) -n -t $(srcdir)/dtimep.lex > dtimep.c
+
+client.o: client.c
+	$(COMPILE2) $(srcdir)/client.c
+
+mts.o: mts.c
+	$(COMPILE2) $(srcdir)/mts.c
+
+pidstatus.o: sigmsg.h
+
+libmh.a: $(OBJS)
+	rm -f $@
+	if test x$(LIBTOOL) != x -a x$(GNU_LIBTOOL) = x ; then \
+	  $(LIBTOOL) -static -c -o libmh.a $(OBJS) ; \
+	else \
+	  ar cr libmh.a `$(LORDER) $(OBJS) | $(TSORT) 2>/dev/null`  ; \
+	  $(RANLIB) libmh.a  ; \
+	fi
+
+install:
+
+uninstall:
+
+# ========== DEPENDENCIES FOR CLEANUP ==========
+
+mostlyclean:
+	rm -f *.o *~
+
+clean: mostlyclean
+	rm -f libmh.a sigmsg.h dtimep.c
+
+distclean: clean
+	#rm -f Makefile
+
+realclean: distclean
+
+superclean: realclean
+
+# ========== DEPENDENCIES FOR MAINTENANCE ==========
+
+subdir = sbr
+
+Makefile: Makefile.in ../config.status
+	cd .. && ./config.status $(subdir)/$@
+ 
+distdir = ../`cat ../distname`/$(subdir)
+nmhdist: $(DIST)
+	@echo "Copying distribution files in $(subdir)"
+	@for file in $(DIST); do \
+	  cp -p $(srcdir)/$$file $(distdir); \
+	done
+
