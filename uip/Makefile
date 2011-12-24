@@ -327,9 +327,6 @@ lint:
 
 subdir = uip
 
-Makefile: Makefile.in ../config.status
-	cd .. && ./config.status $(subdir)/$@
-
 distdir = ../`cat ../distname`/$(subdir)
 nmhdist: $(DIST)
 	@echo "Copying distribution files in $(subdir)"

@@ -74,9 +74,7 @@ INSTALL_DATA    = ${INSTALL} -m 644
 
 # all files in this directory included in the distribution
 DIST = ChangeLog COPYRIGHT DATE INSTALL MACHINES README VERSION		\
-	ChangeLog install-sh mkinstalldirs Makefile.in aclocal.m4	\
-	acconfig.h config.h.in configure.in configure stamp-h.in	\
-	config.sub config.guess
+	ChangeLog install-sh mkinstalldirs
 
 # subdirectories in distribution
 SUBDIRS = h config sbr mts uip etc man docs
@@ -87,7 +85,8 @@ SUBDIRS = h config sbr mts uip etc man docs
 all: config.h Makefile all-recursive
 
 all-recursive:
-	for subdir in $(SUBDIRS); do \
+	@for subdir in $(SUBDIRS); do \
+	  echo "--> $$subdir"; \
 	  (cd $$subdir && $(MAKE) $(MAKEDEFS) all) || exit 1; \
 	done
 
@@ -138,29 +137,6 @@ lint:
 
 # ========== DEPENDENCIES FOR MAINTENANCE ==========
 
-Makefile: Makefile.in config.status
-	./config.status $@
-
-config.status: configure VERSION
-	./config.status --recheck
-
-configure: configure.in aclocal.m4
-	cd $(srcdir) && autoconf
-
-config.h: stamp-h
-stamp-h: config.h.in config.status
-	./config.status config.h stamp
-
-config.h.in: stamp-h.in
-stamp-h.in: configure.in acconfig.h aclocal.m4
-	cd $(srcdir) && autoheader
-	date > $@
-
-# rebuild all autoconf files
-reset:
-	cd $(srcdir) && autoheader
-	cd $(srcdir) && autoconf
-	cd $(srcdir) && date > stamp-h.in
 
 # name of new nmh distribution tar file
 tarfile = nmh-$(VERSION).tar.gz

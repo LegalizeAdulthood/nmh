@@ -66,9 +66,6 @@ superclean: realclean
 
 subdir = docs
 
-Makefile: Makefile.in ../config.status
-	cd .. && ./config.status $(subdir)/$@
-
 distdir = ../`cat ../distname`/$(subdir)
 nmhdist:
 	@echo "Copying distribution files in $(subdir)"
