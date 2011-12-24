@@ -16,7 +16,6 @@ etcdir      = ${prefix}/etc
 
 CC       = gcc
 CFLAGS   = -Wall -Wno-pointer-sign -O2
-DEFS     = -DHAVE_CONFIG_H
 CONFIGDEFS = -DNMHETCDIR='"$(etcdir)"' -DMAILSPOOL='"$(mailspool)"' -DSENDMAILPATH='"$(sendmailpath)"'
 INCLUDES = -I.. -I. -I$(top_srcdir) 
 

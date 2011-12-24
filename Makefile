@@ -51,7 +51,6 @@ default_pager = /usr/bin/more
 
 CC       = gcc
 CPPFLAGS = 
-DEFS     = -DHAVE_CONFIG_H 
 CFLAGS   = -Wall -Wno-pointer-sign -O2
 LDFLAGS  = 
 LIBS     = -liconv 

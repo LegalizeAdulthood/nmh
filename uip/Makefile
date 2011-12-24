@@ -16,7 +16,6 @@ etcdir      = ${prefix}/etc
 
 CC       = gcc
 CFLAGS   = -Wall -Wno-pointer-sign -O2
-DEFS     = -DHAVE_CONFIG_H
 INCLUDES = -I.. -I$(srcdir) -I$(top_srcdir) 
 LDFLAGS  = 
 

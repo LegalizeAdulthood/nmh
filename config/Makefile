@@ -22,7 +22,6 @@ default_pager  = /usr/bin/more
 
 CC         = gcc
 CFLAGS     = -Wall -Wno-pointer-sign -O2
-DEFS       = -DHAVE_CONFIG_H
 INCLUDES   = -I.. -I$(top_srcdir) 
 CONFIGDEFS = -DNMHBINDIR='"$(bindir)"' -DNMHETCDIR='"$(etcdir)"' -DNMHLIBDIR='"$(libdir)"' \
              -DDEFAULT_EDITOR='"$(default_editor)"' -DDEFAULT_PAGER='"$(default_pager)"'
