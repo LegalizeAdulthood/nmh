@@ -142,9 +142,6 @@
 /* Define to 1 if `TIOCGWINSZ' requires <sys/ioctl.h>. */
 /* #undef GWINSZ_IN_SYS_IOCTL */
 
-/* Define to 1 if you have the <arpa/ftp.h> header file. */
-#define HAVE_ARPA_FTP_H 1
-
 /* Define to 1 if you have the <crypt.h> header file. */
 /* #undef HAVE_CRYPT_H */
 
