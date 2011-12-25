@@ -182,9 +182,6 @@
 /* Define to 1 if you have the `mbtowc' function. */
 #define HAVE_MBTOWC 1
 
-/* Define to 1 if you have the `mkstemp' function. */
-#define HAVE_MKSTEMP 1
-
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 /* #undef HAVE_NDIR_H */
 
@@ -227,29 +224,17 @@
 /* Define to 1 if you have the <sys/utsname.h> header file. */
 #define HAVE_SYS_UTSNAME_H 1
 
-/* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
-#define HAVE_SYS_WAIT_H 1
-
 /* Define to 1 if you have the <termcap.h> header file. */
 #define HAVE_TERMCAP_H 1
 
 /* Define to 1 if you have the `tzset' function. */
 #define HAVE_TZSET 1
 
-/* Define to 1 if you have the \`union wait' type in <sys/wait.h>. */
-/* #undef HAVE_UNION_WAIT */
-
 /* Define to 1 if you have the `vfork' function. */
 #define HAVE_VFORK 1
 
 /* Define to 1 if you have the <vfork.h> header file. */
 /* #undef HAVE_VFORK_H */
-
-/* Define to 1 if you have the `wait3' function. */
-#define HAVE_WAIT3 1
-
-/* Define to 1 if you have the `waitpid' function. */
-#define HAVE_WAITPID 1
 
 /* Define to 1 if you have the <wchar.h> header file. */
 #define HAVE_WCHAR_H 1
