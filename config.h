@@ -182,9 +182,6 @@
 /* Define to 1 if you have the `mbtowc' function. */
 #define HAVE_MBTOWC 1
 
-/* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
-/* #undef HAVE_NDIR_H */
-
 /* Define to 1 if you have the `nl_langinfo' function. */
 #define HAVE_NL_LANGINFO 1
 
@@ -203,14 +200,6 @@
 
 /* Define to 1 if `ut_type' is member of `struct utmp'. */
 /* #undef HAVE_STRUCT_UTMP_UT_TYPE */
-
-/* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
-   */
-/* #undef HAVE_SYS_DIR_H */
-
-/* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
-   */
-/* #undef HAVE_SYS_NDIR_H */
 
 /* Define to 1 if you have the <sys/param.h> header file. */
 #define HAVE_SYS_PARAM_H 1
