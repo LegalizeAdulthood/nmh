@@ -74,16 +74,13 @@ SRCS = addrsbr.c ambigsw.c atooi.c brkstring.c			\
 	strindex.c trimcpy.c uprf.c vfgets.c fmt_def.c			\
 	m_msgdef.c mf.c utils.c m_mktemp.c
 
-# source for compatibility functions
-COMPAT = memmove.c snprintf.c strdup.c strerror.c
-
 OBJS =	$(SRCS:.c=.o) $(LIBOBJS)
 
 # auxiliary files
 AUX = Makefile.in sigmsg.awk dtimep.lex
 
 # all files in this directory included in the distribution
-DIST = $(SRCS) $(COMPAT) $(AUX)
+DIST = $(SRCS) $(AUX)
 
 # ========= DEPENDENCIES FOR BUILDING ==========
 
