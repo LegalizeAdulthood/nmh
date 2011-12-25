@@ -19,7 +19,6 @@ CFLAGS   = -Wall -Wno-pointer-sign -O2
 CONFIGDEFS = -DNMHETCDIR='"$(etcdir)"' -DMAILSPOOL='"$(mailspool)"' -DSENDMAILPATH='"$(sendmailpath)"'
 INCLUDES = -I.. -I. -I$(top_srcdir) 
 
-LEX    = flex
 AWK    = awk
 LORDER = lorder
 TSORT  = tsort
