@@ -1,3 +1,4 @@
+.POSIX:
 #
 # Makefile for man subdirectory
 #

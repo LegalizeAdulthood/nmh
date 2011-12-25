@@ -1,3 +1,4 @@
+.POSIX:
 #
 # Makefile for config subdirectory
 #
@@ -20,7 +21,6 @@ etcdir      = ${prefix}/etc
 default_editor = /usr/bin/vi
 default_pager  = /usr/bin/more
 
-CC         = gcc
 CFLAGS     = -Wall -Wno-pointer-sign -O2
 INCLUDES   = -I.. -I$(top_srcdir) 
 CONFIGDEFS = -DNMHBINDIR='"$(bindir)"' -DNMHETCDIR='"$(etcdir)"' -DNMHLIBDIR='"$(libdir)"' \
