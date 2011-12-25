@@ -102,26 +102,10 @@ WINDOW *windows[NWIN + 1];
 WINDOW *WINnew ();
 
 
-#ifdef HAVE_TERMIOS_H
 static struct termios tio;
-# define ERASE tio.c_cc[VERASE]
-# define KILL  tio.c_cc[VKILL]
-# define INTR  tio.c_cc[VINTR]
-#else
-# ifdef HAVE_TERMIO_H
-static struct termio tio;
-#  define ERASE tio.c_cc[VERASE]
-#  define KILL  tio.c_cc[VKILL]
-#  define INTR  tio.c_cc[VINTR]
-# else
-static struct sgttyb tio;
-static struct tchars tc;
-#  define ERASE tio.sg_erase
-#  define KILL  tio.sg_kill
-#  define INTR  tc.t_intrc
-#  define EOFC  tc.t_eofc
-# endif
-#endif
+#define ERASE tio.c_cc[VERASE]
+#define KILL  tio.c_cc[VKILL]
+#define INTR  tio.c_cc[VINTR]
 
 #define	WERASC ltc.t_werasc
 static struct ltchars ltc;
