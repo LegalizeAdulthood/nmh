@@ -260,12 +260,6 @@
 /* Define to 1 if you have the `wcwidth' function. */
 #define HAVE_WCWIDTH 1
 
-/* Define to 1 if `fork' works. */
-#define HAVE_WORKING_FORK 1
-
-/* Define to 1 if `vfork' works. */
-#define HAVE_WORKING_VFORK 1
-
 /* Define to 1 if you have the `writev' function. */
 #define HAVE_WRITEV 1
 
