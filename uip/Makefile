@@ -1,3 +1,4 @@
+.POSIX:
 #
 # Makefile for uip subdirectory
 #
@@ -14,7 +15,6 @@ bindir      = ${exec_prefix}/bin
 libdir      = ${exec_prefix}/lib
 etcdir      = ${prefix}/etc
 
-CC       = gcc
 CFLAGS   = -Wall -Wno-pointer-sign -O2
 INCLUDES = -I.. -I$(srcdir) -I$(top_srcdir) 
 LDFLAGS  = 

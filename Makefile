@@ -49,7 +49,6 @@ default_editor = /usr/bin/vi
 # default pager
 default_pager = /usr/bin/more
 
-CC       = gcc
 CPPFLAGS = 
 CFLAGS   = -Wall -Wno-pointer-sign -O2
 LDFLAGS  = 
