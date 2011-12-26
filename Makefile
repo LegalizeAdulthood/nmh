@@ -49,7 +49,7 @@ default_editor = /usr/bin/vi
 # default pager
 default_pager = /usr/bin/more
 
-CPPFLAGS = -D_POSIX_SOURCE -D_POSIX_C_SOURCE
+CPPFLAGS = -D_POSIX_C_SOURCE=200112L
 CFLAGS   = -Wall -Wno-pointer-sign -O2
 LDFLAGS  = 
 LIBS     = -liconv 
