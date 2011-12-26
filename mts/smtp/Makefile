@@ -20,7 +20,7 @@ INCLUDES = -I../.. -I$(srcdir) -I$(top_srcdir)
 LINT	= echo 'No lint program found'
 LINTFLAGS = 
 
-COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS)
+COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS) $(CPPFLAGS)
 
 .SUFFIXES:
 .SUFFIXES: .c .o

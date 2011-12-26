@@ -33,8 +33,8 @@ LIBOBJS =
 mailspool    = /var/mail
 sendmailpath = /usr/sbin/sendmail
 
-COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS)
-COMPILE2 = $(CC) -c $(DEFS) $(CONFIGDEFS) $(INCLUDES) $(CFLAGS)
+COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS) $(CPPFLAGS)
+COMPILE2 = $(CC) -c $(DEFS) $(CONFIGDEFS) $(INCLUDES) $(CFLAGS) $(CPPFLAGS)
 
 
 

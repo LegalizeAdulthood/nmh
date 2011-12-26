@@ -32,7 +32,7 @@ TERMLIB = -ltermcap
 LEXLIB  = -lfl
 POPLIB  = 
 
-COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS)
+COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CFLAGS) $(CPPFLAGS)
 LINK    = $(CC) $(LDFLAGS) -o $@
 LN = ln
 
