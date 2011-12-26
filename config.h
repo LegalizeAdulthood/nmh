@@ -305,9 +305,6 @@
 /* Define if you want SMTP (simple mail transport protocol) support. */
 #define SMTPMTS 1
 
-/* Define to 1 if the `S_IS*' macros in <sys/stat.h> do not work properly. */
-/* #undef STAT_MACROS_BROKEN */
-
 /* Defined for Solaris 2.x, Irix, OSF/1, HP-UX, AIX; only used in vmh.c which
    is not built. */
 /* #undef SVR4 */
