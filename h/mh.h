@@ -27,6 +27,17 @@
 #endif
 typedef unsigned char  boolean;  /* not int so we can pack in a structure */
 
+#ifdef _POSIX_C_SOURCE
+/*
+ * Some useful constants that aren't present in a strict POSIX environment.
+ */
+
+/* gettaddrinfo() and friends; usually in <netdb.h> */
+# define NI_MAXHOST 1025
+# define NI_MAXSERV 32
+
+#endif /* _POSIX_C_SOURCE */
+
 /* If we're using gcc then give it some information about
  * functions that abort.
  */
