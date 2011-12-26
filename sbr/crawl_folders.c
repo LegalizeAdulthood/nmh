@@ -72,25 +72,11 @@ add_children (char *name, struct crawl_context *crawl)
     }
 
     while ((dp = readdir (dd))) {
-	/* If the system supports it, try to skip processing of children we
-	 * know are not directories or symlinks. */
-	child_is_folder = -1;
-#if defined(HAVE_STRUCT_DIRENT_D_TYPE)
-	if (dp->d_type == DT_DIR) {
-	    child_is_folder = 1;
-	} else if (dp->d_type != DT_LNK && dp->d_type != DT_UNKNOWN) {
-	    continue;
-	}
-#endif
 	if (!strcmp (dp->d_name, ".") || !strcmp (dp->d_name, "..")) {
 	    continue;
 	}
 	child = concat (prefix, dp->d_name, (void *)NULL);
-	/* If we have no d_type or d_type is DT_LNK or DT_UNKNOWN, stat the
-	 * child to see what it is. */
-	if (child_is_folder == -1) {
-	    child_is_folder = (stat (child, &st) != -1 && S_ISDIR(st.st_mode));
-	}
+	child_is_folder = (stat (child, &st) != -1 && S_ISDIR(st.st_mode));
 	if (child_is_folder) {
 	    /* add_folder saves child in the list, don't free it */
 	    add_folder (child, crawl);
