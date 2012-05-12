@@ -160,7 +160,7 @@ if install-mh -check >/dev/null 2>&1; then
   mtsconf=`dirname "$mhbin"`/etc/mts.conf
   if [ -f "$mtsconf" ]; then
     mts_entry=`grep '^mts:' $mtsconf`
-    if [ "mts_entry" ]; then
+    if [ "$mts_entry" ]; then
       mts=`echo $mts_entry | sed -e 's/^mts: *//'`
       if [ "$mts"  -a  "$mts" != smtp ]; then
         config_mts="$mts"
@@ -207,9 +207,7 @@ if [ $yes -eq 0 ]; then
   read mts
   [ "$mts" ]  &&  config_mts="$mts"
 
-  if [ "$mts"  -o  "$mts" = smtp ]; then
-    :
-  else
+  if [ "$config_mts" = smtp ]; then
     printf 'SMTP server(s), space separated [%s]: ' $config_smtpservers
     read response
     servers=`echo $response | sed -e 's/ /\\\ /g'`
@@ -330,7 +328,10 @@ fi
 
 grep 'Error' $logfile
 grep 'warn' $logfile
-[ $status -ne 0 ]  &&  echo build failed!
+if [ $status -ne 0 ]; then
+  echo build failed!
+  echo build log is in $logfile
+fi
 [ $status -eq 0  -a  $verbose -ge 1 ]  &&  echo build completed successfully
 
 exit $status
