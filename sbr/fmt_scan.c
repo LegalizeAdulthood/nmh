@@ -219,7 +219,7 @@ cpstripped (char **start, char *end, char *str)
     /* skip any initial control characters or spaces */
     while ((c = (unsigned char) *s) &&
 #ifdef LOCALE
-	    (iscntrl(c) || isspace(c)))
+	    (isascii(c) && (iscntrl(c) || isspace(c))))
 #else
 	    (c <= 32))
 #endif
@@ -227,12 +227,12 @@ cpstripped (char **start, char *end, char *str)
 
     /* compact repeated control characters and spaces into a single space */
     while((c = (unsigned char) *s++) && *start < end)
-	if (!iscntrl(c) && !isspace(c))
+	if (!isascii(c) || (!iscntrl(c) && !isspace(c)))
 	    *(*start)++ = c;
 	else {
 	    while ((c = (unsigned char) *s) &&
 #ifdef LOCALE
-		    (iscntrl(c) || isspace(c)))
+		    (isascii(c) && (iscntrl(c) || isspace(c))))
 #else
 		    (c <= 32))
 #endif
