@@ -1,4 +1,4 @@
-.TH NMH %manext7% "March 13, 2014" "%nmhversion%"
+.TH NMH %manext7% "April 21, 2014" "%nmhversion%"
 .\"
 .\" %nmhwarning%
 .\"
@@ -451,6 +451,9 @@ nmh shell
 Utilities
 .TP \n(ttu
 .PD 0
+.IR mhfixmsg (1)
+rewrite MIME messages with various transformations
+.TP
 .IR mhparam (1)
 print nmh profile components
 .TP
