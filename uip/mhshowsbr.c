@@ -263,8 +263,15 @@ show_switch (CT ct, int alternate, int concatsw, int textonly, int inlineonly,
 					  inlineonly, fmt);
 
 		case MESSAGE_RFC822:
-		default:
 		    return show_message_rfc822 (ct, alternate);
+
+		/*
+		 * Treat unknown message types as equivalent to
+		 * application/octet-stream for now
+		 */
+		default:
+		    return show_content (ct, alternate, textonly,
+					 inlineonly, fmt);
 	    }
 
 	case CT_TEXT:
