@@ -14,7 +14,8 @@ ACLOCAL_AMFLAGS = -I m4
 ## LDADD is included in the program-specific LDADD since we want to add
 ## to this list of libraries, not replace it.
 ##
-LDADD = sbr/libmh.a
+LDADD = sbr/libmh.a -L @abs_builddir@/lib/lua/src -llua
+SUBDIRS = lib/lua/src
 
 ##
 ## These are used to create the default mhn.defaults config file
@@ -595,7 +596,7 @@ sbr_libmh_a_SOURCES = sbr/addrsbr.c sbr/ambigsw.c sbr/atooi.c sbr/arglist.c \
 
 config/sbr_libmh_a-config.$(OBJEXT) sbr/sbr_libmh_a-mts.$(OBJEXT): Makefile
 
-sbr_libmh_a_CPPFLAGS = -I./sbr -DNMHETCDIR='"$(sysconfdir)"' \
+sbr_libmh_a_CPPFLAGS = -I ./sbr -I lib/lua/src -DNMHETCDIR='"$(sysconfdir)"' \
 		-DMAILSPOOL='"$(mailspool)"' \
 		-DSENDMAILPATH='"$(sendmailpath)"' -DNMHBINDIR='"$(bindir)"' \
 		-DNMHLIBDIR='"$(libdir)"'
