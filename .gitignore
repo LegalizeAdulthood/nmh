@@ -47,6 +47,9 @@ a.out.dSYM/
 /etc/gen-ctype-checked.exe
 /etc/mhn.defaults
 /etc/mts.conf
+/lib/lua/src/liblua.a
+/lib/lua/src/lua
+/lib/lua/src/luac
 /man/*.[1578]
 /man/man.sed
 /man/mh-chart.man
