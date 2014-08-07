@@ -84,6 +84,8 @@ echo:
 # Convenience targets for popular platforms
 ALL= all
 
+check: 
+
 none:
 	@echo "Please do 'make PLATFORM' where PLATFORM is one of these:"
 	@echo "   $(PLATS)"
@@ -121,7 +123,7 @@ solaris:
 	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_POSIX -DLUA_USE_DLOPEN" SYSLIBS="-ldl"
 
 # list targets that do not create files (but not all makes understand .PHONY)
-.PHONY: all $(PLATS) default o a clean depend echo none
+.PHONY: all $(PLATS) default o a clean depend echo none check
 
 # DO NOT DELETE
 
