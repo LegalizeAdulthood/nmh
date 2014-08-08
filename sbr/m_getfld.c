@@ -41,11 +41,8 @@
    state to FLD.
 
    void m_unknown(FILE *iob):  Determines the message delimiter string
-   for the maildrop.  Called by inc, scan, and msh when reading from a
+   for the maildrop.  Called by inc and scan when reading from a
    maildrop file.
-
-   void m_eomsbr (int (*action)(int)):  Sets the hook to check for end
-   of message in a maildrop.  Called only by msh.
 
    State variables
    ===============
@@ -61,7 +58,6 @@
      int edelimlen
      char *msg_delim
      int msg_style
-     int (*eom_action)(int)
 
    Usage
    =====
@@ -207,12 +203,11 @@
  * static prototypes
  */
 struct m_getfld_state;
-static int m_Eom (m_getfld_state_t, int);
+static int m_Eom (m_getfld_state_t);
 static char *matchc(int, char *, int, char *);
 
 #define eom(c,s)	(s->msg_style != MS_DEFAULT && \
-			 (((c) == *s->msg_delim && m_Eom(s,c)) || \
-			  (s->eom_action && (*s->eom_action)(c))))
+			 ((c) == *s->msg_delim && m_Eom(s)))
 
 /* This replaces the old approach, with its direct access to stdio
  * internals.  It uses one fread() to load a buffer that we manage.
@@ -264,7 +259,6 @@ struct m_getfld_state {
     int fdelimlen;
     char *edelim;
     int edelimlen;
-    int (*eom_action)(int);
     int state;
     int track_filepos;
 };
@@ -284,7 +278,6 @@ m_getfld_state_init (m_getfld_state_t *gstate, FILE *iob) {
     s->msg_delim = "";
     s->fdelim = s->delimend = s->edelim = NULL;
     s->fdelimlen = s->edelimlen = 0;
-    s->eom_action = NULL;
     s->state = FLD;
     s->track_filepos = 0;
 }
@@ -504,14 +497,12 @@ m_getfld (m_getfld_state_t *gstate, char name[NAMESZ], char *buf, int *bufsz,
 	return s->state = FILEEOF;
     }
     if (eom (c, s)) {
-	if (! s->eom_action) {
-	    /* flush null messages */
-	    while ((c = Getc(s)) >= 0 && eom (c, s))
-		;
+	/* flush null messages */
+	while ((c = Getc(s)) >= 0 && eom (c, s))
+	    ;
 
-	    if (c >= 0)
-		Ungetc(c, s);
-	}
+	if (c >= 0)
+	    Ungetc(c, s);
 	*bufsz = *buf = 0;
 	leave_getfld (s);
 	return s->state = FILEEOF;
@@ -524,13 +515,11 @@ m_getfld (m_getfld_state_t *gstate, char name[NAMESZ], char *buf, int *bufsz,
 		while (c != '\n' && (c = Getc(s)) >= 0) continue;
 
 		if (c < 0 || (c = Getc(s)) < 0 || eom (c, s)) {
-		    if (! s->eom_action) {
-			/* flush null messages */
-			while ((c = Getc(s)) >= 0 && eom (c, s))
-			    ;
-			if (c >= 0)
-			    Ungetc(c, s);
-		    }
+		    /* flush null messages */
+		    while ((c = Getc(s)) >= 0 && eom (c, s))
+			;
+		    if (c >= 0)
+			Ungetc(c, s);
 		    *bufsz = *buf = 0;
 		    leave_getfld (s);
 		    return s->state = FILEEOF;
@@ -799,8 +788,11 @@ m_unknown(m_getfld_state_t *gstate, FILE *iob)
     s->msg_style = MS_UNKNOWN;
 
     for (i = 0, cp = text; i < sizeof text; ++i, ++cp) {
-	if ((signed char) (*cp = Getc (s)) == EOF) {
+	if ((c = Getc (s)) == EOF) {
+	    *cp = '\0';
 	    break;
+	} else {
+	    *cp = c;
 	}
     }
 
@@ -850,37 +842,25 @@ m_unknown(m_getfld_state_t *gstate, FILE *iob)
 }
 
 
-void
-m_eomsbr (m_getfld_state_t s, int (*action)(int))
-{
-    if ((s->eom_action = action)) {
-	s->msg_style = MS_MSH;
-	*s->msg_delim = 0;
-	s->fdelimlen = 1;
-	s->delimend = s->fdelim;
-    } else {
-	s->msg_style = MS_MMDF;
-	s->msg_delim = s->fdelim + 1;
-	s->fdelimlen = strlen (s->fdelim);
-	s->delimend = s->msg_delim + s->edelimlen;
-    }
-}
-
-
 /*
  * test for msg delimiter string
  */
 
 static int
-m_Eom (m_getfld_state_t s, int c)
+m_Eom (m_getfld_state_t s)
 {
     register int i;
     char text[MAX_DELIMITER_SIZE];
     char *cp;
 
     for (i = 0, cp = text; i < s->edelimlen; ++i, ++cp) {
-	if ((signed char) (*cp = Getc (s)) == EOF) {
+	int c2;
+
+	if ((c2 = Getc (s)) == EOF) {
+	    *cp = '\0';
 	    break;
+	} else {
+	    *cp = c2;
 	}
     }
 
@@ -901,6 +881,7 @@ m_Eom (m_getfld_state_t s, int c)
     }
 
     if (s->msg_style == MS_MBOX) {
+	int c;
 	while ((c = Getc (s)) != '\n')
 	    if (c < 0)
 		break;
