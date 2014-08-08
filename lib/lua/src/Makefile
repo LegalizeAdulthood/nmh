@@ -51,6 +51,8 @@ default: $(PLAT)
 
 all:	$(ALL_T)
 
+install:
+
 o:	$(ALL_O)
 
 a:	$(ALL_A)
