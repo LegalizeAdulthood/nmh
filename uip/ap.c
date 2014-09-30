@@ -15,7 +15,6 @@
 #define	NADDRS	100
 
 #define	WIDTH	78
-#define	WBUFSIZ	BUFSIZ
 
 #define	FORMAT	"%<{error}%{error}: %{text}%|%(putstr(proper{text}))%>"
 
@@ -48,7 +47,7 @@ int
 main (int argc, char **argv)
 {
     int addrp = 0;
-    int width = 0, status = 0;
+    int width = -1, status = 0;
     char *cp, *form = NULL, *format = NULL, *nfs;
     char buf[BUFSIZ], **argp;
     char **arguments, *addrs[NADDRS];
@@ -109,13 +108,16 @@ main (int argc, char **argv)
     /* get new format string */
     nfs = new_fs (form, format, FORMAT);
 
-    if (width == 0) {
-	if ((width = sc_width ()) < WIDTH / 2)
+    if (width == -1) {
+	if ((width = sc_width ()) < WIDTH / 2) {
+	    /* Default:  width of the terminal, but at least WIDTH/2. */
 	    width = WIDTH / 2;
+	} else if (width == 0) {
+	    /* Unlimited width. */
+	    width = INT_MAX;
+	}
 	width -= 2;
     }
-    if (width > WBUFSIZ)
-	width = WBUFSIZ;
     fmt_compile (nfs, &fmt, 1);
 
     dat[0] = 0;
@@ -144,7 +146,7 @@ process (char *arg, int length)
 {
     int	status = 0;
     register char *cp;
-    char buffer[WBUFSIZ + 1], error[BUFSIZ];
+    char error[BUFSIZ];
     register struct comp *cptr;
     register struct pqpair *p, *q;
     struct pqpair pq;
@@ -167,6 +169,8 @@ process (char *arg, int length)
     }
 
     for (p = pq.pq_next; p; p = q) {
+	charstring_t scanl = charstring_create (length);
+
 	cptr = fmt_findcomp ("text");
 	if (cptr) {
 	    if (cptr->c_text)
@@ -182,8 +186,9 @@ process (char *arg, int length)
 	    p->pq_error = NULL;
 	}
 
-	fmt_scan (fmt, buffer, sizeof buffer - 1, length, dat, NULL);
-	fputs (buffer, stdout);
+	fmt_scan (fmt, scanl, length, dat, NULL);
+	fputs (charstring_buffer (scanl), stdout);
+	charstring_free (scanl);
 
 	if (p->pq_text)
 	    free (p->pq_text);

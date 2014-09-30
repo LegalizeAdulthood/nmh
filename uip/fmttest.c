@@ -29,7 +29,6 @@
     X("ccme", 0, CCMESW) \
     X("noccme", 0, NCCMESW) \
     X("outsize size-in-characters", 0, OUTSIZESW) \
-    X("bufsize size-in-bytes", 0, BUFSZSW) \
     X("width column-width", 0, WIDTHSW) \
     X("msgnum number", 0, MSGNUMSW) \
     X("msgcur flag", 0, MSGCURSW) \
@@ -83,19 +82,20 @@ static void assignlabel(struct format *);
 static char *f_typestr(int);
 static char *c_typestr(int);
 static char *c_flagsstr(int);
-static void litputs(char *);
+static void litputs(const char *);
 static void litputc(char);
-static void process_addresses(struct format *, struct msgs_array *, char *,
-			      int, int, int *, struct fmt_callbacks *);
-static void process_raw(struct format *, struct msgs_array *, char *,
-			int, int, int *, struct fmt_callbacks *);
+static void process_addresses(struct format *, struct msgs_array *,
+			      charstring_t, int, int *,
+			      struct fmt_callbacks *);
+static void process_raw(struct format *, struct msgs_array *, charstring_t,
+			int, int *, struct fmt_callbacks *);
 static void process_messages(struct format *, struct msgs_array *,
-			     struct msgs_array *, char *, char *, int,
-			     int, int, int *, struct fmt_callbacks *);
+			     struct msgs_array *, charstring_t, char *, int,
+			     int, int *, struct fmt_callbacks *);
 static void process_single_file(FILE *, struct msgs_array *, int *, int,
-				struct format *, char *, int, int,
+				struct format *, charstring_t, int,
 				struct fmt_callbacks *);
-static void test_trace(void *, struct format *, int, char *, char *);
+static void test_trace(void *, struct format *, int, char *, const char *);
 static char *test_formataddr(char *, char *);
 static char *test_concataddr(char *, char *);
 static int insert(struct mailname *);
@@ -110,12 +110,13 @@ int
 main (int argc, char **argv)
 {
     char *cp, *form = NULL, *format = NULL, *defformat = FORMAT, *folder = NULL;
-    char buf[BUFSIZ], *nfs, **argp, **arguments, *buffer;
+    char buf[BUFSIZ], *nfs, **argp, **arguments;
+    charstring_t buffer;
     struct format *fmt;
     struct comp *cptr;
     struct msgs_array msgs = { 0, 0, NULL }, compargs = { 0, 0, NULL};
     int dump = 0, i;
-    int outputsize = 0, bufsize = 0, dupaddrs = 1, trace = 0, files = 0;
+    int outputsize = 0, dupaddrs = 1, trace = 0, files = 0;
     int colwidth = -1, msgnum = -1, msgcur = -1, msgsize = -1, msgunseen = -1;
     enum mode_t mode = MESSAGE;
     int dat[5];
@@ -164,16 +165,11 @@ main (int argc, char **argv)
 		    if (!(cp = *argp++) || *cp == '-')
 		    	adios(NULL, "missing argument to %s", argp[-2]);
 		    if (strcmp(cp, "max") == 0)
-		    	outputsize = -1;
+			outputsize = INT_MAX;
 		    else if (strcmp(cp, "width") == 0)
 		    	outputsize = sc_width();
 		    else
 			outputsize = atoi(cp);
-		    continue;
-		case BUFSZSW:
-		    if (!(cp = *argp++) || *cp == '-')
-		    	adios(NULL, "missing argument to %s", argp[-2]);
-		    bufsize = atoi(cp);
 		    continue;
 
 		case FORMSW: 
@@ -321,22 +317,13 @@ main (int argc, char **argv)
 	}
     }
 
-    /*
-     * If we don't specify a buffer size, allocate a default one.
-     */
+    buffer = charstring_create(BUFSIZ);
 
-    if (bufsize == 0)
-    	bufsize = BUFSIZ;
-
-    buffer = mh_xmalloc(bufsize);
-
-    if (outputsize < 0)
-    	outputsize = bufsize - 1;	/* For the trailing NUL */
-    else if (outputsize == 0) {
-    	if (mode == MESSAGE) 
+    if (outputsize == 0) {
+	if (mode == MESSAGE)
 	    outputsize = sc_width();
 	else
-	    outputsize = bufsize - 1;
+	    outputsize = INT_MAX;
     }
 
     dat[0] = msgnum;
@@ -375,8 +362,8 @@ main (int argc, char **argv)
     }
 
     if (mode == MESSAGE) {
-    	process_messages(fmt, &compargs, &msgs, buffer, folder, bufsize,
-			 outputsize, files, dat, cbp);
+	process_messages(fmt, &compargs, &msgs, buffer, folder, outputsize,
+			 files, dat, cbp);
     } else {
 	if (compargs.size) {
 	    for (i = 0; i < compargs.size; i += 2) {
@@ -387,12 +374,12 @@ main (int argc, char **argv)
 	}
 
 	if (mode == ADDRESS) {
-	    process_addresses(fmt, &msgs, buffer, bufsize, outputsize,
-	    		      dat, cbp);
+	    process_addresses(fmt, &msgs, buffer, outputsize, dat, cbp);
 	} else /* Fall-through for RAW or DATE */
-	    process_raw(fmt, &msgs, buffer, bufsize, outputsize, dat, cbp);
+	    process_raw(fmt, &msgs, buffer, outputsize, dat, cbp);
     }
 
+    charstring_free(buffer);
     fmt_free(fmt, 1);
 
     done(0);
@@ -410,8 +397,9 @@ struct pqpair {
 };
 
 static void
-process_addresses(struct format *fmt, struct msgs_array *addrs, char *buffer,
-		  int bufsize, int outwidth, int *dat, struct fmt_callbacks *cb)
+process_addresses(struct format *fmt, struct msgs_array *addrs,
+		  charstring_t buffer, int outwidth, int *dat,
+		  struct fmt_callbacks *cb)
 {
     int i;
     char *cp, error[BUFSIZ];
@@ -460,8 +448,8 @@ process_addresses(struct format *fmt, struct msgs_array *addrs, char *buffer,
 		p->pq_error = NULL;
 	    }
 
-	    fmt_scan(fmt, buffer, bufsize, outwidth, dat, cb);
-	    fputs(buffer, stdout);
+	    fmt_scan(fmt, buffer, outwidth, dat, cb);
+	    fputs(charstring_buffer(buffer), stdout);
 	    mlistfree();
 
 	    if (p->pq_text)
@@ -481,8 +469,8 @@ process_addresses(struct format *fmt, struct msgs_array *addrs, char *buffer,
 
 static void
 process_messages(struct format *fmt, struct msgs_array *comps,
-		 struct msgs_array *msgs, char *buffer, char *folder,
-		 int bufsize, int outwidth, int files, int *dat,
+		 struct msgs_array *msgs, charstring_t buffer, char *folder,
+		 int outwidth, int files, int *dat,
 		 struct fmt_callbacks *cb)
 {
     int i, msgnum, msgsize = dat[2], num = dat[0], cur = dat[1];
@@ -500,11 +488,11 @@ process_messages(struct format *fmt, struct msgs_array *comps,
     if (files) {
 	for (i = 0; i < msgs->size; i++) {
 	    if ((in = fopen(cp = msgs->msgs[i], "r")) == NULL) {
-	    	admonish(cp, "unable to open file");
+		admonish(cp, "unable to open file");
 		continue;
 	    }
 	    process_single_file(in, comps, dat, msgsize, fmt, buffer,
-	    			bufsize, outwidth, cb);
+				outwidth, cb);
 	}
 
 	return;
@@ -585,7 +573,7 @@ process_messages(struct format *fmt, struct msgs_array *comps,
 	     */
 
 	    process_single_file(in, comps, dat, msgsize, fmt, buffer,
-	    			bufsize, outwidth, cb);
+				outwidth, cb);
 	}
     }
 
@@ -600,11 +588,11 @@ process_messages(struct format *fmt, struct msgs_array *comps,
 
 static void
 process_single_file(FILE *in, struct msgs_array *comps, int *dat, int msgsize,
-		    struct format *fmt, char *buffer, int bufsize,
-		    int outwidth, struct fmt_callbacks *cb)
+		    struct format *fmt, charstring_t buffer, int outwidth,
+		    struct fmt_callbacks *cb)
 {
     int i, state;
-    char name[NAMESZ], rbuf[BUFSIZ];
+    char name[NAMESZ], rbuf[NMH_BUFSIZ];
     m_getfld_state_t gstate = 0;
     struct comp *c;
     int bufsz;
@@ -637,7 +625,7 @@ process_single_file(FILE *in, struct msgs_array *comps, int *dat, int msgsize,
      * Read in the message and process the components
      */
 
-    for (state = FLD;;) {
+    for (;;) {
 	bufsz = sizeof(rbuf);
 	state = m_getfld(&gstate, name, rbuf, &bufsz, in);
 	switch (state) {
@@ -661,9 +649,8 @@ process_single_file(FILE *in, struct msgs_array *comps, int *dat, int msgsize,
 	case BODY:
 	    if (fmt_findcomp("body")) {
 		if ((i = strlen(rbuf)) < outwidth) {
-		    bufsz = outwidth - 1;
-		    state = m_getfld(&gstate, name, rbuf + i,
-				     &bufsz, in);
+		    bufsz = min (outwidth, (int) sizeof rbuf - i);
+		    m_getfld(&gstate, name, rbuf + i, &bufsz, in);
 		}
 
 		fmt_addcomptext("body", rbuf);
@@ -691,8 +678,8 @@ finished:
 	    }
 	}
     }
-    fmt_scan(fmt, buffer, bufsize, outwidth, dat, cb);
-    fputs(buffer, stdout);
+    fmt_scan(fmt, buffer, outwidth, dat, cb);
+    fputs(charstring_buffer (buffer), stdout);
     mlistfree();
 }
 
@@ -701,8 +688,8 @@ finished:
  */
 
 static void
-process_raw(struct format *fmt, struct msgs_array *text, char *buffer,
-	    int bufsize, int outwidth, int *dat, struct fmt_callbacks *cb)
+process_raw(struct format *fmt, struct msgs_array *text, charstring_t buffer,
+	    int outwidth, int *dat, struct fmt_callbacks *cb)
 {
     int i;
     struct comp *c;
@@ -725,8 +712,8 @@ process_raw(struct format *fmt, struct msgs_array *text, char *buffer,
 	    c->c_text = getcpy(text->msgs[i]);
 	}
 
-	fmt_scan(fmt, buffer, bufsize, outwidth, dat, cb);
-	fputs(buffer, stdout);
+	fmt_scan(fmt, buffer, outwidth, dat, cb);
+	fputs(charstring_buffer (buffer), stdout);
 	mlistfree();
     }
 }
@@ -739,7 +726,8 @@ process_raw(struct format *fmt, struct msgs_array *text, char *buffer,
  */
 
 static void
-test_trace(void *context, struct format *fmt, int num, char *str, char *outbuf)
+test_trace(void *context, struct format *fmt, int num, char *str,
+	   const char *outbuf)
 {
     struct trace_context *ctx = (struct trace_context *) context;
     int changed = 0;
@@ -1147,7 +1135,7 @@ c_flagsstr(int t)
 }
 
 static void
-litputs(char *s)
+litputs(const char *s)
 {
 	if (s) {
 		putc('"', stdout);

@@ -80,8 +80,12 @@ mbx_open (char *file, int mbx_style, uid_t uid, gid_t gid, mode_t mode)
 	 * The stat failed.  So we make sure file
 	 * has right ownership/modes
 	 */
-	chown (file, uid, gid);
-	chmod (file, mode);
+	if (chown (file, uid, gid) < 0) {
+	    advise (file, "chown");
+	}
+	if (chmod (file, mode) < 0) {
+	    advise (file, "chmod");
+	}
     } else if (st.st_size > (off_t) 0) {
 	int status;
 
@@ -237,9 +241,9 @@ mbx_write(char *mailbox, int md, FILE *fp, int id, long last,
     fseek (fp, pos, SEEK_SET);
     while (fgets (buffer, sizeof(buffer), fp) && (pos < stop)) {
 	i = strlen (buffer);
-	for (j = 0; (j = stringdex (mmdlm1, buffer)) >= 0; buffer[j]++)
+	for ( ; (j = stringdex (mmdlm1, buffer)) >= 0; buffer[j]++)
 	    continue;
-	for (j = 0; (j = stringdex (mmdlm2, buffer)) >= 0; buffer[j]++)
+	for ( ; (j = stringdex (mmdlm2, buffer)) >= 0; buffer[j]++)
 	    continue;
 	if (write (md, buffer, i) != i)
 	    return NOTOK;
@@ -300,13 +304,9 @@ mbx_copy (char *mailbox, int mbx_style, int md, int fd,
                    termination. */
                 buffer[i] = '\0';
 
-		for (j = 0;
-			(j = stringdex (mmdlm1, buffer)) >= 0;
-			buffer[j]++)
+		for ( ;	(j = stringdex (mmdlm1, buffer)) >= 0; buffer[j]++)
 		    continue;
-		for (j = 0;
-			(j = stringdex (mmdlm2, buffer)) >= 0;
-			buffer[j]++)
+		for ( ;	(j = stringdex (mmdlm2, buffer)) >= 0; buffer[j]++)
 		    continue;
 		if (write (md, buffer, i) != i)
 		    return NOTOK;
@@ -396,7 +396,9 @@ mbx_copy (char *mailbox, int mbx_style, int md, int fd,
 		 * "From ", then prepend line with ">".
 		 */
 		if (j != 0 && strncmp (buffer, "From ", 5) == 0) {
-		    write (md, ">", 1);
+		    if (write (md, ">", 1) < 0) {
+			advise (mailbox, "write");
+		    }
 		    size++;
 		}
 		i = strlen (buffer);

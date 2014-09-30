@@ -135,7 +135,7 @@ show_single_message (CT ct, char *form, int concatsw, int textonly,
 {
     sigset_t set, oset;
 
-    int status;
+    int status = OK;
 
     /* Allow user executable bit so that temporary directories created by
      * the viewer (e.g., lynx) are going to be accessible */
@@ -329,7 +329,7 @@ show_content_aux (CT ct, int alternate, char *cp, char *cracked, struct format *
 {
     int fd;
     int xstdin = 0, xlist = 0;
-    char *file, buffer[BUFSIZ];
+    char *file = NULL, buffer[BUFSIZ];
 
     if (!ct->c_ceopenfnx) {
 	if (!alternate)
@@ -338,7 +338,6 @@ show_content_aux (CT ct, int alternate, char *cp, char *cracked, struct format *
 	return NOTOK;
     }
 
-    file = NULL;
     if ((fd = (*ct->c_ceopenfnx) (ct, &file)) == NOTOK)
 	return NOTOK;
     if (ct->c_showproc && !strcmp (ct->c_showproc, "true"))
@@ -425,7 +424,9 @@ show_content_aux2 (CT ct, int alternate, char *cracked, char *buffer,
 	}
 
 	while ((cc = read(fd, readbuf, sizeof(readbuf))) > 0) {
-	    fwrite(readbuf, sizeof(char), cc, stdout);
+	    if ((ssize_t) fwrite(readbuf, sizeof(char), cc, stdout) < cc) {
+		advise ("putline", "fwrite");
+	    }
 	    lastchar = readbuf[cc - 1];
 	}
 
@@ -465,8 +466,11 @@ show_content_aux2 (CT ct, int alternate, char *cracked, char *buffer,
 	    return NOTOK;
 
 	case OK:
-	    if (cracked)
-		chdir (cracked);
+	    if (cracked) {
+		if (chdir (cracked) < 0) {
+		    advise (cracked, "chdir");
+		}
+	    }
 	    if (!xstdin)
 		dup2 (fd, 0);
 	    close (fd);
@@ -640,7 +644,7 @@ show_multi_aux (CT ct, int alternate, char *cp, struct format *fmt)
     /* xstdin is only used in the call to parse_display_string():
        its value is ignored in the function. */
     int xstdin = 0, xlist = 0;
-    char *file, buffer[BUFSIZ];
+    char *file = NULL, buffer[BUFSIZ];
     struct multipart *m = (struct multipart *) ct->c_ctparams;
     struct part *part;
     CT p;
@@ -655,7 +659,6 @@ show_multi_aux (CT ct, int alternate, char *cp, struct format *fmt)
 	}
 
 	if (p->c_storage == NULL) {
-	    file = NULL;
 	    if ((*p->c_ceopenfnx) (p, &file) == NOTOK)
 		return NOTOK;
 
@@ -1101,7 +1104,10 @@ iconv_start:
                     status = NOTOK;
                     break;
                 } else {
-                    write (fd, dest_buffer, outbytes_before - outbytes);
+                    if (write (fd, dest_buffer, outbytes_before - outbytes)
+                        < 0) {
+                        advise (dest, "write");
+                    }
                 }
             }
 
@@ -1277,7 +1283,7 @@ compile_marker(char *markerform)
 static void
 output_marker(CT ct, struct format *fmt, int hidden)
 {
-    char outbuf[BUFSIZ];
+    charstring_t outbuf = charstring_create (BUFSIZ);
     struct param_comp_list *pcentry;
     int partsize;
     int dat[5];
@@ -1326,9 +1332,10 @@ output_marker(CT ct, struct format *fmt, int hidden)
     dat[4] = hidden;
     dat[0] = dat[1] = dat[3] = 0;
 
-    fmt_scan(fmt, outbuf, sizeof(outbuf), sizeof(outbuf), dat, NULL);
+    fmt_scan(fmt, outbuf, BUFSIZ, dat, NULL);
 
-    fputs(outbuf, stdout);
+    fputs(charstring_buffer (outbuf), stdout);
+    charstring_free (outbuf);
 
     fmt_freecomptext();
 }

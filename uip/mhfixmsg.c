@@ -53,7 +53,6 @@ int debugsw; /* Needed by mhparse.c. */
 extern int skip_mp_cte_check;                 /* flag to InitMultiPart */
 extern int suppress_bogus_mp_content_warning; /* flag to InitMultiPart */
 extern int bogus_mp_content;                  /* flag from InitMultiPart */
-void reverse_parts (CT);
 
 /* mhoutsbr.c */
 int output_message (CT, char *);
@@ -78,7 +77,6 @@ typedef struct fix_transformations {
 } fix_transformations;
 
 int mhfixmsgsbr (CT *, const fix_transformations *, char *);
-static void reverse_alternative_parts (CT);
 static int fix_boundary (CT *, int *);
 static int get_multipart_boundary (CT, char **);
 static int replace_boundary (CT, char *, char *);
@@ -287,11 +285,12 @@ main (int argc, char **argv) {
             }
         }
 
-        if (! (cts = (CT *) calloc ((size_t) 2, sizeof *cts)))
+        if (! (cts = (CT *) calloc ((size_t) 2, sizeof *cts))) {
             adios (NULL, "out of memory");
+        }
         ctp = cts;
 
-        if ((ct = parse_mime (file))) *ctp++ = ct;
+        if ((ct = parse_mime (file))) { *ctp++ = ct; }
     } else {
         /*
          * message(s) are coming from a folder
@@ -321,8 +320,9 @@ main (int argc, char **argv) {
                 done (1);
         seq_setprev (mp);       /* set the previous-sequence */
 
-        if (! (cts = (CT *) calloc ((size_t) (mp->numsel + 1), sizeof *cts)))
+        if (! (cts = (CT *) calloc ((size_t) (mp->numsel + 1), sizeof *cts))) {
             adios (NULL, "out of memory");
+        }
         ctp = cts;
 
         for (msgnum = mp->lowsel; msgnum <= mp->hghsel; msgnum++) {
@@ -330,7 +330,7 @@ main (int argc, char **argv) {
                 char *msgnam;
 
                 msgnam = m_name (msgnum);
-                if ((ct = parse_mime (msgnam))) *ctp++ = ct;
+                if ((ct = parse_mime (msgnam))) { *ctp++ = ct; }
             }
         }
 
@@ -446,7 +446,7 @@ mhfixmsgsbr (CT *ctp, const fix_transformations *fx, char *outfile) {
     }
 
     if (modify_inplace) {
-        if (status != OK) (void) m_unlink (outfile);
+        if (status != OK) { (void) m_unlink (outfile); }
         free (outfile);
         outfile = NULL;
     }
@@ -454,27 +454,6 @@ mhfixmsgsbr (CT *ctp, const fix_transformations *fx, char *outfile) {
     free (input_filename);
 
     return status;
-}
-
-
-/* parse_mime() arranges alternates in reverse (priority) order, so
-   reverse them back.  This will put a text/plain part at the front of
-   a multipart/alternative part, for example, where it belongs. */
-static void
-reverse_alternative_parts (CT ct) {
-    if (ct->c_type == CT_MULTIPART) {
-        struct multipart *m = (struct multipart *) ct->c_ctparams;
-        struct part *part;
-
-        if (ct->c_subtype == MULTI_ALTERNATE) {
-            reverse_parts (ct);
-        }
-
-        /* And call recursively on each part of a multipart. */
-        for (part = m->mp_parts; part; part = part->mp_next) {
-            reverse_alternative_parts (part->mp_part);
-        }
-    }
 }
 
 
@@ -505,9 +484,11 @@ fix_boundary (CT *ct, int *message_mods) {
                 if ((fixed = m_mktemp2 (NULL, invo_name, NULL, &(*ct)->c_fp))) {
                     if (replace_boundary (*ct, fixed, part_boundary) == OK) {
                         char *filename = add ((*ct)->c_file, NULL);
+                        CT fixed_ct;
 
                         free_content (*ct);
-                        if ((*ct = parse_mime (fixed))) {
+                        if ((fixed_ct = parse_mime (fixed))) {
+                            *ct = fixed_ct;
                             (*ct)->c_unlink = 1;
 
                             ++*message_mods;
@@ -515,6 +496,9 @@ fix_boundary (CT *ct, int *message_mods) {
                                 report (NULL, NULL, filename,
                                         "fix multipart boundary");
                             }
+                        } else {
+                            advise (NULL, "unable to parse fixed part");
+                            status = NOTOK;
                         }
                         free (filename);
                     } else {
@@ -691,7 +675,9 @@ replace_boundary (CT ct, char *file, char *boundary) {
         case BODY:
             fputs ("\n", fpout);
             /* buf will have a terminating NULL, skip it. */
-            fwrite (buf, 1, bufsz-1, fpout);
+            if ((int) fwrite (buf, 1, bufsz-1, fpout) < bufsz-1) {
+                advise (file, "fwrite");
+            }
             continue;
 
         case FILEEOF:
@@ -846,7 +832,7 @@ ensure_text_plain (CT *ct, CT parent, int *message_mods, int replacetextplain) {
         int has_text_plain = 0;
 
         /* Nothing to do for text/plain. */
-        if ((*ct)->c_subtype == TEXT_PLAIN) return OK;
+        if ((*ct)->c_subtype == TEXT_PLAIN) { return OK; }
 
         if (parent  &&  parent->c_type == CT_MULTIPART  &&
             parent->c_subtype == MULTI_ALTERNATE) {
@@ -1630,7 +1616,7 @@ strip_crs (CT ct, int *message_mods) {
                 size_t i;
                 int last_char_was_cr = 0;
 
-                if (end > 0) bytes_to_read -= bytes_read;
+                if (end > 0) { bytes_to_read -= bytes_read; }
 
                 for (i = 0, cp = buffer; i < bytes_read; ++i, ++cp) {
                     if (*cp == '\n'  &&  last_char_was_cr) {
@@ -1665,11 +1651,19 @@ strip_crs (CT ct, int *message_mods) {
                         if (*cp == '\r') {
                             last_char_was_cr = 1;
                         } else if (last_char_was_cr) {
-                            if (*cp != '\n') write (fd, "\r", 1);
-                            write (fd, cp, 1);
+                            if (*cp != '\n') {
+                                if (write (fd, "\r", 1) < 0) {
+                                    advise (tempfile, "CR write");
+                                }
+                            }
+                            if (write (fd, cp, 1) < 0) {
+                                advise (tempfile, "write");
+                            }
                             last_char_was_cr = 0;
                         } else {
-                            write (fd, cp, 1);
+                            if (write (fd, cp, 1) < 0) {
+                                advise (tempfile, "write");
+                            }
                             last_char_was_cr = 0;
                         }
                     }
@@ -1797,8 +1791,8 @@ write_content (CT ct, char *input_filename, char *outfile, int modify_inplace,
                                 }
                             }
                         }
-                        if (new != -1) close (new);
-                        if (old != -1) close (old);
+                        if (new != -1) { close (new); }
+                        if (old != -1) { close (old); }
                         (void) m_unlink (outfile);
 
                         if (i < 0) {

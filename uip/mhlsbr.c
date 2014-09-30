@@ -88,11 +88,12 @@ DEFINE_SWITCH_ARRAY(MHL, mhlswitches);
 #define	DATEFMT     0x000800	/* contains dates                    */
 #define	FORMAT      0x001000	/* parse address/date/RFC-2047 field */
 #define	INIT        0x002000	/* initialize component              */
+#define RTRIM       0x004000	/* trim trailing whitespace          */
 #define	SPLIT       0x010000	/* split headers (don't concatenate) */
 #define	NONEWLINE   0x020000	/* don't write trailing newline      */
 #define NOWRAP      0x040000	/* Don't wrap lines ever             */
 #define FMTFILTER   0x080000	/* Filter through format filter      */
-#define	LBITS	"\020\01NOCOMPONENT\02UPPERCASE\03CENTER\04CLEARTEXT\05EXTRA\06HDROUTPUT\07CLEARSCR\010LEFTADJUST\011COMPRESS\012ADDRFMT\013BELL\014DATEFMT\015FORMAT\016INIT\021SPLIT\022NONEWLINE\023NOWRAP\024FMTFILTER"
+#define	LBITS	"\020\01NOCOMPONENT\02UPPERCASE\03CENTER\04CLEARTEXT\05EXTRA\06HDROUTPUT\07CLEARSCR\010LEFTADJUST\011COMPRESS\012ADDRFMT\013BELL\014DATEFMT\015FORMAT\016INIT\017RTRIM\021SPLIT\022NONEWLINE\023NOWRAP\024FMTFILTER"
 #define	GFLAGS	(NOCOMPONENT | UPPERCASE | CENTER | LEFTADJUST | COMPRESS | SPLIT | NOWRAP)
 
 /*
@@ -221,6 +222,8 @@ static struct triple triples[] = {
     { "nocompress",    0,           COMPRESS },
     { "split",         SPLIT,       0 },
     { "nosplit",       0,           SPLIT },
+    { "rtrim",         RTRIM,       0 },
+    { "nortrim",       0,           RTRIM },
     { "addrfield",     ADDRFMT,     DATEFMT },
     { "bell",          BELL,        0 },
     { "nobell",        0,           BELL },
@@ -400,7 +403,8 @@ mhl (int argc, char **argv)
 		case SLEEPSW:
 		    if (!(cp = *argp++) || *cp == '-')
 			adios (NULL, "missing argument to %s", argp[-2]);
-		    sleepsw = atoi (cp);/* ZERO ok! */
+		    else
+			sleepsw = atoi (cp);/* ZERO ok! */
 		    continue;
 
 		case PROGSW:
@@ -422,13 +426,13 @@ mhl (int argc, char **argv)
 		case LENSW: 
 		    if (!(cp = *argp++) || *cp == '-')
 			adios (NULL, "missing argument to %s", argp[-2]);
-		    if ((length = atoi (cp)) < 1)
+		    else if ((length = atoi (cp)) < 1)
 			adios (NULL, "bad argument %s %s", argp[-2], cp);
 		    continue;
 		case WIDTHSW: 
 		    if (!(cp = *argp++) || *cp == '-')
 			adios (NULL, "missing argument to %s", argp[-2]);
-		    if ((width = atoi (cp)) < 1)
+		    else if ((width = atoi (cp)) < 1)
 			adios (NULL, "bad argument %s %s", argp[-2], cp);
 		    continue;
 
@@ -439,13 +443,13 @@ mhl (int argc, char **argv)
 		case ISSUESW:
 		    if (!(cp = *argp++) || *cp == '-')
 			adios (NULL, "missing argument to %s", argp[-2]);
-		    if ((issue = atoi (cp)) < 1)
+		    else if ((issue = atoi (cp)) < 1)
 			adios (NULL, "bad argument %s %s", argp[-2], cp);
 		    continue;
 		case VOLUMSW:
 		    if (!(cp = *argp++) || *cp == '-')
 			adios (NULL, "missing argument to %s", argp[-2]);
-		    if ((volume = atoi (cp)) < 1)
+		    else if ((volume = atoi (cp)) < 1)
 			adios (NULL, "bad argument %s %s", argp[-2], cp);
 		    continue;
 
@@ -542,7 +546,7 @@ mhl_format (char *file, int length, int width)
 {
     int i;
     char *bp, *cp, **ip;
-    char *ap, buffer[BUFSIZ], name[NAMESZ];
+    char *ap, name[NAMESZ];
     struct mcomp *c1;
     struct stat st;
     FILE *fp;
@@ -591,7 +595,7 @@ mhl_format (char *file, int length, int width)
 	    *cp = 0;
 
 	if (*bp == ':') {
-	    c1 = add_queue (&fmthd, &fmttl, NULL, bp + 1, CLEARTEXT);
+	    (void) add_queue (&fmthd, &fmttl, NULL, bp + 1, CLEARTEXT);
 	    continue;
 	}
 
@@ -663,6 +667,8 @@ mhl_format (char *file, int length, int width)
 
     if (mhldebug) {
 	for (c1 = fmthd; c1; c1 = c1->c_next) {
+	    char buffer[BUFSIZ];
+
 	    fprintf (stderr, "c1: name=\"%s\" text=\"%s\" ovtxt=\"%s\"\n",
 		    c1->c_name, c1->c_text, c1->c_ovtxt);
 	    fprintf (stderr, "\tnfs=0x%x fmt=0x%x\n",
@@ -971,7 +977,9 @@ mhlfile (FILE *fp, char *mname, int ofilen, int ofilec)
 		    }
 		    fflush (stdout);
 		    buf[0] = 0;
-		    read (fileno (stdout), buf, sizeof(buf));
+		    if (read (fileno (stdout), buf, sizeof(buf)) < 0) {
+			advise ("stdout", "read");
+		    }
 		}
 		if (strchr(buf, '\n')) {
 		    if ((global.c_flags & CLEARSCR))
@@ -1143,7 +1151,7 @@ mcomp_format (struct mcomp *c1, struct mcomp *c2)
 {
     int dat[5];
     char *ap, *cp;
-    char buffer[BUFSIZ], error[BUFSIZ];
+    char error[BUFSIZ];
     struct pqpair *p, *q;
     struct pqpair pq;
     struct mailname *mp;
@@ -1153,20 +1161,22 @@ mcomp_format (struct mcomp *c1, struct mcomp *c2)
     dat[0] = 0;
     dat[1] = 0;
     dat[2] = filesize;
-    dat[3] = sizeof(buffer) - 1;
+    dat[3] = BUFSIZ - 1;
     dat[4] = 0;
 
     if (!(c1->c_flags & ADDRFMT)) {
+	charstring_t scanl = charstring_create (BUFSIZ);
+
 	if (c1->c_c_text)
 	    c1->c_c_text->c_text = ap;
 	if ((cp = strrchr(ap, '\n')))	/* drop ending newline */
 	    if (!cp[1])
 		*cp = 0;
 
-	fmt_scan (c1->c_fmt, buffer, sizeof buffer - 1, sizeof buffer - 1,
-		  dat, NULL);
+	fmt_scan (c1->c_fmt, scanl, BUFSIZ - 1, dat, NULL);
 	/* Don't need to append a newline, dctime() already did */
-	c2->c_text = getcpy (buffer);
+	c2->c_text = charstring_buffer_copy (scanl);
+	charstring_free (scanl);
 
 	/* ap is now owned by the component struct, so do NOT free it here */
 	return;
@@ -1176,18 +1186,22 @@ mcomp_format (struct mcomp *c1, struct mcomp *c2)
     while ((cp = getname (ap))) {
 	if ((p = (struct pqpair *) calloc ((size_t) 1, sizeof(*p))) == NULL)
 	    adios (NULL, "unable to allocate pqpair memory");
-
-	if ((mp = getm (cp, NULL, 0, error, sizeof(error))) == NULL) {
-	    p->pq_text = getcpy (cp);
-	    p->pq_error = getcpy (error);
-	} else {
-	    p->pq_text = getcpy (mp->m_text);
-	    mnfree (mp);
+	else {
+	    if ((mp = getm (cp, NULL, 0, error, sizeof(error))) == NULL) {
+		p->pq_text = getcpy (cp);
+		p->pq_error = getcpy (error);
+	    } else {
+		p->pq_text = getcpy (mp->m_text);
+		mnfree (mp);
+	    }
+	    q = (q->pq_next = p);
 	}
-	q = (q->pq_next = p);
     }
 
     for (p = pq.pq_next; p; p = q) {
+	charstring_t scanl = charstring_create (BUFSIZ);
+	char *buffer;
+
 	if (c1->c_c_text) {
 	    c1->c_c_text->c_text = p->pq_text;
 	    p->pq_text = NULL;
@@ -1197,15 +1211,16 @@ mcomp_format (struct mcomp *c1, struct mcomp *c2)
 	    p->pq_error = NULL;
 	}
 
-	fmt_scan (c1->c_fmt, buffer, sizeof buffer - 1, sizeof buffer - 1,
-		  dat, NULL);
-	if (*buffer) {
+	fmt_scan (c1->c_fmt, scanl, BUFSIZ - 1, dat, NULL);
+	buffer = charstring_buffer_copy (scanl);
+	if (strlen (buffer) > 0) {
 	    if (c2->c_text)
 		c2->c_text = add (",\n", c2->c_text);
 	    if (*(cp = buffer + strlen (buffer) - 1) == '\n')
 		*cp = 0;
 	    c2->c_text = add (buffer, c2->c_text);
 	}
+	charstring_free (scanl);
 
 	if (p->pq_text)
 	    free (p->pq_text);
@@ -1227,19 +1242,20 @@ add_queue (struct mcomp **head, struct mcomp **tail, char *name, char *text, int
 
     if ((c1 = (struct mcomp *) calloc ((size_t) 1, sizeof(*c1))) == NULL)
 	adios (NULL, "unable to allocate comp memory");
-
-    c1->c_flags = flags & ~INIT;
-    if ((c1->c_name = name ? getcpy (name) : NULL))
-	c1->c_flags |= mcomp_flags (c1->c_name);
-    c1->c_text = text ? getcpy (text) : NULL;
-    if (flags & INIT) {
-	if (global.c_ovtxt)
-	    c1->c_ovtxt = getcpy (global.c_ovtxt);
-	c1->c_offset = global.c_offset;
-	c1->c_ovoff = global. c_ovoff;
-	c1->c_width = c1->c_length = 0;
-	c1->c_cwidth = global.c_cwidth;
-	c1->c_flags |= global.c_flags & GFLAGS;
+    else {
+	c1->c_flags = flags & ~INIT;
+	if ((c1->c_name = name ? getcpy (name) : NULL))
+	    c1->c_flags |= mcomp_flags (c1->c_name);
+	c1->c_text = text ? getcpy (text) : NULL;
+	if (flags & INIT) {
+	    if (global.c_ovtxt)
+		c1->c_ovtxt = getcpy (global.c_ovtxt);
+	    c1->c_offset = global.c_offset;
+	    c1->c_ovoff = global. c_ovoff;
+	    c1->c_width = c1->c_length = 0;
+	    c1->c_cwidth = global.c_cwidth;
+	    c1->c_flags |= global.c_flags & GFLAGS;
+	}
     }
     if (*head == NULL)
 	*head = c1;
@@ -1280,6 +1296,12 @@ putcomp (struct mcomp *c1, struct mcomp *c2, int flag)
 {
     int count, cchdr;
     char *cp;
+    /*
+     * Create a copy of c1->c_text with trailing whitespace
+     * trimmed, for use with blank lines.
+     */
+    char *trimmed_prefix =
+	rtrim (add (c1->c_text ? c1->c_text : c1->c_name, NULL));
 
     cchdr = 0;
     lm = 0;
@@ -1295,7 +1317,8 @@ putcomp (struct mcomp *c1, struct mcomp *c2, int flag)
     onelp = NULL;
 
     if (c1->c_flags & CLEARTEXT) {
-	putstr (c1->c_text, c1->c_flags);
+	putstr (c1->c_flags & RTRIM ? rtrim (c1->c_text) : c1->c_text,
+		c1->c_flags);
 	putstr ("\n", c1->c_flags);
 	return;
     }
@@ -1369,21 +1392,33 @@ putcomp (struct mcomp *c1, struct mcomp *c2, int flag)
     count += c1->c_offset;
 
     if ((cp = oneline (c2->c_text, c1->c_flags)))
-       putstr(cp, c1->c_flags);
+	/* Output line, trimming trailing whitespace if requested. */
+	putstr (c1->c_flags & RTRIM ? rtrim (cp) : cp, c1->c_flags);
     if (term == '\n')
 	putstr ("\n", c1->c_flags);
     while ((cp = oneline (c2->c_text, c1->c_flags))) {
 	lm = count;
 	if (flag == BODYCOMP
-		&& !(c1->c_flags & NOCOMPONENT))
-	    putstr (c1->c_text ? c1->c_text : c1->c_name, c1->c_flags);
-	if (*cp)
-	    putstr (cp, c1->c_flags);
+		&& !(c1->c_flags & NOCOMPONENT)) {
+	    /* Output component, trimming trailing whitespace if there
+	       is no text on the line. */
+	    if (*cp) {
+		putstr (c1->c_text ? c1->c_text : c1->c_name, c1->c_flags);
+	    } else {
+		putstr (trimmed_prefix, c1->c_flags);
+	    }
+	}
+	if (*cp) {
+	    /* Output line, trimming trailing whitespace if requested. */
+	    putstr (c1->c_flags & RTRIM ? rtrim (cp) : cp, c1->c_flags);
+        }
 	if (term == '\n')
 	    putstr ("\n", c1->c_flags);
     }
     if (flag == BODYCOMP && term == '\n')
 	c1->c_flags &= ~HDROUTPUT;		/* Buffer ended on a newline */
+
+    free (trimmed_prefix);
 }
 
 
@@ -1479,7 +1514,9 @@ putch (char ch, long flags)
 		putchar ('\007');
 	    fflush (stdout);
 	    buf[0] = 0;
-	    read (fileno (stdout), buf, sizeof(buf));
+	    if (read (fileno (stdout), buf, sizeof(buf)) < 0) {
+		advise ("stdout", "read");
+	    }
 	    if (strchr(buf, '\n')) {
 		if (global.c_flags & CLEARSCR)
 		    nmh_clear_screen ();
@@ -1711,7 +1748,9 @@ filterbody (struct mcomp *c1, char *buf, int bufsz, int state, FILE *fp,
 
 	while (state == BODY) {
 	    int bufsz2 = bufsz;
-	    write(fdinput[1], buf, strlen(buf));
+	    if (write(fdinput[1], buf, strlen(buf)) < 0) {
+		advise ("pipe output", "write");
+	    }
 	    state = m_getfld (&gstate, name, buf, &bufsz2, fp);
 	}
 
@@ -1758,22 +1797,25 @@ filterbody (struct mcomp *c1, char *buf, int bufsz, int state, FILE *fp,
 	 */
 
 	for (a = arglist_head, i = argp; a != NULL; a = a->a_next, i++) {
-	    args[i] = mh_xmalloc(BUFSIZ);
-	    fmt_scan(a->a_fmt, args[i], BUFSIZ - 1, BUFSIZ, dat, NULL);
+	    charstring_t scanl = charstring_create (BUFSIZ);
+
+	    fmt_scan(a->a_fmt, scanl, BUFSIZ, dat, NULL);
+	    args[i] = charstring_buffer_copy (scanl);
+	    charstring_free (scanl);
 	    /*
 	     * fmt_scan likes to put a trailing newline at the end of the
 	     * format string.  If we have one, get rid of it.
 	     */
 	    s = strlen(args[i]);
 	    if (args[i][s - 1] == '\n')
-	    	args[i][s - 1] = '\0';
+		args[i][s - 1] = '\0';
 
 	    if (mhldebug)
-	    	fprintf(stderr, "filterarg: fmt=\"%s\", output=\"%s\"\n",
+		fprintf(stderr, "filterarg: fmt=\"%s\", output=\"%s\"\n",
 			a->a_nfs, args[i]);
 	}
 
-    	if (dup2(fdinput[0], STDIN_FILENO) < 0) {
+	if (dup2(fdinput[0], STDIN_FILENO) < 0) {
 	    adios("formatproc", "Unable to dup2() standard input");
 	}
 	if (dup2(fdoutput[1], STDOUT_FILENO) < 0) {

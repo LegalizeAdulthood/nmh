@@ -487,8 +487,12 @@ pop_init (char *host, char *port, char *user, char *pass, char *proxy,
        int inpipe[2];	  /* for reading from the server */
        int outpipe[2];    /* for sending to the server */
 
-       pipe(inpipe);
-       pipe(outpipe);
+       if (pipe(inpipe) < 0) {
+	   adios ("inpipe", "pipe");
+       }
+       if (pipe(outpipe) < 0) {
+	   adios ("outpipe", "pipe");
+       }
 
        pid=fork();
        if (pid==0) {
@@ -895,7 +899,7 @@ sasl_getline (char *s, int n, FILE *iop)
     *p = 0;
     if (*--p == '\n')
 	*p = 0;
-    if (*--p == '\r')
+    if (p > s  &&  *--p == '\r')
 	*p = 0;
 
     return OK;
@@ -932,7 +936,9 @@ putline (char *s, FILE *iop)
 	    return NOTOK;
 	}
 
-	fwrite(buf, buflen, 1, iop);
+	if (fwrite(buf, buflen, 1, iop) < 1) {
+	    advise ("putline", "fwrite");
+	}
     }
 #endif /* CYRUS_SASL */
 

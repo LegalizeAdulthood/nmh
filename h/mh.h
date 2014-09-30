@@ -19,6 +19,12 @@
 #define DMAXFOLDER     4	/* typical number of digits             */
 #define MAXFOLDER   1000	/* message increment                    */
 
+/*
+ * This macro is for use by scan, for example, so that platforms with
+ * a small BUFSIZ can easily allocate larger buffers.
+ */
+#define NMH_BUFSIZ  (BUFSIZ>=8192 ? BUFSIZ : 8192)
+
 #ifndef FALSE
 #define FALSE 0
 #endif
@@ -37,6 +43,34 @@ typedef unsigned char  boolean;  /* not int so we can pack in a structure */
 #define NORETURN
 #define NMH_UNUSED(i) i
 #endif
+
+/*
+ * char array that keeps track of size in both bytes and characters
+ * Usage note:
+ *    Don't store return value of charstring_buffer() and use later
+ *    after intervening push_back's; use charstring_buffer_copy()
+ *    instead.
+ */
+typedef struct charstring *charstring_t;
+
+charstring_t charstring_create (size_t);
+charstring_t charstring_copy (const charstring_t);
+void charstring_free (charstring_t);
+/* Append a single-byte character: */
+void charstring_push_back (charstring_t, const char);
+/* Append possibly multi-byte character(s): */
+void charstring_push_back_chars (charstring_t, const char [], size_t, size_t);
+void charstring_append (charstring_t, const charstring_t);
+void charstring_clear (charstring_t);
+/* Don't store return value of charstring_buffer() and use later after
+   intervening push_back's; use charstring_buffer_copy() instead. */
+const char *charstring_buffer (const charstring_t);
+/* User is responsible for free'ing result of buffer copy. */
+char *charstring_buffer_copy (const charstring_t);
+size_t charstring_bytes (const charstring_t);
+size_t charstring_chars (const charstring_t);
+/* Length of the last character in the charstring. */
+int charstring_last_char_len (const charstring_t);
 
 /*
  * user context/profile structure

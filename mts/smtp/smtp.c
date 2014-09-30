@@ -1223,7 +1223,7 @@ sm_wstream (char *buffer, int len)
 	return (ferror (sm_wfp) ? sm_werror () : OK);
     }
 
-    for (bp = buffer; len > 0; bp++, len--) {
+    for (bp = buffer; bp && len > 0; bp++, len--) {
 	switch (*bp) {
 	    case '\n': 
 		sm_nl = TRUE;
@@ -1272,7 +1272,9 @@ sm_fwrite(char *buffer, int len)
 	    }
 	} else
 #endif /* TLS_SUPPORT */
-	fwrite(buffer, sizeof(*buffer), len, sm_wfp);
+	if ((int) fwrite(buffer, sizeof(*buffer), len, sm_wfp) < len) {
+	    advise ("sm_fwrite", "fwrite");
+	}
 #ifdef CYRUS_SASL
     } else {
 	while (len >= maxoutbuf - sasl_outbuflen) {
@@ -1288,7 +1290,10 @@ sm_fwrite(char *buffer, int len)
 		return NOTOK;
 	    }
 
-	    fwrite(output, sizeof(*output), outputlen, sm_wfp);
+	    if (fwrite(output, sizeof(*output), outputlen, sm_wfp) <
+		outputlen) {
+		advise ("sm_fwrite", "fwrite");
+	    }
 	}
 
 	if (len > 0) {
@@ -1435,7 +1440,9 @@ sm_fflush(void)
 	    return;
 	}
 
-	fwrite(output, sizeof(*output), outputlen, sm_wfp);
+	if (fwrite(output, sizeof(*output), outputlen, sm_wfp) < outputlen) {
+	    advise ("sm_fflush", "fwrite");
+	}
 	sasl_outbuflen = 0;
     }
 #endif /* CYRUS_SASL */
@@ -1467,7 +1474,7 @@ smhear (void)
     int i, code, cont, bc = 0, rc, more;
     unsigned char *bp;
     char *rp;
-    char **ehlo = NULL, buffer[BUFSIZ];
+    char **ehlo = EHLOkeys, buffer[BUFSIZ];
 
     if (doingEHLO) {
 	static int at_least_once = 0;

@@ -53,8 +53,8 @@ TESTS = test/ali/test-ali test/anno/test-anno \
 	test/folder/test-create test/folder/test-packf \
 	test/folder/test-recurse test/folder/test-sortm \
 	test/folder/test-total \
-	test/format/test-curses \
-	test/format/test-dp test/format/test-fmtdump \
+	test/format/test-curses test/format/test-dp \
+	test/format/test-fmtdump test/format/test-functions \
 	test/format/test-localmbox test/format/test-myname \
 	test/format/test-myhost test/format/test-mymbox \
 	test/format/test-nullstr \
@@ -73,6 +73,7 @@ TESTS = test/ali/test-ali test/anno/test-anno \
 	test/mhbuild/test-forw test/mhbuild/test-header-encode \
 	test/mhbuild/test-utf8-body \
 	test/mhfixmsg/test-mhfixmsg \
+	test/mhl/test-mhl-flags \
 	test/mhlist/test-mhlist test/mhlist/test-ext-params \
 	test/mhmail/test-mhmail \
 	test/mhparam/test-mhparam test/mhpath/test-mhpath \
@@ -219,8 +220,8 @@ dist_doc_DATA = COPYRIGHT INSTALL NEWS README VERSION \
 ## Contribs that get installed in docdir/contrib/
 ##
 contribdir = $(docdir)/contrib
-dist_contrib_DATA = docs/contrib/replyfilter docs/contrib/build_nmh \
-		    docs/contrib/ml docs/contrib/vpick
+dist_contrib_SCRIPTS = docs/contrib/replyfilter docs/contrib/build_nmh \
+		       docs/contrib/ml docs/contrib/vpick
 
 ##
 ## Our man pages
@@ -548,8 +549,8 @@ uninstall-hook:
 ## Our rules to build our internal libraries (libmh.a, libmts.a)
 ##
 sbr_libmh_a_SOURCES = sbr/addrsbr.c sbr/ambigsw.c sbr/atooi.c sbr/arglist.c \
-		      sbr/base64.c \
-		      sbr/brkstring.c sbr/check_charset.c sbr/client.c \
+		      sbr/base64.c sbr/brkstring.c \
+		      sbr/charstring.c sbr/check_charset.c sbr/client.c \
 		      sbr/closefds.c sbr/concat.c sbr/context_del.c \
 		      sbr/context_find.c sbr/context_foil.c sbr/context_read.c \
 		      sbr/context_replace.c sbr/context_save.c \
