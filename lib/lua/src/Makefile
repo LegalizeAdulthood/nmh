@@ -67,7 +67,7 @@ $(LUA_T): $(LUA_O) $(LUA_A)
 $(LUAC_T): $(LUAC_O) $(LUA_A)
 	$(CC) -o $@ $(LDFLAGS) $(LUAC_O) $(LUA_A) $(LIBS)
 
-clean:
+clean distclean maintainer-clean:
 	$(RM) $(ALL_T) $(ALL_O)
 
 depend:
@@ -125,7 +125,7 @@ solaris:
 	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_POSIX -DLUA_USE_DLOPEN" SYSLIBS="-ldl"
 
 # list targets that do not create files (but not all makes understand .PHONY)
-.PHONY: all $(PLATS) default o a clean depend echo none check
+.PHONY: all $(PLATS) default o a clean distclean maintainer-clean depend echo none check
 
 # DO NOT DELETE
 
