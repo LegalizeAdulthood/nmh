@@ -7,7 +7,7 @@
 PLAT= posix
 
 CC= cc
-CFLAGS= -O -DLUA_COMPAT_ALL $(SYSCFLAGS) $(MYCFLAGS)
+CFLAGS= -O -DNMH -I../../.. -DLUA_COMPAT_ALL $(SYSCFLAGS) $(MYCFLAGS)
 LDFLAGS= $(SYSLDFLAGS) $(MYLDFLAGS)
 LIBS= -lm $(SYSLIBS) $(MYLIBS)
 
@@ -126,6 +126,11 @@ solaris:
 
 # list targets that do not create files (but not all makes understand .PHONY)
 .PHONY: all $(PLATS) default o a clean distclean maintainer-clean depend echo none check
+
+# autohell dummy targets
+distdir:
+
+.PHONY: distdir
 
 # DO NOT DELETE
 

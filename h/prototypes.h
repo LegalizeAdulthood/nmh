@@ -17,6 +17,12 @@ char *etcpath(char *);
 
 struct msgs_array;
 
+/*
+ * tempfile function prototypes split out so lua can include
+ * these without sucking in everything from libmh.
+ */
+#include "h/mh_mktemp.h"
+
 void add_profile_entry (const char *, const char *);
 void adios (char *, char *, ...) NORETURN;
 void admonish (char *, char *, ...);
@@ -225,10 +231,6 @@ char *m_mailpath (char *);
 char *m_name (int);
 int m_putenv (char *, char *);
 int m_rand (unsigned char *, size_t);
-char *m_mktemp(const char *, int *, FILE **);
-char *m_mktemp2(const char *, const char *, int *, FILE **);
-char *m_mktemps(const char *pfx, const char *suffix, int *, FILE **);
-char *get_temp_dir();
 
 /*
  * Create a subprocess and redirect our standard output to it.

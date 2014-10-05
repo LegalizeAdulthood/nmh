@@ -19,6 +19,11 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+#ifdef NMH
+# include "h/mh_mktemp.h"
+# define mkstemp m_mktemp
+#endif
+
 
 /*
 ** list of valid conversion specifiers for the 'strftime' function

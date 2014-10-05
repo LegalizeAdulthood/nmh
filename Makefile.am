@@ -180,7 +180,7 @@ noinst_LIBRARIES = sbr/libmh.a mts/libmts.a
 ##
 noinst_HEADERS = h/addrsbr.h h/aliasbr.h h/crawl_folders.h h/dropsbr.h \
 		 h/fmt_compile.h h/fmt_scan.h h/md5.h h/mf.h \
-		 h/mh.h h/mhcachesbr.h h/mhparse.h h/mime.h \
+		 h/mh.h h/mhcachesbr.h h/mh_mktemp.h h/mhparse.h h/mime.h \
 		 h/mts.h h/nmh.h h/picksbr.h h/popsbr.h h/prototypes.h \
 		 h/rcvmail.h h/scansbr.h h/signals.h h/tws.h h/utils.h \
 		 mts/smtp/smtp.h sbr/ctype-checked.h
