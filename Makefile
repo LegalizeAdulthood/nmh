@@ -8,9 +8,9 @@ LIBEXECDIR = $(PREFIX)/libexec/nmh
 
 SUBDIRS = etc liblua libmh cmd libexec
 
-PREREQ = h/paths.h
+PREREQ = h/mhpaths.h
 
-CLEANFILES = h/paths.h
+CLEANFILES = h/mhpaths.h
 
 .PHONY: all clean install prereq
 
@@ -29,9 +29,9 @@ clean::
 
 prereq: $(PREREQ)
 
-h/paths.h: h/paths.h.in Makefile
+h/mhpaths.h: h/mhpaths.h.in Makefile
 	sed \
 		-e "s;%BINDIR%;$(BINDIR);"		\
 		-e "s;%ETCDIR%;$(ETCDIR);"		\
 		-e "s;%LIBEXECDIR%;$(LIBEXECDIR);"	\
-		h/paths.h.in > h/paths.h
+		h/mhpaths.h.in > h/mhpaths.h

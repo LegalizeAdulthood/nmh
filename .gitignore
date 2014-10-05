@@ -19,7 +19,7 @@
 /etc/mhn.defaults
 /etc/mts.conf
 
-/h/paths.h
+/h/mhpaths.h
 
 /man/*.[1578]
 /man/man.sed

@@ -13,7 +13,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "h/paths.h"
+#include "h/mhpaths.h"
 
 /*
  * The following can be overriden in the Makefile.
