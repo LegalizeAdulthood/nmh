@@ -25,7 +25,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "h/mhpaths.h"
+#include <_mhpaths.h>
 
 /*
  * The following can be overriden in the Makefile.

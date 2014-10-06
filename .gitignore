@@ -20,7 +20,7 @@
 /etc/mts.conf
 
 /h/lua.h
-/h/mhpaths.h
+/h/_mhpaths.h
 
 /man/*.[1578]
 /man/man.sed
