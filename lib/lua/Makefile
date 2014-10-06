@@ -15,13 +15,19 @@ SRCS	=	lapi.o lcode.o lctype.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o \
 
 OBJS	= $(SRCS:.c=.o)
 
-all: $(LIB)
+INCLUDES = ../../h/lua.h
+
+all: $(LIB) $(INCLUDES)
 
 $(LIB): $(OBJS)
 	ar -cr $(LIB) $(OBJS)
 
+../../h/lua.h: lua.h
+	cp $? $@
+
 clean:
 	rm -f $(LIB) $(OBJS)
+	rm -f $(INCLUDES)
 
 install:
 
