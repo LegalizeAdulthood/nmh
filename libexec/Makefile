@@ -1,6 +1,6 @@
 .POSIX:
 
-CFLAGS = -I.. -I../h -D_XOPEN_SOURCE=700 -Werror
+CFLAGS = -I.. -I../h -D_XOPEN_SOURCE=700
 LDFLAGS = -lcurses -L../libmh -lmh
 
 PROGS =	\
