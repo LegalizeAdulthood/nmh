@@ -6,10 +6,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mhparse.h>
 #include <h/addrsbr.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <strings.h>
 
 /*
  * List of headers that contain addresses and as a result require special

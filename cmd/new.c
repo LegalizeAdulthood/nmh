@@ -11,11 +11,11 @@
  * Inspired by Luke Mewburn's new: http://www.mewburn.net/luke/src/new
  */
 
-#include <sys/types.h>
-
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/crawl_folders.h>
 #include <h/utils.h>
+
+#include <assert.h>
 
 #define NEW_SWITCHES \
     X("mode", 1, MODESW) \

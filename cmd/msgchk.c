@@ -7,9 +7,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mts.h>
 #include <h/tws.h>
+
 #include <pwd.h>
 
 #include <h/popsbr.h>

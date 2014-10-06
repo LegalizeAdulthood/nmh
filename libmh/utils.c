@@ -7,9 +7,14 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <errno.h>
 #include <fcntl.h>
+#include <locale.h>
+#include <strings.h>
 
 /* sbr/signals.c */
 extern int setup_signal_handlers();

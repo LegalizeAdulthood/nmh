@@ -11,9 +11,6 @@
 #   define NMH 1
 #endif /* ! NMH */
 
-#ifdef HAVE_CONFIG_H
-#   include <config.h>
-#endif /* HAVE_CONFIG_H */
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -117,7 +114,7 @@ build_template(const char *directory, const char *prefix, const char *suffix) {
 
 
 #if NMH
-#include <h/mh.h>
+#include <libmh.h>
 
 #if HAVE_MKSTEMPS
 #   define MHFIXMSG_SWITCHES \

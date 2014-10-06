@@ -7,9 +7,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>   /* for snprintf() */
-#include <h/nmh.h>
-#include <h/tws.h>
+#include <libmh.h>   /* for snprintf() */
+#include "h/tws.h"
+
 #include <time.h>
 
 #if !defined(HAVE_STRUCT_TM_TM_GMTOFF)

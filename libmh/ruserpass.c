@@ -20,9 +20,12 @@
  * distribution for complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <errno.h>
 #include <pwd.h>
+#include <strings.h>
 
 static FILE *cfile;
 

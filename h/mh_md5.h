@@ -8,12 +8,6 @@
  */
 
 /*
- * Use include for nmh/mh
- */
-
-#include <h/nmh.h>
-
-/*
  * We need this for uint32_t
  */
 

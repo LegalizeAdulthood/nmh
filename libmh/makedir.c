@@ -11,8 +11,9 @@
  * Modified to try recursive create.
  */
 
-#include <h/mh.h>
-#include <sys/file.h>
+#include <libmh.h>
+
+#include <errno.h>
 
 int
 makedir (char *dir)

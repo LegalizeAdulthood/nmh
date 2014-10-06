@@ -7,8 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <sys/time.h>  /* for gettimeofday() */
+#include <libmh.h>
+
+#include <sys/time.h>
+
+#include <ctype.h>
+#include <strings.h>
 
 
 static enum {

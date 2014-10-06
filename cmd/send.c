@@ -7,9 +7,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
+#include <libmh.h>
 
+#include <errno.h>
 
 #ifndef CYRUS_SASL
 # define SASLminc(a) (a)

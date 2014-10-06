@@ -7,6 +7,6 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
 void (*done) (int) NORETURN = exit;

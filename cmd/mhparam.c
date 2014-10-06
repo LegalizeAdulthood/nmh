@@ -10,8 +10,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mts.h>
+
+#include <strings.h>
 
 #define MHPARAM_SWITCHES \
     X("components", 0, COMPSW) \

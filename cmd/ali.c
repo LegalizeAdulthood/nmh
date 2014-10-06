@@ -7,11 +7,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/aliasbr.h>
 #include <h/mts.h>
 #include <h/utils.h>
+
+#include <strings.h>
 
 #define ALI_SWITCHES \
     X("alias aliasfile", 0, ALIASW) \

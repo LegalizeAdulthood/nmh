@@ -41,13 +41,16 @@
  *
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/tws.h>
 #include <h/fmt_scan.h>
 #include <h/fmt_compile.h>
 #include <h/mts.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <strings.h>
 
 #ifdef HAVE_SYS_TIME_H
 # include <sys/time.h>

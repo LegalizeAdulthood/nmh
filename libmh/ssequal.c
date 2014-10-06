@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
 /*
  * THIS CODE DOES NOT WORK AS ADVERTISED.

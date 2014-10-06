@@ -31,7 +31,9 @@
  * documentation and/or software.
  */
 
-#include <h/md5.h>
+#include "mh_md5.h"
+
+#include <memory.h>
 
 /*
  * Constants for MD5Transform routine.

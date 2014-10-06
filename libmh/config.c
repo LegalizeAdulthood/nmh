@@ -7,12 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <pwd.h>
 
-#define nmhbindir(file) NMHBINDIR#file
-#define nmhetcdir(file) NMHETCDIR#file
-#define nmhlibexecdir(file) NMHLIBEXECDIR#file
+#define nmhbindirpath(file) NMHBINDIR#file
+#define nmhetcdirpath(file) NMHETCDIR#file
+#define nmhlibexecdirpath(file) NMHLIBEXECDIR#file
 
 
 /*
@@ -77,7 +77,7 @@ try_it:
     }
 
     /* Check nmh `etc' directory */
-    snprintf (epath, sizeof(epath), nmhetcdir(/%s), file);
+    snprintf (epath, sizeof(epath), nmhetcdirpath(/%s), file);
     return (access (epath, R_OK) != NOTOK ? epath : file);
 }
 
@@ -97,7 +97,7 @@ struct swit anoyes[] = {
  */
 
 /* initial profile for new users */
-char *mh_defaults = nmhetcdir (/mh.profile);
+char *mh_defaults = nmhetcdirpath (/mh.profile);
 
 /* default name of user profile */
 char *mh_profile = ".mh_profile";
@@ -180,7 +180,7 @@ struct node *m_defs;	/* profile/context structure  */
 /*
  * This is the program to process MIME composition files
  */
-char *buildmimeproc = nmhbindir (/mhbuild);
+char *buildmimeproc = nmhbindirpath (/mhbuild);
 /*
  * This is the program to `cat' a file.
  */
@@ -192,7 +192,7 @@ char *catproc = "/bin/cat";
  * comp/repl/forw/dist to refile a draft message.
  */
 
-char *fileproc = nmhbindir (/refile);
+char *fileproc = nmhbindirpath (/refile);
 
 /*
  * This program is used to optionally format the bodies of messages by
@@ -205,7 +205,7 @@ char *formatproc = NULL;
  * This program is called to incorporate messages into a folder.
  */
 
-char *incproc = nmhbindir (/inc);
+char *incproc = nmhbindirpath (/inc);
 
 /*
  * This is the default program invoked by a "list" response
@@ -220,7 +220,7 @@ char *lproc = NULL;
  * This is the path for the Bell equivalent mail program.
  */
 
-char *mailproc = nmhbindir (/mhmail);
+char *mailproc = nmhbindirpath (/mhmail);
 
 /*
  * This is used by mhl as a front-end.  It is also used
@@ -239,34 +239,34 @@ char *moreproc = NULL;
  * for "Bcc:" recipients.
  */
 
-char *mhlproc = nmhlibexecdir (/mhl);
+char *mhlproc = nmhlibexecdirpath (/mhl);
 
 /* 
  * This is the super handy BBoard reading program, which is
  * really just the nmh shell program.
  */
 
-char *mshproc = nmhbindir (/msh);
+char *mshproc = nmhbindirpath (/msh);
 
 /* 
  * This program is called to pack a folder.  
  */
 
-char *packproc = nmhbindir (/packf);
+char *packproc = nmhbindirpath (/packf);
 
 /*
  * This is the delivery program called by send to actually
  * deliver mail to users.  This is the interface to the MTS.
  */
 
-char *postproc = nmhlibexecdir (/post);
+char *postproc = nmhlibexecdirpath (/post);
 
 /*
  * This is program is called by slocal to handle
  * the action `folder' or `+'.
  */
 
-char *rcvstoreproc = nmhlibexecdir (/rcvstore);
+char *rcvstoreproc = nmhlibexecdirpath (/rcvstore);
 
 /* 
  * This program is called to remove a message by rmm or refile -nolink.
@@ -280,14 +280,14 @@ char *rmmproc = NULL;
  * may also be called directly to send a message previously composed.
  */
 
-char *sendproc = nmhbindir (/send);
+char *sendproc = nmhbindirpath (/send);
 
 /*
  * This is the path to the program used by "show"
  * to display non-text (MIME) messages.
  */
 
-char *showmimeproc = nmhbindir (/mhshow);
+char *showmimeproc = nmhbindirpath (/mhshow);
 
 /*
  * This is the default program called by "show" to filter
@@ -296,33 +296,33 @@ char *showmimeproc = nmhbindir (/mhshow);
  * that such message not be filtered in any way.
  */
 
-char *showproc = nmhlibexecdir (/mhl);
+char *showproc = nmhlibexecdirpath (/mhl);
 
 /* 
  * This program is called by vmh as the back-end to the window management
  * protocol
  */
 
-char *vmhproc = nmhbindir (/msh);
+char *vmhproc = nmhbindirpath (/msh);
 
 /* 
  * This program is called after comp, et. al., have built a draft
  */
 
-char *whatnowproc = nmhbindir (/whatnow);
+char *whatnowproc = nmhbindirpath (/whatnow);
 
 /* 
  * This program is called to list/validate the addresses in a message.
  */
 
-char *whomproc = nmhbindir (/whom);
+char *whomproc = nmhbindirpath (/whom);
 
 /* 
  * This is the global nmh alias file.  It is somewhat obsolete, since
  * global aliases should be handled by the Mail Transport Agent (MTA).
  */
 
-char *AliasFile = nmhetcdir (/MailAliases);
+char *AliasFile = nmhetcdirpath (/MailAliases);
 
 /* 
  * File protections

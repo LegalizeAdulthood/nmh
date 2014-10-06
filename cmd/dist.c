@@ -7,9 +7,8 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
-#include <fcntl.h>
 
 #define DIST_SWITCHES \
     X("annotate", 0, ANNOSW) \

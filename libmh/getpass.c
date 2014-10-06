@@ -31,7 +31,7 @@
  * SUCH DAMAGE.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <termios.h>
 
 /* We don't use MAX_PASS here because the maximum password length on a remote

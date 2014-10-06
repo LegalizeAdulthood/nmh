@@ -7,10 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/fmt_scan.h>
 #include <h/mts.h>
+
+#include <limits.h>
 
 #define	NADDRS	100
 

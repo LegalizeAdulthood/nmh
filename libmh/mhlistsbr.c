@@ -8,14 +8,14 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
+#include <libmh.h>
 #include <h/mts.h>
 #include <h/tws.h>
 #include <h/mime.h>
 #include <h/mhparse.h>
 #include <h/utils.h>
+
+#include <signal.h>
 
 /* mhmisc.c */
 int part_ok (CT, int);

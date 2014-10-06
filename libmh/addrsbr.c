@@ -7,10 +7,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
+
 #include <h/addrsbr.h>
 #include <h/mf.h>
 #include <h/mts.h>
+
+#include <strings.h>
 
 /* High level parsing of addresses:
 

@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/dropsbr.h>
 #include <h/rcvmail.h>
 #include <h/tws.h>

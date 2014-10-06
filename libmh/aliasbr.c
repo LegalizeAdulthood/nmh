@@ -7,10 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/aliasbr.h>
 #include <h/addrsbr.h>
 #include <h/utils.h>
+
+#include <ctype.h>
 #include <grp.h>
 #include <pwd.h>
 

@@ -7,15 +7,19 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>   /* for snprintf() */
+#include <libmh.h>   /* for snprintf() */
 #include <h/utils.h>
 
 #define nmhetcdir(file) NMHETCDIR#file
 
 #include <h/mts.h>
-#include <pwd.h>
+
 #include <sys/socket.h>
+
+#include <ctype.h>
 #include <netdb.h>
+#include <strings.h>
+#include <pwd.h>
 
 /*
  * static prototypes
@@ -249,7 +253,7 @@ LocalName (int flag)
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_flags = AI_CANONNAME;
-	hints.ai_family = PF_UNSPEC;
+	hints.ai_family = AF_UNSPEC;
 	if (getaddrinfo(buf, NULL, &hints, &res) == 0) {
 	    strncpy(buf, res->ai_canonname, sizeof(buffer0) - 1);
 	    freeaddrinfo(res);

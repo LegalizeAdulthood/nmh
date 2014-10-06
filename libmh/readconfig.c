@@ -8,8 +8,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <strings.h>
 
 struct procstr {
     char *procname;

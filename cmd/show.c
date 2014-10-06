@@ -7,9 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mime.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <strings.h>
 
 #define SHOW_SWITCHES \
     X("checkmime", 0, CHECKMIMESW) \

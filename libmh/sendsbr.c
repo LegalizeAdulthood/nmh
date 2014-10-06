@@ -7,8 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/signals.h>
+#include <libmh.h>
 #include <setjmp.h>
 #include <fcntl.h>
 #include <h/mime.h>
@@ -16,9 +15,8 @@
 #include <h/utils.h>
 #include <h/mts.h>
 
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
+#include <signal.h>
+#include <strings.h>
 #include <time.h>
 
 int debugsw = 0;		/* global */

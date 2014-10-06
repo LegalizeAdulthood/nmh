@@ -22,7 +22,10 @@
  *	    environment variable or by the profile.
  */
 
-#include <h/mh.h>				/* mh internals */
+#include <libmh.h>				/* mh internals */
+
+#include <sys/stat.h>
+#include <errno.h>
 #include <pwd.h>				/* structure for getpwuid() results */
 
 void

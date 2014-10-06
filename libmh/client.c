@@ -7,13 +7,16 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mts.h>
 #include <h/utils.h>
+
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+
+#include <errno.h>
 #include <netdb.h>
-#include <arpa/inet.h>
 
 #define	MAXARGS   1000
 
@@ -51,10 +54,8 @@ client (char *args, char *service, char *response, int len_response, int debug)
     }
 
     memset(&hints, 0, sizeof(hints));
-#ifdef AI_ADDRCONFIG
     hints.ai_flags = AI_ADDRCONFIG;
-#endif
-    hints.ai_family = PF_UNSPEC;
+    hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
     for (ap = arguments; *ap; ap++) {

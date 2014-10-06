@@ -6,9 +6,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
 #include <h/tws.h>
+
+#include <ctype.h>
+#include <strings.h>
 
 #ifdef MIMETYPEPROC
 static char *get_file_info(const char *, const char *);

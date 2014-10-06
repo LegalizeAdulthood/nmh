@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
 #define	CWD	"./"
 #define	NCWD	(sizeof(CWD) - 1)

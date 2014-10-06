@@ -17,8 +17,10 @@
  * can be as large as needed, as long as it fits in (virtual) memory.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <assert.h>
 
 #define VEC_INIT_SIZE 256
 

@@ -7,10 +7,8 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
-#include <h/md5.h>
+#include <libmh.h>
+#include "mh_md5.h"
 #include <h/mts.h>
 #include <h/tws.h>
 #include <h/mime.h>
@@ -18,9 +16,8 @@
 #include <h/mhcachesbr.h>
 #include <h/utils.h>
 
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
+#include <errno.h>
+#include <signal.h>
 #include <time.h>
 
 extern int debugsw;

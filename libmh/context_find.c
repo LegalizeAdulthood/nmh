@@ -7,8 +7,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
+#include <strings.h>
 
 char *
 context_find (const char *str)

@@ -7,8 +7,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
+#include <ctype.h>
 
 int
 gans (char *prompt, struct swit *ansp)

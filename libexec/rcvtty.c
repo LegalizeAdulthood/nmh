@@ -12,18 +12,16 @@
  * Ruud de Rooij <ruud@ruud.org>  Sun, 28 May 2000 17:28:55 +0200
  */
 
-#include <h/mh.h>
-#include <h/signals.h>
-#include <setjmp.h>
+#include <libmh.h>
 #include <h/rcvmail.h>
 #include <h/scansbr.h>
 #include <h/tws.h>
 #include <h/mts.h>
-#include <fcntl.h>
 
-#ifdef HAVE_GETUTXENT
+#include <sys/stat.h>
+#include <setjmp.h>
+#include <signal.h>
 #include <utmpx.h>
-#endif /* HAVE_GETUTXENT */
 
 #define	SCANFMT	\
 "%2(hour{dtimenow}):%02(min{dtimenow}): %<(size)%5(size) %>%<{encrypted}E%>\
@@ -69,9 +67,7 @@ char *getusername(void);
 static void alrmser (int);
 static int message_fd (char **);
 static int header_fd (void);
-#if HAVE_GETUTXENT
 static void alert (char *, int);
-#endif /* HAVE_GETUTXENT */
 
 
 int
@@ -150,7 +146,6 @@ main (int argc, char **argv)
 
     user = getusername();
 
-#if HAVE_GETUTXENT
     setutxent();
     while ((utp = getutxent()) != NULL) {
         if (utp->ut_type == USER_PROCESS && utp->ut_user[0] != 0
@@ -161,10 +156,6 @@ main (int argc, char **argv)
         }
     }
     endutxent();
-#else
-    NMH_UNUSED (tty);
-    NMH_UNUSED (utp);
-#endif /* HAVE_GETUTXENT */
 
     exit (RCV_MOK);
 }
@@ -284,7 +275,6 @@ header_fd (void)
 }
 
 
-#if HAVE_GETUTXENT
 static void
 alert (char *tty, int md)
 {
@@ -298,7 +288,7 @@ alert (char *tty, int md)
      * The mask depends on whether we are checking for
      * write permission based on `biff' or `mesg'.
      */
-    mask = biff ? S_IEXEC : (S_IWRITE >> 3);
+    mask = biff ? S_IXUSR : (S_IWUSR >> 3);
     if (stat (ttyspec, &st) == NOTOK || (st.st_mode & mask) == 0)
 	return;
 
@@ -322,4 +312,3 @@ alert (char *tty, int md)
 
     close (td);
 }
-#endif /* HAVE_GETUTXENT */

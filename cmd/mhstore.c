@@ -7,16 +7,15 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
-#include <h/md5.h>
+#include <libmh.h>
 #include <h/mts.h>
 #include <h/tws.h>
 #include <h/mime.h>
 #include <h/mhparse.h>
 #include <h/mhcachesbr.h>
 #include <h/utils.h>
+
+#include <signal.h>
 
 #define MHSTORE_SWITCHES \
     X("auto", 0, AUTOSW) \

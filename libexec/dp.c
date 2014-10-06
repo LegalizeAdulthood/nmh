@@ -7,9 +7,11 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/fmt_scan.h>
 #include <h/tws.h>
+
+#include <limits.h>
 
 #define	NDATES 100
 

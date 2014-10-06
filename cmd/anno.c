@@ -43,8 +43,10 @@
  *	value of 1 is assumed if this argument is absent.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <ctype.h>
 
 #define ANNO_SWITCHES \
     X("component field", 0, COMPSW) \

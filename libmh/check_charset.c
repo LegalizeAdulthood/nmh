@@ -7,9 +7,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
 #include <langinfo.h>
+#include <strings.h>
 
 /* Only get_charset() should use norm_charmap(), so hide its
    declaration here. */

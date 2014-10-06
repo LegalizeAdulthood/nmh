@@ -7,12 +7,15 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/fmt_scan.h>
 #include <h/fmt_compile.h>
 #include <h/utils.h>
 #include <h/scansbr.h>
 #include <h/addrsbr.h>
+
+#include <limits.h>
+#include <strings.h>
 
 #define FMTTEST_SWITCHES \
     X("form formatfile", 0, FORMSW) \

@@ -7,13 +7,16 @@
  * complete copyright information.
  */
 
-#include <h/nmh.h>
-#include <h/utils.h>
 
-#include <h/mh.h>
-#include <h/dropsbr.h>
-#include <h/mts.h>
-#include <h/tws.h>
+#include <libmh.h>
+#include "h/utils.h"
+#include "h/dropsbr.h"
+#include "h/mts.h"
+#include "h/tws.h"
+
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
 
 #ifdef NTOHLSWAP
 # include <netinet/in.h>
@@ -22,7 +25,6 @@
 # define ntohl(n) (n)
 #endif
 
-#include <fcntl.h>
 
 /*
  * static prototypes

@@ -6,11 +6,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include "smtp.h"
 #include <h/mts.h>
-#include <h/signals.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <signal.h>
 
 #ifdef CYRUS_SASL
 #include <sasl/sasl.h>

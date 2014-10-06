@@ -14,8 +14,11 @@
  * any specification.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <limits.h>
 
 #define FALSE   0
 #define TRUE    1

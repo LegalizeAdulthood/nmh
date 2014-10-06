@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/tws.h>
 #include <h/picksbr.h>
 #include <h/utils.h>
@@ -15,6 +15,8 @@
 #ifdef HAVE_SYS_TIME_H
 # include <sys/time.h>
 #endif
+
+#include <strings.h>
 #include <time.h>
 
 #define PARSE_SWITCHES \

@@ -6,12 +6,17 @@
  * distribution for complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mime.h>
 #include <h/mhparse.h>
 #include <h/utils.h>
-#include <h/signals.h>
-#include <fcntl.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <ctype.h>
+#include <signal.h>
+#include <strings.h>
 
 #define MHFIXMSG_SWITCHES \
     X("decodetext 8bit|7bit", 0, DECODETEXTSW) \

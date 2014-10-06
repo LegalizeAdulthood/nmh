@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
 void
 cpydata (int in, int out, char *ifile, char *ofile)

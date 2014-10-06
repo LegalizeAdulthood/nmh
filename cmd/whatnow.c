@@ -7,8 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-
+#include <libmh.h>
 
 int
 main (int argc, char **argv)

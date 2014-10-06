@@ -6,8 +6,11 @@
  * complete copyright information.
  */
 
-#include <h/nmh.h>
-#include <h/utils.h>
+#include <libmh.h>
+#include "h/utils.h"
+
+#include <assert.h>
+
 
 static void
 escape_component (char *name, size_t namesize, char *chars);

@@ -7,8 +7,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/signals.h>
+#include <libmh.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <errno.h>
+#include <signal.h>
 
 int
 pidwait (pid_t id, int sigsok)

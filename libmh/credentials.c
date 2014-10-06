@@ -4,9 +4,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/utils.h>
-#include <h/mts.h>
+#include <libmh.h>
+#include "h/utils.h"
+#include "h/mts.h"
+
+#include <ctype.h>
+#include <strings.h>
 
 void
 init_credentials_file () {

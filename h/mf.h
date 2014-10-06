@@ -3,7 +3,6 @@
  * mf.h -- include file for mailbox filters
  */
 
-#include <h/nmh.h>
 
 #ifndef	TRUE
 # define TRUE 1

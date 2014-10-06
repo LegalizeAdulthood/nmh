@@ -7,11 +7,14 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/fmt_scan.h>
 #include <h/utils.h>
-#include <sys/file.h>		/* L_SET */
+
+#include <ctype.h>
+#include <errno.h>
+#include <strings.h>
 
 extern short ccto;		/* from repl.c */
 extern short cccc;

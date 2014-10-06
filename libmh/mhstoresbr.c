@@ -7,15 +7,17 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
-#include <h/md5.h>
+#include <libmh.h>
+#include "mh_md5.h"
 #include <h/mts.h>
 #include <h/tws.h>
 #include <h/mime.h>
 #include <h/mhparse.h>
 #include <h/utils.h>
+
+#include <fcntl.h>
+#include <signal.h>
+#include <strings.h>
 
 enum clobber_policy_t {
   NMH_CLOBBER_ALWAYS = 0,

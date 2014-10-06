@@ -21,22 +21,20 @@
  * Ruud de Rooij <ruud@ruud.org>  Sun, 28 May 2000 17:28:55 +0200
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/dropsbr.h>
 #include <h/rcvmail.h>
-#include <h/signals.h>
-#include <setjmp.h>
 #include <h/tws.h>
 #include <h/mts.h>
 #include <h/utils.h>
 
+#include <ctype.h>
+#include <errno.h>
+#include <ndbm.h>
 #include <pwd.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-/* Hopefully, grp.h declares initgroups().  If we run into a platform
-   where it doesn't, we could consider declaring it here as well. */
-#include <grp.h>
+#include <setjmp.h>
+#include <signal.h>
+#include <strings.h>
 
 /* This define is needed for Berkeley db v2 and above to
  * make the header file expose the 'historical' ndbm APIs.
@@ -50,9 +48,7 @@
 #include NDBM_HEADER
 #endif
 
-#ifdef HAVE_GETUTXENT
 #include <utmpx.h>
-#endif /* HAVE_GETUTXENT */
 
 #define SLOCAL_SWITCHES \
     X("addr address", 0, ADDRSW) \
@@ -288,7 +284,9 @@ main (int argc, char **argv)
 	if (setgid (pw->pw_gid) != 0) {
 	    adios ("setgid", "unable to set group to %ld", (long) pw->pw_gid);
 	}
-	initgroups (pw->pw_name, pw->pw_gid);
+#if 0
+	initgroups (pw->pw_name, pw->pw_gid); 	// XXX X/Open equiv?
+#endif
 	if (setuid (pw->pw_uid) != 0) {
 	    adios ("setuid", "unable to set user to %ld", (long) pw->pw_uid);
 	}
@@ -910,7 +908,6 @@ lookup (struct pair *pairs, char *key)
 static int
 logged_in (void)
 {
-#if HAVE_GETUTXENT
     struct utmpx *utp;
 
     if (utmped)
@@ -929,7 +926,6 @@ logged_in (void)
     }
 
     endutxent();
-#endif /* HAVE_GETUTXENT */
     return (utmped = NOTOK);
 }
 

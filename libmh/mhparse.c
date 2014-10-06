@@ -7,10 +7,8 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
-#include <h/md5.h>
+#include <libmh.h>
+#include "mh_md5.h"
 #include <h/mts.h>
 #include <h/tws.h>
 #include <h/mime.h>
@@ -20,6 +18,9 @@
 # include <iconv.h>
 #endif /* HAVE_ICONV */
 
+#include <ctype.h>
+#include <signal.h>
+#include <strings.h>
 
 extern int debugsw;
 

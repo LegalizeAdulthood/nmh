@@ -9,9 +9,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
 
+#include <ctype.h>
 
 char *
 trimcpy (char *cp)

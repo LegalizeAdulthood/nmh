@@ -7,8 +7,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/signals.h>
+#include <libmh.h>
+
+#include <signal.h>
 #include <setjmp.h>
 
 #ifdef READLINE_SUPPORT

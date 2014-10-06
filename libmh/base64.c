@@ -6,7 +6,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mime.h>
 
 static char nib2b64[0x40+1] =

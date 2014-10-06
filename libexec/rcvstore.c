@@ -7,10 +7,11 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
+#include <libmh.h>
 #include <h/mts.h>
+
+#include <errno.h>
+#include <signal.h>
 
 #define RCVSTORE_SWITCHES \
     X("create", 0, CRETSW) \

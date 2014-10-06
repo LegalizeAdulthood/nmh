@@ -7,10 +7,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
 #include <h/fmt_scan.h>
-#include <fcntl.h>
 
 #define COMP_SWITCHES \
     X("draftfolder +folder", 0, DFOLDSW) \

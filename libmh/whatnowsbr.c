@@ -39,10 +39,11 @@
  *				by attachment number.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
+#include <libmh.h>
 #include <h/mime.h>
 #include <h/utils.h>
+
+#include <strings.h>
 
 #define WHATNOW_SWITCHES \
     X("draftfolder +folder", 0, DFOLDSW) \

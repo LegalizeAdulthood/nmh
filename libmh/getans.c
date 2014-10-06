@@ -7,8 +7,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/signals.h>
+#include <libmh.h>
+
+#include <errno.h>
+#include <signal.h>
 #include <setjmp.h>
 
 static char ansbuf[BUFSIZ];

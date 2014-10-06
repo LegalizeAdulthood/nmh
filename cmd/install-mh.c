@@ -6,8 +6,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>				/* mh internals */
+#include <libmh.h>
 #include <h/utils.h>
+
 #include <pwd.h>				/* structure for getpwuid() results */
 
 #define INSTALLMH_SWITCHES \

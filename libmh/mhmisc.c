@@ -7,10 +7,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mime.h>
 #include <h/mhparse.h>
 #include <h/utils.h>
+
+#include <errno.h>
+#include <strings.h>
 
 extern int debugsw;
 

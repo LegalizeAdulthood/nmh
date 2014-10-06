@@ -6,8 +6,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
+
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <errno.h>
+#include <signal.h>
 
 #ifdef CYRUS_SASL
 # include <sasl/sasl.h>
@@ -22,7 +27,6 @@
 #endif /* CYRUS_SASL */
 
 #include <h/popsbr.h>
-#include <h/signals.h>
 
 #define	TRM	"."
 #define	TRMLEN	(sizeof TRM - 1)

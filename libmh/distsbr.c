@@ -7,9 +7,11 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
+#include <libmh.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <fcntl.h>
 
 static int  hdrfd = NOTOK;
 static int  txtfd = NOTOK;

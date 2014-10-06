@@ -7,8 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
+#include <libmh.h>
 #include <h/tws.h>
 #include <h/utils.h>
 

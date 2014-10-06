@@ -7,14 +7,20 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/signals.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/fmt_scan.h>
 #include <h/tws.h>
 #include <h/utils.h>
-#include <setjmp.h>
+
 #include <sys/types.h>
+#include <sys/wait.h>
+
+#include <ctype.h>
+#include <errno.h>
+#include <setjmp.h>
+#include <signal.h>
+#include <strings.h>
 
 /*
  * MAJOR BUG:

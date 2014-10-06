@@ -8,9 +8,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
-#include <fcntl.h>
+
+#include <assert.h>
 
 #define REFILE_SWITCHES \
     X("draft", 0, DRAFTSW) \

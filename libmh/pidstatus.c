@@ -7,12 +7,13 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
-/*
- * auto-generated header
- */
-#include <sigmsg.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <errno.h>
+#include <signal.h>
 
 #ifndef WTERMSIG
 # define WTERMSIG(s) ((int)((s) & 0x7F))
@@ -58,12 +59,8 @@ pidstatus (int status, FILE *fp, char *cp)
 	    if (cp)
 		fprintf (fp, "%s: ", cp);
 	    fprintf (fp, "signal %d", signum);
-	    if (signum >= 0 && signum < (int) sizeof(sigmsg) &&
-                  sigmsg[signum] != NULL)
-		fprintf (fp, " (%s%s)\n", sigmsg[signum],
-			 WCOREDUMP(status) ? ", core dumped" : "");
-	    else
-		fprintf (fp, "%s\n", WCOREDUMP(status) ? " (core dumped)" : "");
+	    fprintf (fp, "%s\n", WCOREDUMP(status) ? " (core dumped)" : "");
+	    fflush(fp);
 	}
     }
 

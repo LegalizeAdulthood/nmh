@@ -7,9 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/mts.h>
 #include <h/utils.h>
+
+#include <assert.h>
+#include <ctype.h>
 
 /*
    Purpose

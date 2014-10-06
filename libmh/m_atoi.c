@@ -9,8 +9,9 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
+#include <ctype.h>
 
 int
 m_atoi (char *str)

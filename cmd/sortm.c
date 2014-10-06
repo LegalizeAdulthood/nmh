@@ -7,9 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/tws.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <strings.h>
 
 #define SORTM_SWITCHES \
     X("datefield field", 0, DATESW) \

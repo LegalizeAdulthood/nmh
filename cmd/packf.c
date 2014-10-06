@@ -7,10 +7,11 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
+#include <libmh.h>
 #include <h/dropsbr.h>
 #include <h/utils.h>
+
+#include <errno.h>
 
 #define PACKF_SWITCHES \
     X("file name", 0, FILESW) \

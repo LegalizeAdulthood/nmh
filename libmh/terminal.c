@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
 
 #include <sys/ioctl.h>
@@ -35,7 +35,7 @@ static char *termcbufp = NULL;	   /* tputs() output buffer pointer          */
 static size_t termcbufsz = 0;	   /* Size of termcbuf                       */
 
 static void initialize_terminfo(void);
-static int termbytes(TPUTS_PUTC_ARG);
+static int termbytes(int);
 
 /*
  * Initialize the terminfo library.
@@ -106,7 +106,7 @@ sc_length (void)
 
 
 static int
-outc (TPUTS_PUTC_ARG c)
+outc (int c)
 {
     return putchar(c);
 }
@@ -231,7 +231,7 @@ get_term_numcap(char *capability)
  */
 
 static int
-termbytes(TPUTS_PUTC_ARG c)
+termbytes(int c)
 {
     size_t offset;
 

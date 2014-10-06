@@ -7,10 +7,12 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <h/tws.h>
-#include <h/utils.h>
-#include <fcntl.h>
+#include <libmh.h>
+#include "h/tws.h"
+#include "h/utils.h"
+
+#include <errno.h>
+#include <strings.h>
 #include <utime.h>
 
 

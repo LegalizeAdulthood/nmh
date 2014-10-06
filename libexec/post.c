@@ -7,9 +7,7 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/aliasbr.h>
 #include <h/dropsbr.h>
@@ -17,13 +15,13 @@
 #include <h/utils.h>
 #include <h/tws.h>
 #include <h/mts.h>
+#include <h/smtp.h>
 
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
+#include <ctype.h>
+#include <signal.h>
+#include <strings.h>
 #include <time.h>
 
-#include <mts/smtp/smtp.h>
 
 #ifndef CYRUS_SASL
 # define SASLminc(a) (a)

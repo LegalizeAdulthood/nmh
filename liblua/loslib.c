@@ -20,7 +20,7 @@
 #include "lualib.h"
 
 #ifdef NMH
-# include "h/mh_mktemp.h"
+# include "libmh.h"
 # define mkstemp m_mktemp
 #endif
 

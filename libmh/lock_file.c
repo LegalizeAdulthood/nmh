@@ -15,14 +15,14 @@
  * Ruud de Rooij <ruud@debian.org>  Sun, 28 Mar 1999 15:34:03 +0200
  */
  
-#include <h/mh.h>
-#include <h/signals.h>
+#include <libmh.h>
 #include <h/utils.h>
 #include <h/mts.h>
 
-#ifdef HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
+#include <errno.h>
+#include <signal.h>
+#include <strings.h>
+
 #include <time.h>
 #include <fcntl.h>
 #ifdef HAVE_FLOCK

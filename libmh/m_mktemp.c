@@ -6,9 +6,11 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/utils.h>
-#include <h/signals.h>
+
+#include <errno.h>
+#include <signal.h>
 
 static void register_for_removal(const char *);
 

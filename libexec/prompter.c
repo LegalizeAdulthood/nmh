@@ -7,11 +7,10 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
-#include <fcntl.h>
-#include <h/signals.h>
-#include <setjmp.h>
+#include <libmh.h>
 
+#include <setjmp.h>
+#include <signal.h>
 #include <termios.h>
 
 #define	QUOTE '\\'

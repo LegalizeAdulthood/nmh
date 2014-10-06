@@ -7,10 +7,11 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 
 #include <sys/types.h>
 #include <sys/uio.h>
+#include <errno.h>
 
 
 /*

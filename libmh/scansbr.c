@@ -7,12 +7,15 @@
  * complete copyright information.
  */
 
-#include <h/mh.h>
+#include <libmh.h>
 #include <h/addrsbr.h>
 #include <h/fmt_scan.h>
 #include <h/scansbr.h>
 #include <h/tws.h>
 #include <h/utils.h>
+
+#include <ctype.h>
+#include <limits.h>
 
 /*
  * Buffer size for content part of header fields.  We want this

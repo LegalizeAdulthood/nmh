@@ -8,8 +8,10 @@
 %n2500
 %a5000
 %{
-#include <h/nmh.h>
+#include <libmh.h>
 #include <h/tws.h>
+
+#include <ctype.h>
 
   /* Since we're looking at a string at a time, don't worry about
    *  wrapping to the next buffer.
