@@ -1,9 +1,9 @@
 .POSIX:
 
 LIB = libmh.a
-CFLAGS = -I.. -I../h -D_XOPEN_SOURCE=700
+CFLAGS = $(NMH_CFLAGS) -I.. -I../h -D_XOPEN_SOURCE=700
 
-CLEANFILES = dtimep.c
+# CLEANFILES = dtimep.c
 
 SRCS = \
 	addrsbr.c	\

@@ -2,6 +2,18 @@
  * mh.h -- main header file for all of nmh
  */
 
+/*
+ * XXX
+ *
+ * When compiling with _XOPEN_SOURCE=700, Solaris 11 does not bring
+ * str[n]casenmp() and snprintf() into scope. This is a bug in their
+ * implementation that, unfortunately, requires dropping this anvil on
+ * their head.
+ */
+#ifdef __SunOS_5_11
+# define __EXTENSIONS__
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
 

@@ -1,7 +1,7 @@
 .POSIX:
 
-CFLAGS = -I.. -I../h -D_XOPEN_SOURCE=700
-LDFLAGS = -lcurses -L../libmh -lmh
+CFLAGS = $(NMH_CFLAGS) -I.. -I../h -D_XOPEN_SOURCE=700
+LDFLAGS = $(NHM_LDFLAGS) -lcurses -L../libmh -lmh $(NMH_LDADD)
 
 PROGS =	\
 	ap		\
