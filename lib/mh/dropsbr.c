@@ -9,10 +9,10 @@
 
 
 #include <mh.h>
-#include "h/utils.h"
-#include "h/dropsbr.h"
-#include "h/mts.h"
-#include "h/tws.h"
+#include "utils.h"
+#include "dropsbr.h"
+#include "mts.h"
+#include "tws.h"
 
 #include <ctype.h>
 #include <errno.h>

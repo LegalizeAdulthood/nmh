@@ -8,8 +8,8 @@
 
 #include <mh.h>
 #include "smtp.h"
-#include <h/mts.h>
-#include <h/utils.h>
+#include "mts.h"
+#include "utils.h"
 
 #include <ctype.h>
 #include <signal.h>

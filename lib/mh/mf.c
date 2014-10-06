@@ -9,8 +9,8 @@
 
 #include <mh.h>
 
-#include <h/mf.h>
-#include <h/utils.h>
+#include "mf.h"
+#include "utils.h"
 
 #include <ctype.h>
 

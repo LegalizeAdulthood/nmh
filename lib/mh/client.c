@@ -7,9 +7,9 @@
  * complete copyright information.
  */
 
-#include "h/libmh.h"
-#include <h/mts.h>
-#include <h/utils.h>
+#include <mh.h>
+#include "mts.h"
+#include "utils.h"
 
 #include <arpa/inet.h>
 #include <sys/socket.h>

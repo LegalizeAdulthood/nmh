@@ -18,7 +18,7 @@
  */
 
 #include <mh.h>
-#include <h/utils.h>
+#include "utils.h"
 
 #include <assert.h>
 

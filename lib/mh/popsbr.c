@@ -8,7 +8,7 @@
 
 #include <mh.h>
 
-#include <h/utils.h>
+#include "utils.h"
 
 #include <ctype.h>
 #include <errno.h>
@@ -26,7 +26,7 @@
 # endif /* SASL_VERSION_FULL < 0x020125 */
 #endif /* CYRUS_SASL */
 
-#include <h/popsbr.h>
+#include "popsbr.h"
 
 #define	TRM	"."
 #define	TRMLEN	(sizeof TRM - 1)

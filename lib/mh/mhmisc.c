@@ -8,9 +8,9 @@
  */
 
 #include <mh.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
-#include <h/utils.h>
+#include "mime.h"
+#include "mhparse.h"
+#include "utils.h"
 
 #include <errno.h>
 #include <strings.h>

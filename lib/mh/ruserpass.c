@@ -21,7 +21,7 @@
  */
 
 #include <mh.h>
-#include <h/utils.h>
+#include "utils.h"
 
 #include <errno.h>
 #include <pwd.h>

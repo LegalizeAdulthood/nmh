@@ -8,8 +8,8 @@
 %n2500
 %a5000
 %{
-#include <libmh.h>
-#include <h/tws.h>
+#include <mh.h>
+#include "tws.h"
 
 #include <ctype.h>
 

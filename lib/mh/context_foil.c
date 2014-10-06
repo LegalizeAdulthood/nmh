@@ -8,7 +8,7 @@
  */
 
 #include <mh.h>
-#include <h/utils.h>
+#include "utils.h"
 
 /*
  * Foil search of users .mh_profile

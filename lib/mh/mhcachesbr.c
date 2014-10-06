@@ -9,12 +9,12 @@
 
 #include <mh.h>
 #include "mh_md5.h"
-#include <h/mts.h>
-#include <h/tws.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
-#include <h/mhcachesbr.h>
-#include <h/utils.h>
+#include "mts.h"
+#include "tws.h"
+#include "mime.h"
+#include "mhparse.h"
+#include "mhcachesbr.h"
+#include "utils.h"
 
 #include <errno.h>
 #include <signal.h>

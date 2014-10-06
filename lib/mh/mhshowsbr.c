@@ -10,12 +10,12 @@
 #include <mh.h>
 #include "mh_md5.h"
 #include <setjmp.h>
-#include <h/mts.h>
-#include <h/tws.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
-#include <h/fmt_scan.h>
-#include <h/utils.h>
+#include "mts.h"
+#include "tws.h"
+#include "mime.h"
+#include "mhparse.h"
+#include "fmt_scan.h"
+#include "utils.h"
 
 #ifdef HAVE_ICONV
 #   include <iconv.h>

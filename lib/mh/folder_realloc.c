@@ -8,7 +8,7 @@
  */
 
 #include <mh.h>
-#include <h/utils.h>
+#include "utils.h"
 
 /*
  * Reallocate some of the space in the folder

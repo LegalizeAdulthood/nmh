@@ -9,11 +9,11 @@
 
 #include <mh.h>
 #include "mh_md5.h"
-#include <h/mts.h>
-#include <h/tws.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
-#include <h/utils.h>
+#include "mts.h"
+#include "tws.h"
+#include "mime.h"
+#include "mhparse.h"
+#include "utils.h"
 #ifdef HAVE_ICONV
 # include <iconv.h>
 #endif /* HAVE_ICONV */

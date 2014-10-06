@@ -8,11 +8,11 @@
  */
 
 #include <mh.h>
-#include <h/addrsbr.h>
-#include <h/fmt_scan.h>
-#include <h/scansbr.h>
-#include <h/tws.h>
-#include <h/utils.h>
+#include "addrsbr.h"
+#include "fmt_scan.h"
+#include "scansbr.h"
+#include "tws.h"
+#include "utils.h"
 
 #include <ctype.h>
 #include <limits.h>

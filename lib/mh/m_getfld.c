@@ -8,8 +8,8 @@
  */
 
 #include <mh.h>
-#include <h/mts.h>
-#include <h/utils.h>
+#include "mts.h"
+#include "utils.h"
 
 #include <assert.h>
 #include <ctype.h>

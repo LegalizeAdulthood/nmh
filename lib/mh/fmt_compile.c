@@ -42,12 +42,12 @@
  */
 
 #include <mh.h>
-#include <h/addrsbr.h>
-#include <h/tws.h>
-#include <h/fmt_scan.h>
-#include <h/fmt_compile.h>
-#include <h/mts.h>
-#include <h/utils.h>
+#include "addrsbr.h"
+#include "tws.h"
+#include "fmt_scan.h"
+#include "fmt_compile.h"
+#include "mts.h"
+#include "utils.h"
 
 #include <ctype.h>
 #include <strings.h>

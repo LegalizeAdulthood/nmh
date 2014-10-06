@@ -9,7 +9,7 @@
  */
 
 #include <mh.h>
-#include <h/utils.h>
+#include "utils.h"
 
 /* allocate this number of pointers at a time */
 #define NUMBROKEN 256

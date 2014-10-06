@@ -8,7 +8,7 @@
  */
 
 #include <mh.h>
-#include <h/utils.h>
+#include "utils.h"
 
 /*
  * Split up a command into an appropriate array to pass to execvp()

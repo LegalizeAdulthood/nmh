@@ -10,10 +10,10 @@
 #include <mh.h>
 #include <setjmp.h>
 #include <fcntl.h>
-#include <h/mime.h>
-#include <h/tws.h>
-#include <h/utils.h>
-#include <h/mts.h>
+#include "mime.h"
+#include "tws.h"
+#include "utils.h"
+#include "mts.h"
 
 #include <signal.h>
 #include <strings.h>

@@ -8,11 +8,11 @@
  */
 
 #include <mh.h>   /* for snprintf() */
-#include <h/utils.h>
+#include "utils.h"
 
 #define nmhetcdir(file) NMHETCDIR#file
 
-#include <h/mts.h>
+#include "mts.h"
 
 #include <sys/socket.h>
 

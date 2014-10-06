@@ -8,7 +8,7 @@
  */
 
 #include <mh.h>   /* for snprintf() */
-#include "h/tws.h"
+#include "tws.h"
 
 #include <time.h>
 

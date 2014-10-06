@@ -9,9 +9,9 @@
 
 #include <mh.h>
 
-#include <h/addrsbr.h>
-#include <h/mf.h>
-#include <h/mts.h>
+#include "addrsbr.h"
+#include "mf.h"
+#include "mts.h"
 
 #include <strings.h>
 

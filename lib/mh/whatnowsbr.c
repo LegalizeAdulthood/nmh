@@ -40,8 +40,8 @@
  */
 
 #include <mh.h>
-#include <h/mime.h>
-#include <h/utils.h>
+#include "mime.h"
+#include "utils.h"
 
 #include <strings.h>
 

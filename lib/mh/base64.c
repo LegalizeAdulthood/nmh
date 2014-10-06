@@ -7,7 +7,7 @@
  */
 
 #include <mh.h>
-#include <h/mime.h>
+#include "mime.h"
 
 static char nib2b64[0x40+1] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

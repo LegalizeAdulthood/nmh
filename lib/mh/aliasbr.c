@@ -8,9 +8,9 @@
  */
 
 #include <mh.h>
-#include <h/aliasbr.h>
-#include <h/addrsbr.h>
-#include <h/utils.h>
+#include "aliasbr.h"
+#include "addrsbr.h"
+#include "utils.h"
 
 #include <ctype.h>
 #include <grp.h>

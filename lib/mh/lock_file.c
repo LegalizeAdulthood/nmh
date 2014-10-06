@@ -16,8 +16,8 @@
  */
  
 #include <mh.h>
-#include <h/utils.h>
-#include <h/mts.h>
+#include "utils.h"
+#include "mts.h"
 
 #include <errno.h>
 #include <signal.h>

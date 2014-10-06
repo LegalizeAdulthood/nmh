@@ -8,9 +8,9 @@
  */
 
 #include <mh.h>
-#include <h/addrsbr.h>
-#include <h/fmt_scan.h>
-#include <h/utils.h>
+#include "addrsbr.h"
+#include "fmt_scan.h"
+#include "utils.h"
 
 #include <ctype.h>
 #include <errno.h>

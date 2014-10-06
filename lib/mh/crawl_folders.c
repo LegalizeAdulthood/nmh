@@ -8,8 +8,8 @@
  */
 
 #include <mh.h>
-#include <h/crawl_folders.h>
-#include <h/utils.h>
+#include "crawl_folders.h"
+#include "utils.h"
 
 struct crawl_context {
     int max;			/* how many folders we currently can hold in
