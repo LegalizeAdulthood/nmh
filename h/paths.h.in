@@ -1,0 +1,9 @@
+/* generated from paths.h.in */
+
+static const char *nmhbindir = "%BINDIR%";
+static const char *nmhetcdir = "%ETCDIR%";
+static const char *nmhlibexecdir = "%LIBEXECDIR%";
+
+#define NMHBINDIR "%BINDIR%"
+#define NMHETCDIR "%ETCDIR%"
+#define NMHLIBEXECDIR "%LIBEXECDIR%"
