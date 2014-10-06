@@ -62,6 +62,19 @@
 /cmd/whatnow
 /cmd/whom
 
+/libexec/ap
+/libexec/dp
+/libexec/fmtdump
+/libexec/mkstemp
+/libexec/post
+/libexec/prompter
+/libexec/rcvdist
+/libexec/rcvpack
+/libexec/rcvstore
+/libexec/rcvtty
+/libexec/slocal
+/libexec/viamail
+
 /liblua/lua
 /liblua/luac
 
