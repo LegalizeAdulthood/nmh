@@ -21,6 +21,17 @@
 #define	MAXARGS   1000
 
 /*
+ * These are not defined during a strict X/Open compilation,
+ * although some systems leak them anyway.
+ */
+#ifndef NI_MAXHOST
+# define NI_MAXHOST 1025
+#endif
+#ifndef NI_MAXSERV
+# define NI_MAXSERV 32
+#endif
+
+/*
  * static prototypes
  */
 
