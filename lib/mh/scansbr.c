@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/addrsbr.h>
 #include <h/fmt_scan.h>
 #include <h/scansbr.h>

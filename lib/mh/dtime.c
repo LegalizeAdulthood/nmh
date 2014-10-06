@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>   /* for snprintf() */
+#include <mh.h>   /* for snprintf() */
 #include "h/tws.h"
 
 #include <time.h>

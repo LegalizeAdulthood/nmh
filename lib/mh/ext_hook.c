@@ -8,7 +8,7 @@
  *	Only produce the error message once.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 int
 ext_hook(char *hook_name, char *message_file_name_1, char *message_file_name_2)

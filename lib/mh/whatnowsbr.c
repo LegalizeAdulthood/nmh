@@ -39,7 +39,7 @@
  *				by attachment number.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/mime.h>
 #include <h/utils.h>
 

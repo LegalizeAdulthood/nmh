@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/crawl_folders.h>
 #include <h/utils.h>
 

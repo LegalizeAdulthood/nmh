@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <setjmp.h>
 #include <fcntl.h>
 #include <h/mime.h>

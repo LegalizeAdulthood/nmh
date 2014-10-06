@@ -15,7 +15,7 @@
  * Ruud de Rooij <ruud@debian.org>  Sun, 28 Mar 1999 15:34:03 +0200
  */
  
-#include <libmh.h>
+#include <mh.h>
 #include <h/utils.h>
 #include <h/mts.h>
 

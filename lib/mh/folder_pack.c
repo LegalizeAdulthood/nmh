@@ -8,7 +8,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 /*
  * Pack the message in a folder.

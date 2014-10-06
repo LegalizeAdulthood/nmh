@@ -41,7 +41,7 @@
  *
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/addrsbr.h>
 #include <h/tws.h>
 #include <h/fmt_scan.h>

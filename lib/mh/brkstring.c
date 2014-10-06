@@ -8,7 +8,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/utils.h>
 
 /* allocate this number of pointers at a time */

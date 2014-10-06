@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <pwd.h>
 
 #define nmhbindirpath(file) NMHBINDIR#file

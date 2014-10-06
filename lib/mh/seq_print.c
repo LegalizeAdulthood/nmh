@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 #define empty(s) ((s) ? (s) : "")
 

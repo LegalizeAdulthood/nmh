@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/utils.h>
 
 /* We allocate the `mi' array 1024 elements at a time */

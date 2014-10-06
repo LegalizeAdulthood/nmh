@@ -17,7 +17,7 @@
  * can be as large as needed, as long as it fits in (virtual) memory.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/utils.h>
 
 #include <assert.h>

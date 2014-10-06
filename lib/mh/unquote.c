@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 /*
  * Remove quotes (and handle escape strings) from RFC 5322 quoted-strings.

@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include "mh_md5.h"
 #include <h/mts.h>
 #include <h/tws.h>

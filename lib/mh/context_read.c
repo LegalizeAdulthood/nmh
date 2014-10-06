@@ -22,7 +22,7 @@
  *	    environment variable or by the profile.
  */
 
-#include <libmh.h>				/* mh internals */
+#include <mh.h>				/* mh internals */
 
 #include <sys/stat.h>
 #include <errno.h>

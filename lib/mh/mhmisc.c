@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/mime.h>
 #include <h/mhparse.h>
 #include <h/utils.h>

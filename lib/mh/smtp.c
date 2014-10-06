@@ -6,7 +6,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include "smtp.h"
 #include <h/mts.h>
 #include <h/utils.h>

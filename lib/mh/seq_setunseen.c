@@ -8,7 +8,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 /*
  * We scan through the folder and act upon all messages

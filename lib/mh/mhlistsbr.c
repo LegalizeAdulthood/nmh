@@ -8,7 +8,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/mts.h>
 #include <h/tws.h>
 #include <h/mime.h>

@@ -6,7 +6,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 #include <stdlib.h>
 #include <unistd.h>

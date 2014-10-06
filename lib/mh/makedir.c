@@ -11,7 +11,7 @@
  * Modified to try recursive create.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 #include <errno.h>
 

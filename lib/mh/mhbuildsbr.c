@@ -15,7 +15,7 @@
  * streamlining and removal of unneeded code.
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include "mh_md5.h"
 #include <h/mts.h>
 #include <h/tws.h>

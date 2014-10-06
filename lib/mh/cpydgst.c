@@ -8,7 +8,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 /*
  * We want to perform the substitution

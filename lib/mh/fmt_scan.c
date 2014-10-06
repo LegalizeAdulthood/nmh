@@ -10,7 +10,7 @@
  * fmt_compile (found in fmt_compile.c).
  */
 
-#include <libmh.h>
+#include <mh.h>
 #include <h/addrsbr.h>
 #include <h/fmt_scan.h>
 #include <h/tws.h>
