@@ -3,6 +3,8 @@
 LIB = libmh.a
 CFLAGS = -I../h -I.. -D_XOPEN_SOURCE=700 -Werror
 
+CLEANFILES = dtimep.c
+
 SRCS = \
 	addrsbr.c	\
 	aliasbr.c	\
@@ -152,7 +154,7 @@ tsort:
 	lorder $(OBJS) | tsort -q
 
 clean:
-	rm -f $(OBJS) $(LIB)
+	rm -f $(OBJS) $(LIB) $(CLEANFILES)
 
 install:
 
