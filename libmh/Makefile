@@ -148,7 +148,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(LIB)
 
 $(LIB): $(OBJS)
-	$(AR) -cr $(LIB) `lorder $(OBJS) | tsort 2>/dev/null`
+	$(AR) -cr $(LIB) $(OBJS)
 
 tsort:
 	lorder $(OBJS) | tsort -q
