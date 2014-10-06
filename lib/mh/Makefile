@@ -1,7 +1,7 @@
 .POSIX:
 
-LIB = libmh.a
-CFLAGS = $(NMH_CFLAGS) -I.. -I../h -D_XOPEN_SOURCE=700
+LIB = ../libmh.a
+CFLAGS = $(NMH_CFLAGS) -I../.. -I../../h -D_XOPEN_SOURCE=700
 
 # CLEANFILES = dtimep.c
 

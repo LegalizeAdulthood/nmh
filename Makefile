@@ -6,7 +6,7 @@ BINDIR = $(PREFIX)/bin
 ETCDIR = $(PREFIX)/etc/nmh
 LIBEXECDIR = $(PREFIX)/libexec/nmh
 
-SUBDIRS = etc liblua libmh cmd libexec
+SUBDIRS = etc lib cmd libexec
 
 PREREQ = h/mhpaths.h
 

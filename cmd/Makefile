@@ -1,7 +1,7 @@
 .POSIX:
 
 CFLAGS = $(NMH_CFLAGS) -I.. -I../h -D_XOPEN_SOURCE=700
-LDFLAGS = $(NMH_LDFLAGS) -lcurses -L../libmh -lmh $(NMH_LDADD)
+LDFLAGS = $(NMH_LDFLAGS) -lcurses -L../lib -lmh $(NMH_LDADD)
 
 PROGS =		\
 	ali	\
@@ -44,6 +44,7 @@ PROGS =		\
 all: $(PROGS)
 
 clean:
+	rm -f $(PROGS)
 
 install:
 
