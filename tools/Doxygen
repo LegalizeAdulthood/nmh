@@ -27,7 +27,7 @@ PROJECT_NAME           = "NMH"
 # if some version control system is used.
 
 # NOTE: keep in sync with VERSION file.
-PROJECT_NUMBER         = 1.6+lmh
+PROJECT_NUMBER         = "1.6+dev LMH Experimental Branch"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer
@@ -663,7 +663,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = cmd libmh liblua h
+INPUT                  = h lib/mh contrib/lua/src cmd libexec
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
