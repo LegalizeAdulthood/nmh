@@ -1,0 +1,16 @@
+This directory contains 3rd-party code we use in the build.  The
+sources here are unmodified from their original distribution.  The
+MH build makefiles reference the code here via VPATH directives.
+
+If you need to modify the source to any of these packages, make a
+copy of the source file in the MH build tree, commit the pristine
+copy, then make your changes to that copy.  This greatly simplifies
+merging any MH-specific customizations when a new version of the
+3rd-party code is imported.
+
+DO NOT modify any of the files here from their original distribution!
+
+
+Directory	Description
+--------------------------------------------------------------------------------
+lua		lua version 5.2.3 (lua.org). Referenced by lib/lua/Makefile.
