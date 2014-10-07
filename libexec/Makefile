@@ -1,6 +1,6 @@
 .POSIX:
 
-CFLAGS = $(NMH_CFLAGS) -I../h -D_XOPEN_SOURCE=700
+CFLAGS = $(NMH_CFLAGS) -I../h -D_XOPEN_SOURCE=600
 LDFLAGS = $(NHM_LDFLAGS) -L../lib -lmh $(NMH_LDADD)
 
 LUADEPS = ../h/lua.h ../lib/liblua.a
