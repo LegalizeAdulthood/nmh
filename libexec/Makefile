@@ -1,6 +1,6 @@
 .POSIX:
 
-CFLAGS = $(NMH_CFLAGS) -I.. -I../h -D_XOPEN_SOURCE=700
+CFLAGS = $(NMH_CFLAGS) -I../h -D_XOPEN_SOURCE=700
 LDFLAGS = $(NHM_LDFLAGS) -lcurses -L../lib -lmh $(NMH_LDADD)
 
 PROGS =	\
@@ -19,6 +19,8 @@ PROGS =	\
 
 
 all: $(PROGS)
+
+$(PROGS): ../h/mh.h ../h/_mhpaths.h ../h/mh_md5.h ../lib/libmh.a ../lib/liblua.a
 
 clean:
 	rm -f $(PROGS) $(PROGS:=.o)
