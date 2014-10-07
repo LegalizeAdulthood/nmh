@@ -9,8 +9,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #define MARK_SWITCHES \
     X("add", 0, ADDSW) \

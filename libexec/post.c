@@ -7,15 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/addrsbr.h>
-#include <h/aliasbr.h>
-#include <h/dropsbr.h>
-#include <h/mime.h>
-#include <h/utils.h>
-#include <h/tws.h>
-#include <h/mts.h>
-#include <h/smtp.h>
+#include <mh.h>
 
 #include <ctype.h>
 #include <signal.h>
@@ -191,7 +183,7 @@ static int msgid = 0;		/* add msgid                             */
 static int debug = 0;		/* debugging post                        */
 static int watch = 0;		/* watch the delivery process            */
 static int whomsw = 0;		/* we are whom not post                  */
-static int checksw = 0;		/* whom -check                           */
+// static int checksw = 0;		/* whom -check                           */
 static int linepos=0;		/* putadr()'s position on the line       */
 static int nameoutput=0;	/* putadr() has output header name       */
 static int sasl=0;		/* Use SASL auth for SMTP                */

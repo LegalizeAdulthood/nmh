@@ -7,7 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
+#include <mh.h>
 
 #define RMF_SWITCHES \
     X("interactive", 0, INTRSW) \

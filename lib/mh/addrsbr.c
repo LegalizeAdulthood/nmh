@@ -9,9 +9,7 @@
 
 #include <mh.h>
 
-#include "addrsbr.h"
 #include "mf.h"
-#include "mts.h"
 
 #include <strings.h>
 

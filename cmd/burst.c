@@ -7,9 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
-#include <h/mhparse.h>
+#include <mh.h>
 
 #define BURST_SWITCHES \
     X("inplace", 0, INPLSW) \

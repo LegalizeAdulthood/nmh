@@ -8,13 +8,9 @@
  */
 
 #include <mh.h>
-#include <setjmp.h>
-#include <fcntl.h>
-#include "mime.h"
-#include "tws.h"
-#include "utils.h"
-#include "mts.h"
 
+#include <fcntl.h>
+#include <setjmp.h>
 #include <signal.h>
 #include <strings.h>
 #include <time.h>

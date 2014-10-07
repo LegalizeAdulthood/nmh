@@ -8,7 +8,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 extern char **environ;
 

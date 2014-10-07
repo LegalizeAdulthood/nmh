@@ -7,13 +7,9 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/mts.h>
-#include <h/tws.h>
+#include <mh.h>
 
 #include <pwd.h>
-
-#include <h/popsbr.h>
 
 #ifndef CYRUS_SASL
 # define SASLminc(a) (a)

@@ -5,8 +5,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
-#include "mts.h"
 
 #include <ctype.h>
 #include <strings.h>

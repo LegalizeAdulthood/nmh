@@ -43,8 +43,7 @@
  *	value of 1 is assumed if this argument is absent.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <ctype.h>
 

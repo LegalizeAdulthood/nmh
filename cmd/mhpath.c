@@ -7,8 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #define MHPATH_SWITCHES \
     X("version", 0, VERSIONSW) \

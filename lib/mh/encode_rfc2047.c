@@ -7,9 +7,6 @@
  */
 
 #include <mh.h>
-#include "mhparse.h"
-#include "addrsbr.h"
-#include "utils.h"
 
 #include <ctype.h>
 #include <strings.h>

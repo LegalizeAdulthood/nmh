@@ -8,7 +8,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 char **
 getarguments (char *invo_name, int argc, char **argv, int check_context)

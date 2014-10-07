@@ -8,12 +8,8 @@
  */
 
 #include <mh.h>
-#include "mh_md5.h"
-#include "mts.h"
-#include "tws.h"
-#include "mime.h"
-#include "mhparse.h"
-#include "utils.h"
+#include <mh_md5.h>
+
 #ifdef HAVE_ICONV
 # include <iconv.h>
 #endif /* HAVE_ICONV */

@@ -7,12 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/fmt_scan.h>
-#include <h/fmt_compile.h>
-#include <h/utils.h>
-#include <h/scansbr.h>
-#include <h/addrsbr.h>
+#include <mh.h>
 
 #include <limits.h>
 #include <strings.h>
@@ -112,7 +107,7 @@ static char *dummy = "dummy";
 int
 main (int argc, char **argv)
 {
-    char *cp, *form = NULL, *format = NULL, *defformat = FORMAT, *folder = NULL;
+    char *cp, *form = NULL, *format = NULL, *defformat = SCANINC_FORMAT, *folder = NULL;
     char buf[BUFSIZ], *nfs, **argp, **arguments;
     charstring_t buffer;
     struct format *fmt;
@@ -202,7 +197,7 @@ main (int argc, char **argv)
 		    continue;
 		case MESSAGESW:
 		    mode = MESSAGE;
-		    defformat = FORMAT;
+		    defformat = SCANINC_FORMAT;
 		    dupaddrs = 0;
 		    continue;
 		case DATESW:

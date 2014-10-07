@@ -7,12 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/fmt_scan.h>
-#include <h/scansbr.h>
-#include <h/tws.h>
-#include <h/mts.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #define SCAN_SWITCHES \
     X("clear", 0, CLRSW) \
@@ -139,7 +134,7 @@ main (int argc, char **argv)
     /*
      * Get new format string.  Must be before chdir().
      */
-    nfs = new_fs (form, format, FORMAT);
+    nfs = new_fs (form, format, SCANINC_FORMAT);
 
     /*
      * We are scanning a maildrop file

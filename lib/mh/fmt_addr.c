@@ -8,9 +8,6 @@
  */
 
 #include <mh.h>
-#include "addrsbr.h"
-#include "fmt_scan.h"
-#include "utils.h"
 
 static char *buf;		/* our current working buffer  */
 static char *bufend;		/* end of working buffer       */

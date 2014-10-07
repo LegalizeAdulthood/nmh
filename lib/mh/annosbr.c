@@ -8,8 +8,6 @@
  */
 
 #include <mh.h>
-#include "tws.h"
-#include "utils.h"
 
 #include <errno.h>
 #include <strings.h>

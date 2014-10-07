@@ -7,8 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/mts.h>
+#include <mh.h>
 
 #include <errno.h>
 #include <signal.h>

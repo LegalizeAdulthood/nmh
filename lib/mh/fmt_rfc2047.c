@@ -8,7 +8,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 #ifdef HAVE_ICONV
 #  include <iconv.h>
 #endif

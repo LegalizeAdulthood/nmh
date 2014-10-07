@@ -8,10 +8,6 @@
  */
 
 #include <mh.h>
-#include "addrsbr.h"
-#include "fmt_scan.h"
-#include "tws.h"
-#include "utils.h"
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -92,14 +88,14 @@ DEFINE_SWITCH_ARRAY(MHL, mhlswitches);
 #define	ADDRFMT     0x000200	/* contains addresses                */
 #define	BELL        0x000400	/* sound bell at EOP                 */
 #define	DATEFMT     0x000800	/* contains dates                    */
-#define	FORMAT      0x001000	/* parse address/date/RFC-2047 field */
+#define	MHLFORMAT      0x001000	/* parse address/date/RFC-2047 field */
 #define	INIT        0x002000	/* initialize component              */
 #define RTRIM       0x004000	/* trim trailing whitespace          */
 #define	SPLIT       0x010000	/* split headers (don't concatenate) */
 #define	NONEWLINE   0x020000	/* don't write trailing newline      */
 #define NOWRAP      0x040000	/* Don't wrap lines ever             */
 #define FMTFILTER   0x080000	/* Filter through format filter      */
-#define	LBITS	"\020\01NOCOMPONENT\02UPPERCASE\03CENTER\04CLEARTEXT\05EXTRA\06HDROUTPUT\07CLEARSCR\010LEFTADJUST\011COMPRESS\012ADDRFMT\013BELL\014DATEFMT\015FORMAT\016INIT\017RTRIM\021SPLIT\022NONEWLINE\023NOWRAP\024FMTFILTER"
+#define	LBITS	"\020\01NOCOMPONENT\02UPPERCASE\03CENTER\04CLEARTEXT\05EXTRA\06HDROUTPUT\07CLEARSCR\010LEFTADJUST\011COMPRESS\012ADDRFMT\013BELL\014DATEFMT\015MHLFORMAT\016INIT\017RTRIM\021SPLIT\022NONEWLINE\023NOWRAP\024FMTFILTER"
 #define	GFLAGS	(NOCOMPONENT | UPPERCASE | CENTER | LEFTADJUST | COMPRESS | SPLIT | NOWRAP)
 
 /*
@@ -158,9 +154,9 @@ struct mcomp {
     char *c_name;		/* component name          */
     char *c_text;		/* component text          */
     char *c_ovtxt;		/* text overflow indicator */
-    char *c_nfs;		/* iff FORMAT              */
+    char *c_nfs;		/* iff MHLFORMAT              */
     struct format *c_fmt;	/*   ..                    */
-    struct comp *c_c_text;	/* Ref to {text} in FORMAT */
+    struct comp *c_c_text;	/* Ref to {text} in MHLFORMAT */
     struct comp *c_c_error;	/* Ref to {error}          */
     int c_offset;		/* left margin indentation */
     int c_ovoff;		/* overflow indentation    */
@@ -741,14 +737,14 @@ evalvar (struct mcomp *c1)
 	    return 1;
 	c1->c_nfs = getcpy (new_fs (NULL, NULL, cp));
 	compile_formatfield(c1);
-	c1->c_flags |= FORMAT;
+	c1->c_flags |= MHLFORMAT;
 	return 0;
     }
 
     if (!strcasecmp (name, "decode")) {
 	c1->c_nfs = getcpy (new_fs (NULL, NULL, "%(decode{text})"));
 	compile_formatfield(c1);
-	c1->c_flags |= FORMAT;
+	c1->c_flags |= MHLFORMAT;
 	return 0;
     }
 
@@ -1329,7 +1325,7 @@ putcomp (struct mcomp *c1, struct mcomp *c2, int flag)
 	return;
     }
 
-    if (c1->c_nfs && (c1->c_flags & (ADDRFMT | DATEFMT | FORMAT)))
+    if (c1->c_nfs && (c1->c_flags & (ADDRFMT | DATEFMT | MHLFORMAT)))
 	mcomp_format (c1, c2);
 
     if (c1->c_flags & CENTER) {

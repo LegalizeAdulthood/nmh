@@ -26,14 +26,7 @@
  */
 #endif
 
-#include <libmh.h>
-#include <h/utils.h>
-#include <h/dropsbr.h>
-#include <h/popsbr.h>
-#include <h/fmt_scan.h>
-#include <h/scansbr.h>
-#include <h/tws.h>
-#include <h/mts.h>
+#include <mh.h>
 
 #include <errno.h>
 #include <signal.h>
@@ -554,7 +547,7 @@ go_to_it:
     }
 
     /* Get new format string */
-    nfs = new_fs (form, format, FORMAT);
+    nfs = new_fs (form, format, SCANINC_FORMAT);
 
     if (noisy) {
 	printf ("Incorporating new mail into %s...\n\n", folder);

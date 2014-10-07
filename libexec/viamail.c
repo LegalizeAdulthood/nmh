@@ -7,11 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/mts.h>
-#include <h/tws.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
+#include <mh.h>
 
 #define VIAMAIL_SWITCHES \
     X("to mailpath", 0, TOSW) \

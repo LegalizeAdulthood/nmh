@@ -21,12 +21,7 @@
  * Ruud de Rooij <ruud@ruud.org>  Sun, 28 May 2000 17:28:55 +0200
  */
 
-#include <libmh.h>
-#include <h/dropsbr.h>
-#include <h/rcvmail.h>
-#include <h/tws.h>
-#include <h/mts.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <ctype.h>
 #include <errno.h>

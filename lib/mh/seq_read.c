@@ -9,7 +9,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 /*
  * static prototypes

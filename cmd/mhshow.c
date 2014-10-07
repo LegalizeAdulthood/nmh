@@ -7,14 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include "mh_md5.h"
-#include <h/mts.h>
-#include <h/tws.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
-#include <h/mhcachesbr.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <signal.h>
 

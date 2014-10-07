@@ -8,8 +8,6 @@
  */
 
 #include <mh.h>
-#include "mts.h"
-#include "utils.h"
 
 #include <arpa/inet.h>
 #include <sys/socket.h>

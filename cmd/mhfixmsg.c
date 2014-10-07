@@ -6,10 +6,7 @@
  * distribution for complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/mime.h>
-#include <h/mhparse.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <sys/types.h>
 #include <sys/wait.h>

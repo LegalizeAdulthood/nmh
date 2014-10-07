@@ -8,7 +8,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 static char *default_editor = NULL;
 

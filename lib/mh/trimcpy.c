@@ -10,7 +10,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 #include <ctype.h>
 

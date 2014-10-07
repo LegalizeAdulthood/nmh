@@ -7,9 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/fmt_scan.h>
-#include <h/tws.h>
+#include <mh.h>
 
 #include <limits.h>
 

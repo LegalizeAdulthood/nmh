@@ -7,11 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/dropsbr.h>
-#include <h/rcvmail.h>
-#include <h/tws.h>
-#include <h/mts.h>
+#include <mh.h>
 
 #define RCVPACK_SWITCHES \
     X("mbox", 0, MBOXSW) \

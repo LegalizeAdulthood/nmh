@@ -16,12 +16,7 @@
  */
 
 #include <mh.h>
-#include "mh_md5.h"
-#include "mts.h"
-#include "tws.h"
-#include "mime.h"
-#include "mhparse.h"
-#include "utils.h"
+#include <mh_md5.h>
 
 #include <ctype.h>
 #include <signal.h>

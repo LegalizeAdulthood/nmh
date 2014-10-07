@@ -114,7 +114,7 @@ build_template(const char *directory, const char *prefix, const char *suffix) {
 
 
 #if NMH
-#include <libmh.h>
+#include <mh.h>
 
 #if HAVE_MKSTEMPS
 #   define MHFIXMSG_SWITCHES \

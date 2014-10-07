@@ -18,7 +18,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 #include <assert.h>
 

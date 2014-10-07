@@ -7,10 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/tws.h>
-#include <h/picksbr.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #define PICK_SWITCHES \
     X("and", 0, ANDSW) \

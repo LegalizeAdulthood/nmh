@@ -7,8 +7,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
-#include "tws.h"
 
 #include <ctype.h>
 #include <strings.h>

@@ -8,7 +8,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 /*
  * 1) If we are using an external rmmproc, then exec it.

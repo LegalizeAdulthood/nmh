@@ -9,11 +9,6 @@
  */
 
 #include <mh.h>
-#include "mts.h"
-#include "tws.h"
-#include "mime.h"
-#include "mhparse.h"
-#include "utils.h"
 
 #include <signal.h>
 

@@ -9,7 +9,6 @@
 %a5000
 %{
 #include <mh.h>
-#include "tws.h"
 
 #include <ctype.h>
 

@@ -14,8 +14,7 @@
  * any specification.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <ctype.h>
 #include <limits.h>

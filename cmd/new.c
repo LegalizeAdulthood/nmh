@@ -11,9 +11,7 @@
  * Inspired by Luke Mewburn's new: http://www.mewburn.net/luke/src/new
  */
 
-#include <libmh.h>
-#include <h/crawl_folders.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <assert.h>
 

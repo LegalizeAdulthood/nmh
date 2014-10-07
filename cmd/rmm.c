@@ -7,8 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #define RMM_SWITCHES \
     X("unlink", 0, UNLINKSW) \

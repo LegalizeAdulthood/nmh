@@ -9,9 +9,6 @@
 
 #include <mh.h>
 #include <fcntl.h>
-#include "fmt_scan.h"
-#include "tws.h"
-#include "utils.h"
 
 /*
  * Take from replsbr.c - a buffer big enough to read in data header lines

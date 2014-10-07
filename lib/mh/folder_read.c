@@ -8,7 +8,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 /* We allocate the `mi' array 1024 elements at a time */
 #define	NUMMSGS  1024

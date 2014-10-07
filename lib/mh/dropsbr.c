@@ -9,10 +9,6 @@
 
 
 #include <mh.h>
-#include "utils.h"
-#include "dropsbr.h"
-#include "mts.h"
-#include "tws.h"
 
 #include <ctype.h>
 #include <errno.h>

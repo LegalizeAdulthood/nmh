@@ -7,12 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/fmt_scan.h>
-#include <h/rcvmail.h>
-#include <h/tws.h>
-#include <h/mts.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #define RCVDIST_SWITCHES \
     X("form formfile", 4, FORMSW) \

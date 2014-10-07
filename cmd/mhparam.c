@@ -10,8 +10,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/mts.h>
+#include <mh.h>
 
 #include <strings.h>
 

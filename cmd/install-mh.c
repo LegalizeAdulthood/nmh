@@ -6,8 +6,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/utils.h>
+#include <mh.h>
 
 #include <pwd.h>				/* structure for getpwuid() results */
 

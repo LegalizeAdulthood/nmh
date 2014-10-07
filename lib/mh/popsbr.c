@@ -8,8 +8,6 @@
 
 #include <mh.h>
 
-#include "utils.h"
-
 #include <ctype.h>
 #include <errno.h>
 #include <signal.h>
@@ -25,8 +23,6 @@
     typedef int (*sasl_callback_ft)();
 # endif /* SASL_VERSION_FULL < 0x020125 */
 #endif /* CYRUS_SASL */
-
-#include "popsbr.h"
 
 #define	TRM	"."
 #define	TRMLEN	(sizeof TRM - 1)

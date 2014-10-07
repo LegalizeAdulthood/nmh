@@ -9,7 +9,6 @@
  */
 
 #include <mh.h>
-#include "utils.h"
 
 /* allocate this much buffer space at a time */
 #define MAXBUFFER 1024

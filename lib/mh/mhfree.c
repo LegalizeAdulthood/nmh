@@ -9,8 +9,6 @@
  */
 
 #include <mh.h>
-#include "mime.h"
-#include "mhparse.h"
 
 /* The list of top-level contents to display */
 CT *cts = NULL;

@@ -7,10 +7,7 @@
  * complete copyright information.
  */
 
-#include <libmh.h>
-#include <h/fmt_scan.h>
-#include <h/fmt_compile.h>
-#include <h/scansbr.h>
+#include <mh.h>
 
 #define FMTDUMP_SWITCHES \
     X("form formatfile", 0, FORMSW) \
@@ -95,7 +92,7 @@ main (int argc, char **argv)
     /*
      * Get new format string.  Must be before chdir().
      */
-    nfs = new_fs (form, format, FORMAT);
+    nfs = new_fs (form, format, SCANINC_FORMAT);
     (void) fmt_compile(nfs, &fmt, 1);
 
     fmt_dump(fmt);
