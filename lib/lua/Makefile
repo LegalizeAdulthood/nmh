@@ -1,6 +1,6 @@
 .POSIX:
 
-VPATH	= ../../contrib/lua-5.2.3/src
+VPATH	= ../../contrib/lua/src
 
 CFLAGS	= -DLUA_USE_POSIX
 LDFLAGS	=
