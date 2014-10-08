@@ -100,7 +100,16 @@ dlocaltime (time_t *clock)
 	tw.tw_flags |= TW_DST;
 
     tzset();
+#ifdef __FreeBSD__
+    /*
+     * XXX FreeBSD has the old timezone(3) from V7, which conflicts with
+     * POSIX.  The following hack is necessary to compile in a strict
+     * X/Open environment.
+     */
+    tw.tw_zone = -(tm->tm_gmtoff / 60);
+#else
     tw.tw_zone = -(timezone / 60);
+#endif
 
     tw.tw_flags &= ~TW_SDAY;
     tw.tw_flags |= TW_SEXP;
