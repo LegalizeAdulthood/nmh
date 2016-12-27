@@ -17,6 +17,9 @@ extern int setup_signal_handlers();
 /* sbr/m_mktemp.c */
 extern void remove_registered_files_atexit();
 
+/* sbr/folder_read.c */
+extern void remove_registered_folders_atexit();
+
 extern char *mhdocdir;
 
 /*
@@ -436,6 +439,13 @@ void to_upper(char *s)
 }
 
 
+static void
+cleanup(void) {
+    remove_registered_files_atexit();
+    remove_registered_folders_atexit();
+}
+
+
 int
 nmh_init(const char *argv0, int read_context) {
     int status = OK;
@@ -448,7 +458,7 @@ nmh_init(const char *argv0, int read_context) {
     }
 
     /* POSIX atexit() does not define any error conditions. */
-    if (atexit(remove_registered_files_atexit)) {
+    if (atexit(cleanup)) {
         admonish("atexit", "unable to register atexit function");
     }
 

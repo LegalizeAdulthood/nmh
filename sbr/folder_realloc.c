@@ -13,13 +13,18 @@
 /*
  * Reallocate some of the space in the folder
  * structure (currently just message status array).
+ * Therefore, mp is declared as const because it isn't changed.  If
+ * it ever is, would have to update the stored value in the msgs_list
+ * list in folder_free.c.  (The declaration in h/prototypes.h doesn't
+ * declare mp as a const pointer, because it's an implementation
+ * detail.  Compilers should accept it.)
  *
  * Return pointer to new folder structure.
  * If error, return NULL.
  */
 
 struct msgs *
-folder_realloc (struct msgs *mp, int lo, int hi)
+folder_realloc (struct msgs *const mp, int lo, int hi)
 {
     int msgnum;
 

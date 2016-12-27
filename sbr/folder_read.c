@@ -10,6 +10,9 @@
 #include <h/mh.h>
 #include <h/utils.h>
 
+/* folder_free.c */
+void register_folder_for_cleanup(struct msgs *);
+
 /* We allocate the `mi' array 1024 elements at a time */
 #define	NUMMSGS  1024
 
@@ -172,6 +175,8 @@ folder_read (char *name, int lockflag)
 
         return NULL;
     }
+
+    register_folder_for_cleanup (mp);
 
     return mp;
 }
