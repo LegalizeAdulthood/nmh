@@ -21,6 +21,7 @@ getarguments (char *invo_name, int argc, char **argv, int check_context)
      */
     if (check_context && (cp = context_find (invo_name))) {
 	cp = mh_xstrdup(cp);		/* make copy    */
+        register_for_deletion_atexit (cp);
 	ap = brkstring (cp, " ", "\n");	/* split string */
 
 	/* Count number of arguments split */

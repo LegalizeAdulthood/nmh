@@ -33,6 +33,7 @@ brkstring (char *str, char *brksep, char *brkterm)
     if (!broken) {
 	len = NUMBROKEN;
 	broken = (char **) mh_xmalloc ((size_t) (len * sizeof(*broken)));
+	register_for_deletion_atexit (broken);
     }
 
     /*
