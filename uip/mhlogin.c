@@ -198,7 +198,6 @@ main(int argc, char **argv)
         /* xoauth is assumed */
         adios(NULL, "only -saslmech xoauth2 is supported");
     }
-    free(arguments);
 
 #ifdef OAUTH_SUPPORT
     return do_login(svc, user, browser, snoop);

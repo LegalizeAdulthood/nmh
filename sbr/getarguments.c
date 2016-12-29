@@ -31,6 +31,7 @@ getarguments (char *invo_name, int argc, char **argv, int check_context)
     }
 
     arguments = (char **) mh_xmalloc ((argc + n) * sizeof(*arguments));
+    register_for_deletion_atexit (arguments);
     bp = arguments;
 
     /* Copy any arguments from profile/context */

@@ -162,8 +162,6 @@ main (int argc, char *argv[]) {
         }
     }
 
-    free (arguments);
-
     if (infile) {
         if ((inputfile = fopen (infile, "r"))) {
             icalset_inputfile (inputfile);

@@ -515,7 +515,6 @@ main (int argc, char **argv) {
         free (file);
         free (folder);
     }
-    free (arguments);
 
     done (status);
     return NOTOK;
