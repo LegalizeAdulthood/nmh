@@ -18,6 +18,12 @@ char *mh_xstrdup(const char *src);
 /* Call free(3), if ptr isn't NULL. */
 void mh_xfree(void *ptr);
 
+/* Register allocated memory chunk to be free'd at exit. */
+void register_for_deletion_atexit(void *);
+
+/* Replace address of chunk to be free'd at exit. */
+void replace_deletion_registration(const void *, void *);
+
 /* Set p to point to newly allocated, uninitialised, memory. */
 #define NEW(p) ((p) = mh_xmalloc(sizeof *(p)))
 

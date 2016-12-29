@@ -22,6 +22,13 @@ extern void remove_registered_folders_atexit();
 
 extern char *mhdocdir;
 
+struct registered_chunk_node {
+    void *chunk;
+    struct registered_chunk_node *next;
+};
+
+static struct registered_chunk_node *registered_chunks;
+
 /*
  * We allocate space for messages (msgs array)
  * this number of elements at a time.
@@ -50,14 +57,18 @@ void *mh_xrealloc(void *ptr, size_t size)
     /* Copy POSIX behaviour, coping with non-POSIX systems. */
     if (size == 0) {
         mh_xfree(ptr);
-        return mh_xmalloc(1); /* Get a unique pointer. */
+        new = mh_xmalloc(1); /* Get a unique pointer. */
+    } else if (!ptr) {
+        new = mh_xmalloc(size);
+    } else {
+        new = realloc(ptr, size);
     }
-    if (!ptr)
-        return mh_xmalloc(size);
 
-    new = realloc(ptr, size);
-    if (!new)
+    if (!new) {
         adios(NULL, "realloc failed, size wanted: %zu", size);
+    } else {
+        replace_deletion_registration (ptr, new);
+    }
 
     return new;
 }
@@ -439,10 +450,57 @@ void to_upper(char *s)
 }
 
 
+/*
+ * Store the address of an allocated memory chunk to be free'd at exit.
+ */
+void
+register_for_deletion_atexit (void *cp) {
+    struct registered_chunk_node *node = (struct registered_chunk_node *)
+        mh_xmalloc (sizeof (struct registered_chunk_node));
+
+    node->chunk = cp;
+    /* Push new node on front of list. */
+    node->next = registered_chunks;
+    registered_chunks = node;
+}
+
+
+/*
+ * Replace the address of a chunk to be free'd at exit.
+ */
+void
+replace_deletion_registration (const void *old, void *new) {
+    if (old  &&  old != new) {
+        struct registered_chunk_node *node;
+
+        for (node = registered_chunks; node; node = node->next) {
+            if (node->chunk == old) {
+                node->chunk = new;
+                break;
+            }
+        }
+    }
+}
+
+
+void
+remove_registered_memory_atexit () {
+    struct registered_chunk_node *node = registered_chunks;
+
+    while (node) {
+        struct registered_chunk_node *next = node->next;
+
+        mh_xfree (node->chunk);
+        mh_xfree (node);
+        node = next;
+    }
+}
+
 static void
 cleanup(void) {
     remove_registered_files_atexit();
     remove_registered_folders_atexit();
+    remove_registered_memory_atexit();
 }
 
 
