@@ -511,8 +511,10 @@ main (int argc, char **argv) {
     if (infp) { fclose (infp); }    /* even if stdin */
     if (outfp) { fclose (outfp); }  /* even if stdout */
     free (outfile);
-    free (file);
-    free (folder);
+    if (file) {
+        free (file);
+        free (folder);
+    }
     free (arguments);
 
     done (status);

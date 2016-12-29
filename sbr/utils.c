@@ -20,6 +20,9 @@ extern void remove_registered_files_atexit();
 /* sbr/folder_read.c */
 extern void remove_registered_folders_atexit();
 
+/* sbr/context_del.c */
+void delete_context ();
+
 extern char *mhdocdir;
 
 struct registered_chunk_node {
@@ -498,9 +501,10 @@ remove_registered_memory_atexit () {
 
 static void
 cleanup(void) {
-    remove_registered_files_atexit();
-    remove_registered_folders_atexit();
-    remove_registered_memory_atexit();
+    remove_registered_files_atexit ();
+    remove_registered_folders_atexit ();
+    remove_registered_memory_atexit ();
+    delete_context ();
 }
 
 

@@ -38,3 +38,23 @@ context_del (char *key)
 
     return 1;
 }
+
+
+/*
+ * Delete entire profile/context.
+ */
+void
+delete_context () {
+    struct node *np = m_defs;
+
+    while (np) {
+        struct node *next = np->n_next;
+
+        mh_xfree (np->n_name);
+        mh_xfree (np->n_field);
+        mh_xfree (np);
+        np = next;
+    }
+
+    m_defs = NULL;
+}
