@@ -57,4 +57,10 @@ delete_context () {
     }
 
     m_defs = NULL;
+
+    /* These might also have been allocated by context_read(). */
+    mh_xfree (defpath);
+    defpath = NULL;
+    mh_xfree (ctxpath);
+    ctxpath = NULL;
 }
