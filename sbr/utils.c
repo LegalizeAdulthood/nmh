@@ -20,6 +20,9 @@ extern void remove_registered_files_atexit();
 /* sbr/folder_read.c */
 extern void remove_registered_folders_atexit();
 
+/* sbr/addrsbr.c */
+void remove_mq_atexit();
+
 /* sbr/context_del.c */
 void delete_context ();
 
@@ -504,6 +507,7 @@ cleanup(void) {
     remove_registered_files_atexit ();
     remove_registered_folders_atexit ();
     remove_registered_memory_atexit ();
+    remove_mq_atexit ();
     delete_context ();
 }
 

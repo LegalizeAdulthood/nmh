@@ -77,6 +77,7 @@ static char *note = NULL;
 static char err[BUFSIZ];
 static char adr[BUFSIZ];
 static int eai = 0;
+static struct mailname mq;
 
 void
 enable_eai() {
@@ -285,7 +286,6 @@ ismymbox (struct mailname *np)
     char buffer[BUFSIZ];
     struct mailname *mp;
     static char *am = NULL;
-    static struct mailname mq;
     static int localmailbox = 0;
 
     /*
@@ -455,4 +455,21 @@ local_test: ;
     }
 
     return 0;
+}
+
+
+/*
+ * Free the entire mq list.
+ */
+void
+remove_mq_atexit () {
+    struct mailname *mp;
+
+    /* The mq struct isn't used; the list starts at mq.m_next. */
+    for (mp = mq.m_next; mp; ) {
+        struct mailname *next = mp->m_next;
+
+        mnfree (mp);
+        mp = next;
+    }
 }
