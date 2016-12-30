@@ -175,6 +175,7 @@ main (int argc, char **argv)
 	}
 	scan_finished ();
 	fclose (in);
+	mh_xfree (nfs);
 	done (0);
     }
 
@@ -201,8 +202,10 @@ main (int argc, char **argv)
 
     /* parse all the message ranges/sequences and set SELECTED */
     for (msgnum = 0; msgnum < msgs.size; msgnum++)
-	if (!m_convert (mp, msgs.msgs[msgnum]))
+	if (!m_convert (mp, msgs.msgs[msgnum])) {
+	    mh_xfree (nfs);
 	    done(1);
+	}
     seq_setprev (mp);			/* set the Previous-Sequence */
 
     context_replace (pfolder, folder);	/* update current folder         */
@@ -283,6 +286,7 @@ main (int argc, char **argv)
     if (clearflag)
 	nmh_clear_screen ();
 
+    mh_xfree (nfs);
     done (0);
     return 1;
 }

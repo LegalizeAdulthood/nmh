@@ -628,8 +628,10 @@ go_to_it:
 		if (errno != ENOENT)
 		    adios (packfile, "error on file");
 		cp = concat ("Create file \"", packfile, "\"? ", NULL);
-		if (noisy && !read_yes_or_no_if_tty (cp))
+		if (noisy && !read_yes_or_no_if_tty (cp)) {
+		    mh_xfree (nfs);
 		    done (1);
+		}
 		free (cp);
 	    }
 	    msgnum = map_count ();
@@ -912,8 +914,10 @@ go_to_it:
     if (noisy)
 	fflush (stdout);
 
-    if ((inc_type == INC_POP) && packfile)
+    if ((inc_type == INC_POP) && packfile) {
+	mh_xfree (nfs);
 	done (0);
+    }
 
     /*
      * truncate file we are incorporating from
@@ -999,6 +1003,7 @@ skip:
     }
 
     context_save ();		/* save the context file   */
+    mh_xfree (nfs);
     done (0);
     return 1;
 }

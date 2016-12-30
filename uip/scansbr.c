@@ -151,16 +151,20 @@ scan (FILE *inb, int innum, int outnum, char *nfs, int width, int curflg,
     if ((state = m_getfld (&gstate, name, tmpbuf, &bufsz, inb)) == FILEEOF) {
 	if (ferror(inb)) {
 	    advise("read", "unable to"); /* "read error" */
+	    fmt_free (fmt, 1);
 	    return SCNFAT;
 	}
+        fmt_free (fmt, 1);
         return SCNEOF;
     }
 
     if (outnum) {
 	if (outnum > 0) {
 	    scnmsg = m_name (outnum);
-	    if (*scnmsg == '?')		/* msg num out of range */
+	    if (*scnmsg == '?') {		/* msg num out of range */
+		fmt_free (fmt, 1);
 		return SCNNUM;
+	    }
 	} else {
 	    scnmsg = "/dev/null";
 	}
@@ -279,6 +283,7 @@ body:;
 		goto finished;
 
 	    default: 
+		fmt_free (fmt, 1);
 		adios (NULL, "getfld() returned %d", state);
 	}
     }
@@ -289,6 +294,7 @@ body:;
 finished:
     if (ferror(inb)) {
 	advise("read", "unable to"); /* "read error" */
+	fmt_free (fmt, 1);
 	return SCNFAT;
     }
 
@@ -343,6 +349,7 @@ finished:
     if (outnum && (ferror(scnout) || fclose (scnout) == EOF))
 	DIEWRERR();
 
+    fmt_free (fmt, 1);
     return (state != FILEEOF ? SCNERR : encrypted ? SCNENC : SCNMSG);
 }
 

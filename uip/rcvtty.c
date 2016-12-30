@@ -280,6 +280,7 @@ header_fd (void)
 	    advise (tfile, "write BEL");
         }
     }
+    mh_xfree (nfs);
 
     return fd;
 }
