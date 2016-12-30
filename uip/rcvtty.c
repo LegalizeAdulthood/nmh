@@ -13,6 +13,7 @@
  */
 
 #include <h/mh.h>
+#include <h/utils.h>
 #include <h/signals.h>
 #include <setjmp.h>
 #include <h/rcvmail.h>
