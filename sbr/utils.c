@@ -263,12 +263,23 @@ num_digits (int n)
 void
 app_msgarg(struct msgs_array *msgs, char *cp)
 {
-	if(msgs->size >= msgs->max) {
+	bool initial_alloc = false;
+
+	if (msgs->msgs == NULL) { initial_alloc = true; }
+
+	if (msgs->size >= msgs->max) {
 		msgs->max += MAXMSGS;
+		/* If initial_alloc, mh_xrealloc will call
+		   replace_deletion_registration(NULL, ...),
+		   which will be a no-op. */
 		msgs->msgs = mh_xrealloc(msgs->msgs,
 			msgs->max * sizeof(*msgs->msgs));
 	}
 	msgs->msgs[msgs->size++] = cp;
+
+	if (initial_alloc) {
+	    register_for_deletion_atexit (msgs->msgs);
+	}
 }
 
 /*
@@ -279,12 +290,23 @@ app_msgarg(struct msgs_array *msgs, char *cp)
 void
 app_msgnum(struct msgnum_array *msgs, int msgnum)
 {
+	bool initial_alloc = false;
+
+	if (msgs->msgnums == NULL) { initial_alloc = true; }
+
 	if (msgs->size >= msgs->max) {
 		msgs->max += MAXMSGS;
+		/* If initial_alloc, mh_xrealloc will call
+		   replace_deletion_registration(NULL, ...),
+		   which will be a no-op. */
 		msgs->msgnums = mh_xrealloc(msgs->msgnums,
 			msgs->max * sizeof(*msgs->msgnums));
 	}
 	msgs->msgnums[msgs->size++] = msgnum;
+
+	if (initial_alloc) {
+	    register_for_deletion_atexit (msgs->msgnums);
+	}
 }
 
 /* Open a form or components file */
