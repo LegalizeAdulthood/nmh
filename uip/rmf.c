@@ -82,7 +82,7 @@ main (int argc, char **argv)
     if (!context_find ("path"))
 	free (path ("./", TFOLDER));
     if (!folder) {
-	folder = getfolder (1);
+	folder = mh_xstrdup (getfolder (1));
 	defolder++;
     }
     if (strcmp (m_mailpath (folder), pwd ()) == 0)
@@ -117,6 +117,7 @@ main (int argc, char **argv)
 	}
     }
     context_save ();	/* save the context file */
+    mh_xfree (folder);
     done (0);
     return 1;
 }

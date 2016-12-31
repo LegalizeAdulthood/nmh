@@ -317,7 +317,7 @@ main (int argc, char **argv) {
     suppress_extraneous_trailing_semicolon_warning = 1;
 
     if (! context_find ("path")) {
-        free (path ("./", TFOLDER));
+        mh_xfree (path ("./", TFOLDER));
     }
 
     if (file && msgs.size) {
@@ -354,7 +354,7 @@ main (int argc, char **argv) {
                 adios (NULL, "unable to create temporary file in %s",
                        get_temp_dir());
             } else {
-                free (file);
+                mh_xfree (file);
                 file = mh_xstrdup (cp);
                 cpydata (STDIN_FILENO, fd, "-", file);
             }
@@ -404,7 +404,7 @@ main (int argc, char **argv) {
             app_msgarg(&msgs, "cur");
         }
         if (! folder) {
-            folder = getfolder (1);
+            folder = mh_xstrdup (getfolder (1));
         }
         maildir = m_maildir (folder);
 
@@ -473,7 +473,7 @@ main (int argc, char **argv) {
 
                         fclose (infp);
                         infp = NULL;
-                        free (input_filename);
+                        mh_xfree (input_filename);
                     }
                 }
             }
@@ -505,16 +505,16 @@ main (int argc, char **argv) {
         status = 1;
     }
 
-    free (cts);
+    mh_xfree (cts);
 
     if (fx.fixtypes != NULL) { svector_free (fx.fixtypes); }
     if (infp) { fclose (infp); }    /* even if stdin */
     if (outfp) { fclose (outfp); }  /* even if stdout */
-    free (outfile);
+    mh_xfree (outfile);
     if (file) {
-        free (file);
-        free (folder);
+        mh_xfree (file);
     }
+    mh_xfree (folder);
 
     done (status);
     return NOTOK;

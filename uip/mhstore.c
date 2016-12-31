@@ -294,7 +294,7 @@ do_cache:
 	if (!msgs.size)
 	    app_msgarg(&msgs, "cur");
 	if (!folder)
-	    folder = getfolder (1);
+	    folder = mh_xstrdup (getfolder (1));
 	maildir = m_maildir (folder);
 
 	if (chdir (maildir) == NOTOK)
@@ -376,6 +376,7 @@ do_cache:
 	seq_save (mp);			  /* synchronize sequences  */
 	context_save ();		  /* save the context file  */
     }
+    mh_xfree (folder);
 
     done (files_not_clobbered);
     return 1;

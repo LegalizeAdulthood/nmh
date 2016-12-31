@@ -301,6 +301,7 @@ main (int argc, char **argv)
 	    adios (cp, "unable to find folder");
 	context_replace (pfolder, argfolder);	/* update current folder   */
 	context_save ();		/* save the context file   */
+	mh_xfree (argfolder);
 	argfolder = NULL;
     }
 
@@ -373,6 +374,7 @@ main (int argc, char **argv)
     print_folders();
 
     context_save ();	/* save the context file */
+    mh_xfree (argfolder);
     done (0);
     return 1;
 }

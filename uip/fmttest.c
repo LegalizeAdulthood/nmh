@@ -364,6 +364,7 @@ main (int argc, char **argv)
     if (mode == MESSAGE) {
 	process_messages(fmt, &compargs, &msgs, buffer, folder, outputsize,
 			 files, dat, cbp);
+        folder = NULL; /* process_messages() would have free'd folder */
     } else {
 	if (compargs.size) {
 	    for (i = 0; i < compargs.size; i += 2) {
@@ -381,6 +382,7 @@ main (int argc, char **argv)
 
     charstring_free(buffer);
     fmt_free(fmt, 1);
+    mh_xfree (folder); /* in case process_messages() wasn't called */
 
     done(0);
     return 1;
@@ -494,7 +496,7 @@ process_messages(struct format *fmt, struct msgs_array *comps,
     }
 
     if (! folder)
-    	folder = getfolder(1);
+	folder = mh_xstrdup (getfolder(1));
 
     maildir = m_maildir(folder);
 
@@ -573,6 +575,7 @@ process_messages(struct format *fmt, struct msgs_array *comps,
 
     ivector_free (seqnum);
     folder_free(mp);
+    mh_xfree (folder);
     return;
 }
 

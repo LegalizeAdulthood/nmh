@@ -364,7 +364,7 @@ do_cache:
 	if (!msgs.size)
 	    app_msgarg(&msgs, "cur");
 	if (!folder)
-	    folder = getfolder (1);
+	    folder = mh_xstrdup (getfolder (1));
 	maildir = m_maildir (folder);
 
 	if (chdir (maildir) == NOTOK)
@@ -459,6 +459,8 @@ do_cache:
 
     if (concatsw)
 	m_pclose();
+
+    mh_xfree (folder);
 
     done (0);
     return 1;

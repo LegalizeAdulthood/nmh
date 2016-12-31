@@ -537,7 +537,7 @@ main (int argc, char **argv)
     if (!context_find ("path"))
 	free (path ("./", TFOLDER));
     if (!folder)
-	folder = getfolder (0);
+	folder = mh_xstrdup (getfolder (0));
     maildir = m_maildir (folder);
 
     if ((maildir_copy = strdup(maildir)) == NULL)
@@ -1004,6 +1004,7 @@ skip:
 
     context_save ();		/* save the context file   */
     mh_xfree (nfs);
+    mh_xfree (folder);
     done (0);
     return 1;
 }

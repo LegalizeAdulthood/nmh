@@ -91,7 +91,7 @@ main (int argc, char **argv)
     if (!msgs.size)
 	app_msgarg(&msgs, "cur");
     if (!folder)
-	folder = getfolder (1);
+	folder = mh_xstrdup (getfolder (1));
     maildir = m_maildir (folder);
 
     if (chdir (maildir) == NOTOK)
@@ -123,6 +123,7 @@ main (int argc, char **argv)
     folder_delmsgs (mp, unlink_msgs, 0);
 
     folder_free (mp);			/* free folder structure   */
+    mh_xfree (folder);
     done (0);
     return 1;
 }

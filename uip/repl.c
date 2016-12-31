@@ -406,7 +406,7 @@ try_it_again:
 	if (!msg)
 	    msg = "cur";
 	if (!folder)
-	    folder = getfolder (1);
+	    folder = mh_xstrdup (getfolder (1));
 	maildir = m_maildir (folder);
 
 	if (chdir (maildir) == NOTOK)
@@ -463,6 +463,8 @@ try_it_again:
             free (filename);
         }
     }
+
+    mh_xfree (folder);
 
     if (nwhat)
 	done (0);

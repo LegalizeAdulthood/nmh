@@ -247,7 +247,7 @@ main (int argc, char **argv)
 	if (!msg)
 	    msg = "cur";
 	if (!folder)
-	    folder = getfolder (1);
+	    folder = mh_xstrdup (getfolder (1));
 	maildir = m_maildir (folder);
 
 	if (chdir (maildir) == NOTOK)
@@ -394,6 +394,8 @@ try_it_again:
 
 edit_it:
     context_save ();	/* save the context file */
+
+    mh_xfree (folder);
 
     if (nwhat)
 	done (0);

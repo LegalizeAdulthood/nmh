@@ -196,7 +196,7 @@ main (int argc, char **argv)
 	app_msgarg(&msgs, "all");
 
     if (!folder)
-	folder = getfolder (1);
+	folder = mh_xstrdup (getfolder (1));
     maildir = m_maildir (folder);
 
     if (chdir (maildir) == NOTOK)
@@ -315,6 +315,7 @@ main (int argc, char **argv)
     context_save ();			/* save the context file         */
     folder_free (mp);			/* free folder/message structure */
     folder_free (mp2);
+    mh_xfree (folder);
     done (0);
     return 1;
 }

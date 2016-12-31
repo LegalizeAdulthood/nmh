@@ -144,7 +144,7 @@ main (int argc, char **argv)
     if (!msgs.size)
 	app_msgarg(&msgs, "cur");
     if (!folder)
-	folder = getfolder (1);
+	folder = mh_xstrdup (getfolder (1));
     maildir = m_maildir (folder);
 
     if (chdir (maildir) == NOTOK)
@@ -209,6 +209,7 @@ main (int argc, char **argv)
     seq_save (mp);	/* synchronize message sequences */
     context_save ();	/* save the context file         */
     folder_free (mp);	/* free folder/message structure */
+    mh_xfree (folder);
     done (0);
     return 1;
 }

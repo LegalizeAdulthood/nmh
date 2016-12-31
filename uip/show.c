@@ -225,7 +225,7 @@ usage:
     }
 
     if (!folder)
-	folder = getfolder (1);
+	folder = mh_xstrdup (getfolder (1));
     maildir = m_maildir (folder);
 
     if (chdir (maildir) == NOTOK)
@@ -350,6 +350,7 @@ go_to_it: ;
     }
 
     fflush (stdout);
+    mh_xfree (folder);
 
     argsplit_insert(&vec, proc, &program);
     app_msgarg(&vec, NULL);

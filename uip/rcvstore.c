@@ -8,6 +8,7 @@
  */
 
 #include <h/mh.h>
+#include <h/utils.h>
 #include <fcntl.h>
 #include <h/signals.h>
 #include <h/mts.h>
@@ -133,7 +134,7 @@ main (int argc, char **argv)
 
     /* if no folder is given, use default folder */
     if (!folder)
-	folder = getfolder (0);
+	folder = mh_xstrdup (getfolder (0));
     maildir = m_maildir (folder);
 
     /* check if folder exists */
@@ -210,6 +211,7 @@ main (int argc, char **argv)
     seq_setunseen (mp, 0);	/* synchronize any Unseen-Sequence's      */
     seq_save (mp);		/* synchronize and save message sequences */
     folder_free (mp);		/* free folder/message structure          */
+    mh_xfree (folder);
 
     context_save ();		/* save the global context file           */
     (void) m_unlink (tmpfilenam); /* remove temporary file                  */
