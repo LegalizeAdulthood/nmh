@@ -375,6 +375,8 @@ main (int argc, char **argv)
 
     context_save ();	/* save the context file */
     mh_xfree (argfolder);
+    mh_xfree (fi);
+    mh_xfree (nmhdir);
     done (0);
     return 1;
 }
