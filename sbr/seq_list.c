@@ -29,6 +29,7 @@ seq_list(struct msgs *mp, char *seqname)
     if (!buffer) {
 	len = MAXBUFFER;
 	buffer = mh_xmalloc ((size_t) len);
+        register_for_deletion_atexit (buffer);
     }
 
     /*
