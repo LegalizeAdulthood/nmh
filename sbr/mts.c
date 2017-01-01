@@ -86,27 +86,27 @@ char *maildelivery = nmhetcdir(/maildelivery);
 struct bind {
     char *keyword;
     char **value;
+    char *allocated;
 };
 
 static struct bind binds[] = {
-    { "localname", &localname },
-    { "localdomain", &localdomain },
-    { "systemname", &systemname },
-    { "mmdfldir", &mmdfldir },
-    { "mmdflfil", &mmdflfil },
-    { "spoollocking", &spoollocking },
-    { "uucpldir", &uucpldir },
-    { "uucplfil", &uucplfil },
-    { "mmdelim1", &mmdlm1 },
-    { "mmdelim2", &mmdlm2 },
-    { "mts",      &mts_method },
-    { "sendmail", &sendmail  },
-    { "clientname",  &clientname },
-    { "servers", &servers },
-    { "pophost", &pophost },
-
-    { "maildelivery", &maildelivery },
-    { NULL, NULL }
+    { "localname", &localname, NULL },
+    { "localdomain", &localdomain, NULL },
+    { "systemname", &systemname, NULL },
+    { "mmdfldir", &mmdfldir, NULL },
+    { "mmdflfil", &mmdflfil, NULL },
+    { "spoollocking", &spoollocking, NULL },
+    { "uucpldir", &uucpldir, NULL },
+    { "uucplfil", &uucplfil, NULL },
+    { "mmdelim1", &mmdlm1, NULL },
+    { "mmdelim2", &mmdlm2, NULL },
+    { "mts",      &mts_method, NULL },
+    { "sendmail", &sendmail , NULL },
+    { "clientname",  &clientname, NULL },
+    { "servers", &servers, NULL },
+    { "pophost", &pophost, NULL },
+    { "maildelivery", &maildelivery, NULL },
+    { NULL, NULL, NULL }
 };
 
 
@@ -461,7 +461,21 @@ mts_read_conf_file (FILE *fp)
 	for (b = binds; b->keyword; b++)
 	    if (!strcmp (buffer, b->keyword))
 		break;
-	if (b->keyword && (cp = tailor_value (bp)))
-	    *b->value = cp;
+        if (b->keyword && (cp = tailor_value (bp))) {
+            b->allocated = *b->value = cp;
+        }
+    }
+}
+
+
+/*
+ * Free all of the values in binds.
+ */
+void
+remove_binds_values_atexit () {
+    struct bind *b;
+
+    for (b = binds; b->keyword; ++b) {
+        mh_xfree (b->allocated);
     }
 }

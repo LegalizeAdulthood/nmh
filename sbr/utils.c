@@ -24,7 +24,10 @@ extern void remove_registered_folders_atexit();
 void remove_mq_atexit();
 
 /* sbr/context_del.c */
-void delete_context ();
+void delete_context();
+
+/* sbr/mts.c */
+void remove_binds_values_atexit();
 
 extern char *mhdocdir;
 
@@ -530,6 +533,7 @@ cleanup(void) {
     remove_registered_folders_atexit ();
     remove_registered_memory_atexit ();
     remove_mq_atexit ();
+    remove_binds_values_atexit ();
     delete_context ();
 }
 
