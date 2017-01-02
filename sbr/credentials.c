@@ -23,6 +23,7 @@ init_credentials_file () {
             char *hdir = getenv ("HOME");
 
             credentials_file = concat (hdir ? hdir : ".", "/.netrc", NULL);
+            register_for_deletion_atexit(credentials_file);
         } else if (! strncasecmp (cred_style, "file:", 5) ||
 		   ! strncasecmp (cred_style, "file-nopermcheck:", 17)) {
             struct stat st;
@@ -37,6 +38,7 @@ init_credentials_file () {
                 if (stat (credentials_file, &st) != OK) {
                     credentials_file =
                         concat (mypath ? mypath : ".", "/", filename, NULL);
+                    register_for_deletion_atexit(credentials_file);
                     if (stat (credentials_file, &st) != OK) {
                         admonish (NULL, "unable to find credentials file %s",
                                   filename);
