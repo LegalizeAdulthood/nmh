@@ -45,3 +45,12 @@
    fun:si_addrinfo
    fun:getaddrinfo
 }
+
+{
+   setupterm and tigetnum_sp, in curses lib, leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*alloc
+   ...
+   fun:initialize_terminfo
+}
