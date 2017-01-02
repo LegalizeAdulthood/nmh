@@ -309,7 +309,6 @@ char *mime_type(const char *filename);
  */
 void nmh_clear_screen(void);
 char *nmh_getpass(const char *);
-char *new_fs (char *, char *, char *);
 char *path(char *, int);
 int pidwait (pid_t, int);
 int pidstatus (int, FILE *, char *);
