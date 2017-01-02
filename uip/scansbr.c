@@ -30,6 +30,7 @@ static struct comp *bodycomp;		/* pntr to "body" pseudo-comp      *
 static int ncomps = 0;			/* # of interesting components     */
 static char **compbuffers = 0; 		/* buffers for component text      */
 static struct comp **used_buf = 0;	/* stack for comp that use buffers */
+static struct comp **save_used_buf;	/* so that used_buf can be free'd  */
 
 static int dat[5];			/* aux. data for format routine    */
 
@@ -122,7 +123,7 @@ scan (FILE *inb, int innum, int outnum, char *nfs, int width, int curflg,
 	 */
 
 	nxtbuf = compbuffers = mh_xcalloc(ncomps, sizeof *nxtbuf);
-	used_buf = mh_xcalloc(ncomps + 1, sizeof *used_buf);
+	save_used_buf = used_buf = mh_xcalloc(ncomps + 1, sizeof *used_buf);
 	used_buf += ncomps+1; *--used_buf = 0;
 	rlwidth = bodycomp && (width > SBUFSIZ)
 	    ? min (width, NMH_BUFSIZ)
@@ -358,6 +359,19 @@ finished:
 void
 scan_finished () {
     m_getfld_state_destroy (&gstate);
+
+    if (compbuffers) {
+        /* Free scan buffers. */
+        int i;
+
+        for (i = 0; i < ncomps; ++i) {
+            mh_xfree (compbuffers[i]);
+        }
+        mh_xfree (compbuffers);
+        compbuffers = NULL;
+        mh_xfree (save_used_buf);
+        save_used_buf = used_buf = NULL;
+    }
 }
 
 void
