@@ -386,6 +386,7 @@ try_it_again:
 	    advise (drft, "write");
 	}
 	charstring_free(scanl);
+	free_fs ();
     } else {
 	cpydata (in, out, form, drft);
 	close (in);

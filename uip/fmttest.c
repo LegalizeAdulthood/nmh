@@ -382,6 +382,7 @@ main (int argc, char **argv)
 
     charstring_free(buffer);
     fmt_free(fmt, 1);
+    mh_xfree (nfs);
     mh_xfree (folder); /* in case process_messages() wasn't called */
 
     done(0);

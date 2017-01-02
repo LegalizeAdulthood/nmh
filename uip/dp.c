@@ -126,6 +126,7 @@ main (int argc, char **argv)
 
     context_save ();	/* save the context file */
     fmt_free (fmt, 1);
+    mh_xfree (nfs);
     done (status);
     return 1;
 }

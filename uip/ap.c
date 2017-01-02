@@ -119,6 +119,7 @@ main (int argc, char **argv)
 	width = INT_MAX;
     }
     fmt_compile (nfs, &fmt, 1);
+    mh_xfree (nfs);
 
     dat[0] = 0;
     dat[1] = 0;

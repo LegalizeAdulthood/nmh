@@ -8,6 +8,7 @@
  */
 
 #include <h/mh.h>
+#include <h/utils.h>
 #include <h/fmt_scan.h>
 #include <h/fmt_compile.h>
 #include <h/scansbr.h>
@@ -101,6 +102,7 @@ main (int argc, char **argv)
     fmt_dump(fmt);
 
     fmt_free(fmt, 1);
+    mh_xfree (nfs);
 
     done(0);
     return 1;

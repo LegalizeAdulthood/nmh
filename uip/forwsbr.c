@@ -195,8 +195,8 @@ finished:
     /*
      * Free any component buffers that we allocated
      */
-
     fmt_free(fmt, 1);
+    mh_xfree (nfs);
 
     return in;
 }

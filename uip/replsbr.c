@@ -248,6 +248,7 @@ finished:
     /* return dynamically allocated buffers */
     charstring_free (scanl);
     fmt_free(fmt, 1);
+    free_fs ();
 }
 
 static char *buf;		/* our current working buffer */
